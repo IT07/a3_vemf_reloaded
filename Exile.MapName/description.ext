@@ -1,0 +1,9 @@
+class cfgFunctions
+{
+	#include "VEMFr_client\CfgFunctions.hpp"
+};
+
+class RscTitles
+{
+	#include "VEMFr_client\gui\hpp_mainVEMFrClient.hpp"
+};

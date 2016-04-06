@@ -1,0 +1,67 @@
+================================================================================================
+======   LICENSE INFORMATION ===================================================================
+================================================================================================
+
+	VEMF code is provided under an Attribution Non-Commercial ShareAlike 4.0 Commons License.
+Link: http://creativecommons.org/licenses/by-nc-sa/4.0/
+
+	The majority of the code is created by the VEMF license holder, but not all of it.
+Very small samples of code may belong to the "Exile Mod" for Arma 3 made by the Exile Mod Team.
+
+	The "Exile Mod" code is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+Link: http://creativecommons.org/licenses/by-nc-nd/4.0/
+Website: http://exilemod.com/
+
+	VEMF being programmed for the Arma 3 engine means you must also comply to Bohemia
+Interactive's End User License Agreement, and Game Content Usage Rules.
+EULA: http://www.bistudio.com/community/licenses/arma3-end-user-license
+GCUR: http://www.bistudio.com/community/game-content-usage-rules
+
+================================================================================================
+What does this mean for me?
+
+	You are able to share VEMF under any format, torrents, file hosts, ftp etc,
+however it must be free to be able to access the downloads. If you have to pay
+for an account to access the download link you are in violation of the license.
+
+	You can adapt the work as you please inside of the terms of the license.
+	
+	If you want to release an adapted version of VEMF, you must give appropriate
+credit to the original authors, provide a link to the license, indicate if changes
+were made (via a changelog), and share the new version under the same license.
+
+	You must do this in a way that does not indicate that the original authors
+endorses you or your use. (An example would be advertising your new adaptation
+as originally coming from VEMF. The key being "Advertise" instead of simply listing it.)
+
+	Finally, this content cannot be commercialized. If you are receiving ANY
+monetary funds where VEMF is included in your work, you are breaking the terms of this license.
+Donations are to be given without any return consideration. The person donating cannot have
+the intention of receiving something in return from you for making their donation.
+
+This include but is not limited to:
+ - Selling access to a server that runs VEMF.
+ - Allowing users of your server to purchase "perks" somehow related to VEMF. (Mission GPS?)
+ - Including VEMF in a mod that is being sold for a profit.
+ - Preventing access to VEMF files or content based on donations.
+ 
+================================================================================================
+So do I need to ask for your permission to modify VEMF?
+
+	As a non-binding request, I ask that you make a concerted effort to try to contact me
+to ask for my permission before you start modifying VEMF. I would like to know about modified
+versions of VEMF before they are released. This request does not apply to individuals
+("Individuals" not "groups") or "clans" that wish to modify VEMF for their individual server.
+
+	Even though this license seems a little overkill, I'm a fairly likeable guy. If you're
+trying to contact me for a non-commercial interest, I'll most likely allow it.
+
+	If you cannot reach me within a month, and you meet all the other requirements of this license,
+you can modify VEMF freely within the terms of the license.
+
+================================================================================================
+I feel VEMF is infringing upon my work.
+
+	If you think VEMF infringes upon your work, please contact me.
+	You can contact me on:
+EpochMod.com (IT07), Reddit (IT07), forums.bistudio.com (IT07) and Exilemod.com (IT07)
