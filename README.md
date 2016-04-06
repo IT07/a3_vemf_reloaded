@@ -1,4 +1,4 @@
-# A3_Exile_VEMF_Reloaded
+# ArmA3_exile_vemf_reloaded
 **Not to confuse with VEMF** <br /><br />
 
 #### How to download?
