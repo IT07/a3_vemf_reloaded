@@ -17,7 +17,7 @@
     ARRAY - Result
 */
 
-private["_cfg","_v","_r","_path","_check"];
+private["_cfg","_v","_r","_path","_check","_build"];
 _r = [];
 _check =
 {
@@ -43,7 +43,13 @@ _check =
 
 if (_this isEqualType "") then
 {
-	_cfg = configFile >> "CfgVemfReloaded" >> _this;
+	if (isNull (configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride" >> _this)) then
+	{
+		_cfg = configFile >> "CfgVemfReloaded" >> _this;
+	} else
+	{
+		_cfg = configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride" >> _this;
+	};
 	call _check;
 	if not(isNil"_v") then
 	{
@@ -53,15 +59,29 @@ if (_this isEqualType "") then
 
 if (_this isEqualType []) then
 {
-	if (count _this isEqualTo 2) then
+	if (_this isEqualTypeArray [[],[]]) then
 	{
-		_cfg = configFile >> "CfgVemfReloaded";
-		_path = _cfg;
+		_path = _this select 0;
+		//["fn_getSetting", 1, format["_path = %1", _path]] spawn VEMFr_fnc_log;
+		_build = {
+			{
+				_cfg = _cfg >> _x;
+			} forEach _path;
+		};
 		{
-			_path = _path >> _x; // Build the config path
-		} forEach (_this select 0);
-		{
-			_cfg = _path >> _x;
+			_cfg = configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride";
+			call _build;
+			_cfg = _cfg >> _x;
+			//["fn_getSetting", 1, format["_cfg after first build = %1", _cfg]] spawn VEMFr_fnc_log;
+			if (isNull _cfg) then
+			{
+				//["fn_getSetting", 1, format["_cfg isNull. Resetting _cfg...."]] spawn VEMFr_fnc_log;
+				_cfg = configFile >> "CfgVemfReloaded";
+				call _build;
+				_cfg = _cfg >> _x;
+				//["fn_getSetting", 1, format["_cfg after second build = %1", _cfg]] spawn VEMFr_fnc_log;
+			};
+			//["fn_getSetting", 1, format["_cfg after appending _x = %1", _cfg]] spawn VEMFr_fnc_log;
 			call _check;
 			if not isNil"_v" then
 			{
@@ -69,10 +89,14 @@ if (_this isEqualType []) then
 			};
 		} forEach (_this select 1);
 	};
-	if (count _this isEqualTo 1) then
+	if (_this isEqualTypeArray [[]]) then
 	{
 		{
-			_cfg = configFile >> "CfgVemfReloaded" >> _x;
+			_cfg = configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride" >> _x;
+			if (isNull _cfg) then
+			{
+				_cfg = configFile >> "CfgVemfReloaded" >> _x;
+			};
 			call _check;
 			_r pushBack _v;
 		} forEach (_this select 0);

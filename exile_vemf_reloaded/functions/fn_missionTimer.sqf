@@ -32,7 +32,7 @@ if (_minFPS > -1) then
                         waitUntil { uiSleep 5; (if (([_minPlayers] call VEMFr_fnc_playerCount) AND (diag_fps > _minFPS)) then { true } else { false }) };
                         ["missionTimer", 1, format["Minimal player count of %1 reached! Starting timer...", _minPlayers]] spawn VEMFr_fnc_log;
 
-                        VEMFr_missionCount = 0;
+                        VEMFrMissionCount = 0;
                         private ["_ignoreLimit"];
                         _ignoreLimit = false;
                         if (_maxGlobalMissions isEqualTo 0) then
@@ -55,11 +55,11 @@ if (_minFPS > -1) then
                                 };
                                 if not _ignoreLimit then
                                 {
-                                    if (VEMFr_missionCount <= _maxGlobalMissions) then
+                                    if (VEMFrMissionCount <= _maxGlobalMissions) then
                                     {
                                         _missVar = selectRandom _missionList;
                                         [] execVM format["exile_vemf_reloaded\missions\%1.sqf", _missVar];
-                                        VEMFr_missionCount = VEMFr_missionCount +1;
+                                        VEMFrMissionCount = VEMFrMissionCount +1;
                                         _lastMission = serverTime;
                                     };
                                 };

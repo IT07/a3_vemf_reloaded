@@ -16,22 +16,35 @@
 
 private ["_param","_prefix","_mode","_logThis","_logModesAllowed","_loggingEnabled"];
 _loggingEnabled = "debugMode" call VEMFr_fnc_getSetting;
-if (_loggingEnabled > 0) then
+if not(_loggingEnabled isEqualTo 0) then
 {
-    if (_loggingEnabled < 4) then
-    {
-        _type = param [1, 3, [0]];
-        _line = param [2, "", [""]];
-        if (_type < _loggingEnabled) then
-        {
-            if not(_line isEqualTo "") then
-            {
-                diag_log text format["IT07: [exile_vemf_reloaded] %1", _line];
-            };
-        };
-        if (_type isEqualTo 2) then // Always allow log type 2 no matter which debugMode is set
-        {
-            diag_log text format["IT07: [exile_vemf_reloaded] %1", _line];
-        };
-    };
+   _prefix = param [0, "", [""]];
+   _type = param [1, 3, [0]];
+   _line = param [2, "", [""]];
+   _doLog =
+   {
+      diag_log text format["IT07: [exile_vemf_reloaded] %1 -- %2", _prefix, _line];
+   };
+
+   switch _type do
+   {
+      case 0:
+      {
+         if (_loggingEnabled isEqualTo 1 OR _loggingEnabled isEqualTo 3) then
+         {
+            call _doLog;
+         };
+      };
+      case 1:
+      {
+         if (_loggingEnabled isEqualTo 2 OR _loggingEnabled isEqualTo 3) then
+         {
+            call _doLog;
+         };
+      };
+      case 2:
+      {
+         call _doLog;
+      };
+   };
 };

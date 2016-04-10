@@ -16,8 +16,9 @@
 
 class CfgVemfReloaded
 {
-	/////// Debugging/learning mode ///////
-	debugMode = 2; // 0 = no debugging | 1 = ERRORS only | 2 = INFO only | 3 = ERRORS & INFO
+	/////// Debugging/learning/logging ///////
+	debugMode = 3; // 0 = no debugging | 1 = ERRORS only | 2 = INFO only | 3 = ERRORS & INFO
+	overridesToRPT = 1; // Enable/disable logging of override settings to .RPT
 	///////////////////////////////////////
 
 	// Global settings
@@ -33,7 +34,7 @@ class CfgVemfReloaded
 	minServerFPS = 20; // Enable/disable minimum server FPS for VEMF to keep spawning missions
 	missionDistance = 2000; // Enable/disable minimum distance between missions
 	missionList[] = {"DynamicLocationInvasion"}; // Each entry should represent an .sqf file in the missions folder
-	noMissionPos[] = {{{2998.62,18175.4,0.00143886},500},{{14601.3,16799.3,0.00143814},800},{{23334.8,24189.5,0.00132132},600}}; // Format: {{position},radius} | Default: Exile safezones
+	noMissionPos[] = {{{2998.62,18175.4,0.00143886},500},{{14601.3,16799.3,0.00143814},800},{{23334.8,24189.5,0.00132132},600}}; // Format: {{position},radius} | Default: Exile Altis safezones
 	nonPopulated = 1; // Enable/disable allowance of missions at locations WITHOUT (enterable) buildings
 	punishRoadKills = 1; // Enable/disable respect deduction if player roadkills AI
 	removeAllAssignedItems = 0; // Enable/disable removal of Map, Compass, Watch and Radio from all AI
@@ -70,10 +71,10 @@ class CfgVemfReloaded
 		};
 	};
 
-	class DynamicLocationInvasion // DynamicLocationInvasion (mission) settings
-	{
+	class DynamicLocationInvasion
+	{ // DynamicLocationInvasion (mission) settings
 		allowCrateLift = 0; // Allow/disallow the loot crate to be lifted with helicopter
-		aiLaunchers = 1; // Allow/disallow AI to HAVE rocket launchers
+		aiLaunchers = 1; // Allow/disallow AI to have rocket launchers
 		allowTWS = 0; // Enable/disable the usage of TWS scopes by AI
 		announce = 1; // Enable/disable mission notificatons
 		cal50s = 3; // Max amount of .50 caliber machineguns at mission | Needs to be lower than total unit count per mission
@@ -83,43 +84,43 @@ class CfgVemfReloaded
 		groupCount[] = {2,4}; // In format: {minimum, maximum}; VEMF will pick a random number between min and max. If you want the same amount always, use same numbers for minimum and maximum.
 		groupUnits[] = {4,6}; // How much units in each group. Works the same like groupCount
 		hasLauncherChance = 25; // In percentage. How big the chance that each AI gets a launcher
-	    marker = 1; // Enable/disable mission markers
+		heliPatrol[] = {1, {"B_Heli_Light_01_armed_F","B_Heli_Attack_01_F","B_Heli_Transport_03_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F"}}; // Enable/disable heli patrol at mission location and set the types of heli(s)
+		marker = 1; // Enable/disable mission markers
 		markCrateOnMap = 1; // Enable/disable loot crate marker on map called "Loot"
 		markCrateVisual = 1; // Enable/disable loot crate VISUAL marker (smoke and/or chem)
-		maxDistance = 15000; // Maximum distance from random player for mission location selection
 		/* maxDistance NOTE: make sure to keep this number very high. 15000 is for Altis */
 		maxDistancePrefered = 7000; // Prefered maximum mission distance from player
 		maxInvasions = 7; // Max amount of active uncompleted invasions allowed at the same time
 		mines = 0; // Enable/disable mines at mission | 1 = anti-Armor mines | 2 = anti-Personell mines | 3 = both anti-Armor and anti-Personell mines
 		minesAmount = 20; // Ignore if placeMines = 0;
 		minesCleanup = 1; // Enable/disable the removal of mines once mission has been completed | 2 = explode mines
+		nonPopulated = -1; // Allow/disallow this mission type being placed at locations without buildings | using -1 will ignore this setting and use the global settting
 		parachuteCrate[] = {0, 250}; // default: {disabled, 250 meters} | use 1 as first number to enable crate parachute spawn
 		randomModes = 1; // Enable/disable randomization of AI types (linked to aiMode setting)
-	    skipDistance = 800; // No missions at locations which have players within this range (in meters)
-	    smokeTypes[] = {"SmokeShell","SmokeShellBlue","SmokeShellGreen","SmokeShellOrange","SmokeShellRed","SmokeShellYellow"};
-	    streetLights = 0; // Enable/disable street lights at mission location
-	    streetLightsRestore = 1; // Enable/disable restoration of street lights after mission completion
-	    streetLightsRange = 500; // Affects streetlights within this distance from mission's center
+	   skipDistance = 800; // No missions at locations which have players within this range (in meters)
+	   smokeTypes[] = {"SmokeShell","SmokeShellBlue","SmokeShellGreen","SmokeShellOrange","SmokeShellRed","SmokeShellYellow"};
+	   streetLights = 0; // Enable/disable street lights at mission location
+	   streetLightsRestore = 1; // Enable/disable restoration of street lights after mission completion
+	   streetLightsRange = 500; // Affects streetlights within this distance from mission's center
 	};
 
-	class aiCleanUp // Contains settings for removal of items from each AI that gets eliminated
-	{
+	class aiCleanUp
+	{ // Contains settings for removal of items from each AI that gets eliminated
 		aiDeathRemovalEffect = 0; // Enable/disable the "death effect" from Virtual Arsenal. Flashes AI and deletes it after being eliminated
 		removeHeadGear = 0; // Enable/disable removal of headgear after AI has been eliminated, obviously
 		removeLaunchers = 0; // Enable/disable removal of rocket launchers from AI after they are eliminated
 	};
 
 	class aiStatic
-	{
+	{ // Simply spawns units at desired positions
 		amount[] = {10,20,12,11,40,21,19}; // How much AI units on each seperate position. Example: 1st location, 10. 2nd location, 20. 3rd location, 12. And so on....
 		enabled = 0; // Enable/disable static AI spawning
 		positions[] = {}; // Add positions here. Each position must have {} around it and must be seperated with a comma if multiple positions present. Last position in list should NOT have a comma behind it!
 		random = 1; // Enable/disable randomization of AI units amount
 	};
 
-	// Global AI skill settings. They affect each VEMF unit for any default VEMF mission
 	class aiSkill // Minimum: 0 | Maximum: 1
-	{
+	{ // Global AI skill settings. They affect each VEMF unit for any default VEMF mission
 		difficulty = "Veteran"; // Options: "Easy" "Normal" "Veteran" "Hardcore" | Default: Veteran
 		class Easy // AI looks stupid with this setting xD
 		{
@@ -163,9 +164,8 @@ class CfgVemfReloaded
 		vests[] = {"V_TacVest_blk_POLICE","V_PlateCarrierSpec_blk","V_PlateCarrierGL_blk","V_TacVestCamo_khk","V_TacVest_blk","V_BandollierB_blk","V_Rangemaster_belt"};
 	};
 
-	// Loot crate configuration
 	class crateLoot
-	{
+	{ // Loot crate configuration
 		primarySlotsMax = 10; // Maximum primary weapons in each loot crate
 		primarySlotsMin = 4; // Minimum primary weapons in each loot crate
 		primaryWeaponLoot[] =
@@ -276,8 +276,7 @@ class CfgVemfReloaded
 		// End of loot crate configuration
 	};
 	class aiGear
-	{
-		// Configuration of what AI have
+	{ // Configuration of what AI have
 		aiHeadGear[] =
 		{
 			"H_HelmetB","H_HelmetB_camo","H_HelmetB_paint","H_HelmetB_light","H_Booniehat_khk","H_Booniehat_oli","H_Booniehat_indp",
@@ -346,7 +345,12 @@ class CfgVemfReloaded
 			"hgun_ACPC2_F","hgun_Rook40_F","hgun_P07_F","hgun_Pistol_heavy_01_F","hgun_Pistol_heavy_02_F"
 		};
 	};
+	class CfgSettingsOverride
+	{
+		#include "config_override.cpp"
+	};
 };
+
 
 class CfgPatches
 {
@@ -356,8 +360,8 @@ class CfgPatches
 		requiredAddons[] = {"exile_server"};
 		fileName = "exile_vemf_reloaded.pbo";
 		requiredVersion = 1.56; // VEMF does not work on older versions due to use of the latest scripting commands
-		version = 0740.30; // Do NOT change
-		author[]= {"IT07"};
+		version = 0.741; // Do NOT change
+		author = "IT07";
 	};
 };
 
@@ -383,11 +387,14 @@ class CfgFunctions
 			class giveAmmo {};
 			class giveWeaponItems {};
 			class spawnAI {};
+			class spawnInvasionAI {};
 			class spawnStaticAI {};
+			class spawnVEMFrAI {};
 			class loadLoot {};
 			class placeMines {};
 			class waitForPlayers {};
 			class waitForMissionDone {};
+			class checkSide {};
 			class checkLoot {};
 			class missionTimer {};
 			class launch { postInit = 1; };
