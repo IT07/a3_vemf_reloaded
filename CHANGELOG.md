@@ -1,5 +1,11 @@
 ## VEMF Changelog
 
+#### `v0.741`
+*Server-side* <br />
+**[NEW]** config_override.cpp which provides easy custom settings to be applied without ever needing to re-apply them every time there is a new VEMFr update. <br />
+**[ADDED]** option to enable/disable helicopter patrol at DynamicLocationInvasion missions <br />
+<br />
+
 #### `v0740.30`
 *Server-side* <br />
 **[ADDED]** Option to prevent AI from having TWS (thermal) scopes <br />
