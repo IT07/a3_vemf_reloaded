@@ -1,5 +1,13 @@
 ## VEMF Changelog
 
+#### `v0741.1`
+*Server-side* <br />
+**[FIXED]** .50cals not being deleted <br />
+*Client-side* <br />
+**[CHANGED]** newer code <br />
+*NOTES: Completely remove the current client-side VEMFr stuff from your mission file and install the new files*<br />
+<br />
+
 #### `v0.741`
 *Server-side* <br />
 **[NEW]** config_override.cpp which provides easy custom settings to be applied without ever needing to re-apply them every time there is a new VEMFr update. <br />
