@@ -1,4 +1,4 @@
 class RscTitles
 {
-	#include "VEMFr_client\gui\hpp_mainVEMFrClient.hpp"
+	#include "VEMFr_client\gui\RscDisplayVEMFrClient.hpp"
 };
