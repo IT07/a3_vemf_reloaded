@@ -107,13 +107,16 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 			{
 				if (_spawned isEqualTypeArray [[],[]]) then
 				{
-					private ["_units","_cal50s"];
-					_units = _spawned select 0;
-					_groups = _spawned select 1;
+					private ["_units","_groups","_cal50s"];
+					_units = [];
+					_groups = _spawned select 0;
 					{
 						[_x] spawn VEMFr_fnc_signAI;
+						{
+							_units pushBack _x;
+						} forEach (units _x);
 					} forEach _groups;
-					_cal50s = _spawned select 2;
+					_cal50s = _spawned select 1;
 
 					private ["_heliUnits"];
 					_heliPatrolSettings = ([["DynamicLocationInvasion"],["heliPatrol"]] call VEMFr_fnc_getSetting) select 0;
