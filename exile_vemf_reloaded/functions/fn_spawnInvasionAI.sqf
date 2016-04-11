@@ -12,7 +12,7 @@
 	_this select 4: STRING - exact config name of mission
 
 	Returns:
-	ARRAY format [UNITS,[groups],50cals]
+	ARRAY format [[groups],[50cals]]
 */
 
 private // Make sure that the vars in this function do not interfere with vars in the calling script
@@ -90,7 +90,7 @@ if (count _pos isEqualTo 3) then
 					if not isNil"_groupSide" then
 					{
 						_grp = createGroup _groupSide;
-						(_spawned select 1) pushBack _grp;
+						(_spawned select 0) pushBack _grp;
 					};
 					if not isNil"_grp" then
 					{
@@ -124,7 +124,7 @@ if (count _pos isEqualTo 3) then
 									{
 										_hmg = createVehicle ["B_HMG_01_high_F", _spawnPos, [], 0, "CAN_COLLIDE"];
 										_hmg setVehicleLock "LOCKEDPLAYER";
-										(_spawned select 2) pushBack _hmg;
+										(_spawned select 1) pushBack _hmg;
 									};
 								};
 							};
@@ -155,7 +155,6 @@ if (count _pos isEqualTo 3) then
 							};
 
 							_unit addMPEventHandler ["mpkilled","if (isDedicated) then { [_this select 0, _this select 1] spawn VEMFr_fnc_aiKilled }"];
-							(_spawned select 0) pushBack _unit;
 							// Set skills
 							_unit setSkill ["aimingAccuracy", _accuracy];
 							_unit setSkill ["aimingShake", _aimShake];
@@ -170,11 +169,11 @@ if (count _pos isEqualTo 3) then
 							_unit setRank "Private"; // Set rank
 						};
 						_grp selectLeader _unit; // Leader Assignment
+						_invLoaded = [units _grp, _missionName, _mode] call VEMFr_fnc_loadInv; // Load the AI's inventory
 						_groups pushBack _grp; // Push it into the _groups array
 					};
 				};
 
-				_invLoaded = [_spawned select 0, _missionName, _mode] call VEMFr_fnc_loadInv; // Load the AI's inventory
 				if isNil"_invLoaded" then
 				{
 					["fn_spawnAI", 0, "failed to load AI's inventory..."] spawn VEMFr_fnc_log;
