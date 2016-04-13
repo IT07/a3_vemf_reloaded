@@ -1,5 +1,14 @@
 ## VEMF Changelog
 
+#### `v0741.2`
+*Server-side* <br />
+**[CHANGED]** Some functions are now not a function anymore <br />
+**[CHANGED]** CfgPatches and CfgFunctions now have their own seperate file <br />
+**[FIXED]** hasLauncherChance was not working at all <br />
+**[IMPROVED]** Overall variable structure <br />
+**[IMPROVED]** Loggin feedback in RPT. Was sometimes too cryptic <br />
+<br />
+
 #### `v0741.1`
 *Server-side* <br />
 **[FIXED]** .50cals not being deleted <br />
