@@ -12,10 +12,11 @@
 	nothing
 */
 
-private ["_msg","_mode"];
+private ["_msg"];
 _msg = param [0, "", [[],format[""]]];
 if not(_msg isEqualTo "") then
 {
+	private ["_mode"];
 	_mode = param [1, "", [""]];
 	if (count allPlayers > 0) then
 	{
