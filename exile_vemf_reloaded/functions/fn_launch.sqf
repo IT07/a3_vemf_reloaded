@@ -9,17 +9,20 @@
 uiNamespace setVariable ["VEMFrUsedLocs", []];
 uiNamespace setVariable ["VEMFrHcLoad", []];
 
-[] spawn VEMFr_fnc_checkLoot; // Check loot tables if enabled
-[] spawn VEMFr_fnc_missionTimer; // Launch mission timer
-[] spawn VEMFr_fnc_spawnStaticAI; // Launch Static AI spawner
+_scripts = ["checkLoot","missionTimer","REMOTEguard","spawnStaticAI"];
+{
+	private ["_script"];
+	_script = [] ExecVM format["exile_vemf_reloaded\sqf\%1.sqf", _x];
+	waitUntil { uiSleep 0.5; scriptDone _script };
+} forEach _scripts;
+
 west setFriend [independent, 0];
 independent setFriend [west, 0];
 
 [] spawn
 {
 	uiSleep 4;
-	_overridesToRPT = "overridesToRPT" call VEMFr_fnc_getSetting;
-	if (_overridesToRPT isEqualTo 1) then
+	if ("overridesToRPT" call VEMFr_fnc_getSetting isEqualTo 1) then
 	{
 		_root = configProperties [configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride", "true", false];
 		if (count _root > 0) then
