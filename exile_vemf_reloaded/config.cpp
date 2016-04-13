@@ -55,7 +55,7 @@ class CfgVemfReloaded
 	{ // NOTE: If the map you use is not listed below, simply add it by yourself or put the locations you want to blacklist into the locations array of the Other class
 		class Altis
 		{
-			locations[] = {"Sagonisi","Monisi","Fournos","Savri","Atsalis","Polemista","Cap Makrinos","Pyrgi","Makrynisi","Chelonisi","Almyra","Surf Club"};
+			locations[] = {"Kavala","Syrta","Zaros","Pyrgos","Selekano","Sofia","Sagonisi","Monisi","Fournos","Savri","Atsalis","Polemista","Cap Makrinos","Pyrgi","Makrynisi","Chelonisi","Almyra","Surf Club"};
 		};
 		class Stratis
 		{
@@ -351,54 +351,5 @@ class CfgVemfReloaded
 	};
 };
 
-
-class CfgPatches
-{
-	class exile_vemf_reloaded
-	{
-		units[] = {};
-		requiredAddons[] = {"exile_server"};
-		fileName = "exile_vemf_reloaded.pbo";
-		requiredVersion = 1.56; // VEMF does not work on older versions due to use of the latest scripting commands
-		version = 0741.1; // Do NOT change
-		author = "IT07";
-	};
-};
-
-class CfgFunctions
-{
-	class exile_vemf_reloaded
-	{
-		tag = "VEMFr";
-		class serverFunctions
-		{
-			file = "exile_vemf_reloaded\functions";
-			class log {};
-			class getSetting {};
-			class aiKilled {};
-			class findPos {};
-			class broadCast {};
-			class playerCount {};
-			class headLessClient {};
-			class signAI {};
-			class transferOwner {};
-			class checkPlayerPresence {};
-			class loadInv {};
-			class giveAmmo {};
-			class giveWeaponItems {};
-			class spawnAI {};
-			class spawnInvasionAI {};
-			class spawnStaticAI {};
-			class spawnVEMFrAI {};
-			class loadLoot {};
-			class placeMines {};
-			class waitForPlayers {};
-			class waitForMissionDone {};
-			class checkSide {};
-			class checkLoot {};
-			class missionTimer {};
-			class launch { postInit = 1; };
-			class REMOTEguard { postInit = 1; };
-		};
-	};
-};
+#include "cpp\CfgPatches.cpp"
+#include "cpp\CfgFunctions.cpp"
