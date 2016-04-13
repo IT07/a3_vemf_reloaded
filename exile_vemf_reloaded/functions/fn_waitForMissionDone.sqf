@@ -14,14 +14,16 @@
 	BOOL - true when mission is done
 */
 
-private ["_pos","_unitArr","_unitCount","_killed","_killToComplete","_rad","_playerNear","_complete"];
+private ["_complete","_pos"];
 _complete = false;
 _pos = param [1, [], [[]]];
 if (count _pos isEqualTo 3) then
 {
+	private ["_unitArr"];
 	_unitArr = param [2, [], [[]]];
 	if (count _unitArr > 0) then
 	{
+		private ["_unitCount","_killed","_killToComplete","_rad"];
 		_unitCount = count _unitArr;
 		_killed = [];
 		_killToComplete = round(("killPercentage" call VEMFr_fnc_getSetting)/100*_unitCount);
@@ -30,10 +32,11 @@ if (count _pos isEqualTo 3) then
 		{
 			while {not _complete} do
 			{
+				private ["_playerNear"];
 				// First check for a player
 				if not _complete then { uiSleep 1; };
 				_playerNear = [_pos, _rad] call VEMFr_fnc_checkPlayerPresence;
-				if (_playerNear) then
+				if _playerNear then
 				{
 					{
 						if not(alive _x) then
@@ -42,6 +45,7 @@ if (count _pos isEqualTo 3) then
 						};
 				 	} forEach _unitArr;
 					{ // Delete the not(alive) units
+						private ["_index"];
 						_index = _unitArr find _x;
 						if not(_index isEqualTo -1) then
 						{
@@ -57,4 +61,5 @@ if (count _pos isEqualTo 3) then
 		};
 	};
 };
+
 _complete

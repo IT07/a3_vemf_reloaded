@@ -15,27 +15,28 @@
 	ARRAY with group(s)
 */
 
-private // Make sure that the vars in this function do not interfere with vars in the calling script
-[
-	"_spawned","_allUnits","_pos","_grpCount","_unitsPerGrp","_sldrClass","_settings","_hc","_skills","_newPos","_return","_units","_missionName",
-	"_accuracy","_aimShake","_aimSpeed","_stamina","_spotDist","_spotTime","_courage","_reloadSpd","_commanding","_general","_loadInv","_mode"
-];
-
+private ["_spawned","_allUnits","_pos"];
 _spawned = [];
 _allUnits = [];
 _pos = param [0, [], [[]]];
-if (count _pos isEqualTo 3) then
+if (_pos isEqualTypeArray [0,0,0]) then
 {
+	private ["_grpCount"];
 	_grpCount = param [1, 1, [0]];
 	if (_grpCount > 0) then
 	{
+		private ["_unitsPerGrp"];
 		_unitsPerGrp = param [2, 1, [0]];
 		if (_unitsPerGrp > 0) then
 		{
+			private ["_mode","_missionName"];
 			_mode = param [3, -1, [0]];
 			_missionName = param [4, "", [""]];
 			if (_missionName in ("missionList" call VEMFr_fnc_getSetting)) then
 			{
+				private [
+					"_sldrClass","_hc","_aiDifficulty","_skills","_accuracy","_aimShake","_aimSpeed","_stamina","_spotDist","_spotTime","_courage","_reloadSpd","_commanding","_general","_units"
+				];
 				_sldrClass = "unitClass" call VEMFr_fnc_getSetting;
 				_hc = "headLessClientSupport" call VEMFr_fnc_getSetting;
 				_aiDifficulty = [["aiSkill"],["difficulty"]] call VEMFr_fnc_getSetting param [0, "Veteran", [""]];
@@ -54,43 +55,45 @@ if (count _pos isEqualTo 3) then
 				_units = []; // Define units array. the for loops below will fill it with units
 				for "_g" from 1 to _grpCount do // Spawn Groups near Position
 				{
-					private ["_unitSide","_grp","_unit","_groupSide"];
+					private ["_groupSide"];
 					_groupSide = ("unitClass" call VEMFr_fnc_getSetting) call VEMFr_fnc_checkSide;
 					if not isNil"_groupSide" then
 					{
-						private["_unit"];
+						private["_grp"];
 						_grp = createGroup _groupSide;
-						if not isNil"_grp" then
+						_grp setBehaviour "AWARE";
+						_grp setCombatMode "RED";
+						_grp allowFleeing 0;
+						for "_u" from 1 to _unitsPerGrp do
 						{
-							_grp setBehaviour "AWARE";
-							_grp setCombatMode "RED";
-							_grp allowFleeing 0;
-							for "_u" from 1 to _unitsPerGrp do
-							{
-								_unit = _grp createUnit [_sldrClass, _pos, [], 10, "FORM"]; // Create Unit There
-								_allUnits pushBack _unit;
-								_unit addMPEventHandler ["mpkilled","if (isDedicated) then { [_this select 0, _this select 1] spawn VEMFr_fnc_aiKilled }"];
+							private ["_unit"];
+							_unit = _grp createUnit [_sldrClass, _pos, [], 10, "FORM"]; // Create Unit There
+							_allUnits pushBack _unit;
+							_unit addMPEventHandler ["mpkilled","if (isDedicated) then { [_this select 0, _this select 1] spawn VEMFr_fnc_aiKilled }"];
 
-								// Set skills
-								_unit setSkill ["aimingAccuracy", _accuracy];
-								_unit setSkill ["aimingShake", _aimShake];
-								_unit setSkill ["aimingSpeed", _aimSpeed];
-								_unit setSkill ["endurance", _stamina];
-								_unit setSkill ["spotDistance", _spotDist];
-								_unit setSkill ["spotTime", _spotTime];
-								_unit setSkill ["courage", _courage];
-								_unit setSkill ["reloadSpeed", _reloadSpd];
-								_unit setSkill ["commanding", _commanding];
-								_unit setSkill ["general", _general];
-								_unit setRank "Private"; // Set rank
+							// Set skills
+							_unit setSkill ["aimingAccuracy", _accuracy];
+							_unit setSkill ["aimingShake", _aimShake];
+							_unit setSkill ["aimingSpeed", _aimSpeed];
+							_unit setSkill ["endurance", _stamina];
+							_unit setSkill ["spotDistance", _spotDist];
+							_unit setSkill ["spotTime", _spotTime];
+							_unit setSkill ["courage", _courage];
+							_unit setSkill ["reloadSpeed", _reloadSpd];
+							_unit setSkill ["commanding", _commanding];
+							_unit setSkill ["general", _general];
+							_unit setRank "Private"; // Set rank
+							if (_u isEqualTo _unitsPerGrp) then
+							{
+								_grp selectLeader _unit; // Leader Assignment
 							};
 						};
-						_grp selectLeader _unit; // Leader Assignment
 						_grp enableAttack true;
 						_spawned pushBack _grp;
 					};
 				};
 
+				private ["_invLoaded"];
 				_invLoaded = [_allUnits, _missionName, _mode] call VEMFr_fnc_loadInv; // Load the AI's inventory
 				if not _invLoaded then
 				{
@@ -101,4 +104,5 @@ if (count _pos isEqualTo 3) then
 		};
 	};
 };
+
 _spawned

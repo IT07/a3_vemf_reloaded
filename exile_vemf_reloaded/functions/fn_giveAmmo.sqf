@@ -26,7 +26,7 @@ if (_this isEqualType []) then
             {
                 if not(vest _unit isEqualTo "") then
                 {
-                    private ["_itemMass","_weapon","_mag","_magMass","_vestMass","_itemMass"];
+                    private ["_weapon","_mag","_magMass","_vestMass","_itemMass"];
                     _weapon = primaryWeapon _unit;
                     _mag = selectRandom (getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines"));
                     _magMass = getNumber (configFile >> "CfgMagazines" >> _mag >> "mass");
@@ -83,7 +83,7 @@ if (_this isEqualType []) then
             {
                 if not(uniform _unit isEqualTo "") then
                 {
-                    private ["_weapon","_mag","_uniformMass"];
+                    private ["_weapon","_mag","_magMass","_uniformMass"];
                     _weapon = handGunWeapon _unit;
                     _mag = selectRandom (getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines"));
                     _magMass = getNumber (configFile >> "CfgMagazines" >> _mag >> "mass");
@@ -104,13 +104,11 @@ if (_this isEqualType []) then
                 };
             };
             _done = true;
-        };
-        if not local _unit then
+        } else // If unit is not local
         {
             ["fn_giveAmmo", 0, format["%1 is not local. Can not execute!", _unit]] spawn VEMfr_fnc_log;
         };
-    };
-    if isNull _unit then
+    } else // If unit isNull
     {
         ["fn_giveAmmo", 0, "_unit isNull. Can not execute!"] spawn VEMFr_fnc_log;
     };

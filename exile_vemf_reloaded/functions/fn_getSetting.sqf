@@ -17,21 +17,19 @@
     ARRAY - Result
 */
 
-private["_cfg","_v","_r","_path","_check","_build"];
+private["_r","_check","_v"];
 _r = [];
 _check =
 {
 	if (isNumber _cfg) then
 	{
 		_v = getNumber _cfg
-	};
-	if not(isNumber _cfg) then
+	} else
 	{
 		if (isText _cfg) then
 		{
 			_v = getText _cfg
-		};
-		if not(isText _cfg) then
+		} else
 		{
 			if (isArray _cfg) then
 			{
@@ -43,6 +41,7 @@ _check =
 
 if (_this isEqualType "") then
 {
+	private ["_cfg"];
 	if (isNull (configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride" >> _this)) then
 	{
 		_cfg = configFile >> "CfgVemfReloaded" >> _this;
@@ -51,7 +50,7 @@ if (_this isEqualType "") then
 		_cfg = configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride" >> _this;
 	};
 	call _check;
-	if not(isNil"_v") then
+	if not isNil"_v" then
 	{
 		_r = _v;
 	};
@@ -61,14 +60,17 @@ if (_this isEqualType []) then
 {
 	if (_this isEqualTypeArray [[],[]]) then
 	{
+		private ["_path","_build"];
 		_path = _this select 0;
 		//["fn_getSetting", 1, format["_path = %1", _path]] spawn VEMFr_fnc_log;
-		_build = {
+		_build =
+		{
 			{
 				_cfg = _cfg >> _x;
 			} forEach _path;
 		};
 		{
+			private ["_cfg"];
 			_cfg = configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride";
 			call _build;
 			_cfg = _cfg >> _x;
@@ -92,6 +94,7 @@ if (_this isEqualType []) then
 	if (_this isEqualTypeArray [[]]) then
 	{
 		{
+			private ["_cfg"];
 			_cfg = configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride" >> _x;
 			if (isNull _cfg) then
 			{
@@ -103,5 +106,4 @@ if (_this isEqualType []) then
 	};
 };
 
-if isNil"_v" then { _r = nil };
 _r

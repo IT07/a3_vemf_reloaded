@@ -14,22 +14,26 @@
 	BOOLEAN - true if nothing failed
 */
 
-private ["_ok","_params","_units","_missionName","_settings","_aiLaunchers","_aiGear","_uniforms","_headGear","_vests","_backpacks","_launchers","_rifles","_pistols","_aiMode","_givenAmmo"];
+private ["_ok","_params"];
 _ok = false;
 _params = _this;
 if (_this isEqualType []) then
 {
+	private ["_units"];
 	_units = param [0, [], [[]]];
 	if (count _units > 0) then
 	{
+		private ["_missionName"];
 		_missionName = param [1, "", [""]];
 		if (_missionName in ("missionList" call VEMFr_fnc_getSetting)) then
 		{
+			private ["_aiMode"];
 			_aiMode = param [2, 0, [0]];
 			switch _aiMode do
 			{
 				case 0:
 				{
+					private ["_aiGear","_uniforms","_headGear","_vests","_backpacks","_rifles","_pistols","_aiLaunchers","_launchers","_launcherChance"];
 					// Define settings
 					_aiGear = [["aiGear"],["aiUniforms","aiHeadGear","aiVests","aiBackpacks","aiLaunchers","aiRifles","aiPistols"]] call VEMFr_fnc_getSetting;
 					_uniforms = _aiGear select 0;
@@ -42,6 +46,7 @@ if (_this isEqualType []) then
 					if (_aiLaunchers isEqualTo 1) then
 					{
 						_launchers = _aiGear select 4;
+						_launcherChance = ([["DynamicLocationInvasion"],["hasLauncherChance"]] call VEMFr_fnc_getSetting) select 0;
 					};
 					{
 						private ["_unit","_gear","_ammo"];
@@ -68,26 +73,23 @@ if (_this isEqualType []) then
 						_gear = selectRandom _vests;
 						_unit addVest _gear;
 
-						if ((floor random 2) isEqualTo 0) then
+						if (_aiLaunchers isEqualTo 1) then
 						{
-							_gear = selectRandom _backpacks;
-							_unit addBackpack _gear;
-							if (_aiLaunchers isEqualTo 1) then
+							if (_launcherChance isEqualTo 100 OR (ceil random (100 / _launcherChance) isEqualTo (ceil random (100 / _launcherChance)))) then
 							{
-								if ((floor random 4) isEqualTo 0) then
+								_gear = selectRandom _backpacks;
+								_unit addBackpack _gear;
+								private ["_ammo"];
+								_gear = selectRandom _launchers;
+								_unit addWeapon _gear;
+								_ammo = getArray (configFile >> "cfgWeapons" >> _gear >> "magazines");
+								if (count _ammo > 2) then
 								{
-									private ["_ammo"];
-									_gear = selectRandom _launchers;
-									_unit addWeapon _gear;
-									_ammo = getArray (configFile >> "cfgWeapons" >> _gear >> "magazines");
-									if (count _ammo > 2) then
-									{
-										_ammo resize 2;
-									};
-									for "_i" from 0 to (2 + (round random 1)) do
-									{
-										_unit addMagazine (selectRandom _ammo);
-									};
+									_ammo resize 2;
+								};
+								for "_i" from 0 to (2 + (round random 1)) do
+								{
+									_unit addMagazine (selectRandom _ammo);
 								};
 							};
 						};
@@ -118,7 +120,7 @@ if (_this isEqualType []) then
 				};
 				case 1:
 				{
-					private ["_policeGear","_headGear","_vests"];
+					private ["_policeGear","_headGear","_vests","_uniforms","_rifles","_pistols","_backpacks"];
 					_policeGear = [["policeConfig"],["headGear","vests","uniforms","rifles","pistols","backpacks"]] call VEMFr_fnc_getSetting;
 					_headGear = _policeGear select 0;
 					_vests = _policeGear select 1;
@@ -127,6 +129,7 @@ if (_this isEqualType []) then
 					_pistols = _policeGear select 4;
 					_backpacks = _policeGear select 5;
 					{
+						private ["_unit","_hat","_vest","_uniform","_rifle","_pistol","_backpack","_givenAmmo","_giveAttachments"];
 						_unit = _x;
 						// Strip it
 						removeAllWeapons _unit;
@@ -172,11 +175,12 @@ if (_this isEqualType []) then
 				};
 				case 2:
 				{
-					private ["_policeGear","_headGear","_vests"];
+					private ["_policeGear","_rifles","_pistols"];
 					_policeGear = [["policeConfig"],["rifles","pistols"]] call VEMFr_fnc_getSetting;
 					_rifles = _policeGear select 0;
 					_pistols = _policeGear select 1;
 					{
+						private ["_unit","_rifle","_pistol","_givenAmmo","_giveAttachments"];
 						_unit = _x;
 						// Strip it
 						removeAllWeapons _unit;
@@ -217,7 +221,7 @@ if (_this isEqualType []) then
 				};
 				default
 				{
-					["fn_loadInv", 0, format["Incorrect _aiMode of %1 given!", _aiMode]] spawn VEMFr_fnc_log;
+					["fn_loadInv", 0, format["Incorrect _aiMode (%1) given!", _aiMode]] spawn VEMFr_fnc_log;
 				};
 			};
 		};

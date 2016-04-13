@@ -12,7 +12,7 @@
     BOOL - true if OK
 */
 
-private["_signed","_abort"];
+private ["_ok","_group"];
 _ok = false;
 _group = param [0, grpNull, [grpNull]];
 if not isNull _group then
@@ -20,4 +20,5 @@ if not isNull _group then
     (uiNamespace getVariable "vemfGroups") pushBack _group;
     _ok = true
 };
+
 _ok

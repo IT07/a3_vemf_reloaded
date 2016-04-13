@@ -14,10 +14,11 @@
     nothing (use spawn, not call)
 */
 
-private ["_param","_prefix","_mode","_logThis","_logModesAllowed","_loggingEnabled"];
+private ["_loggingEnabled"];
 _loggingEnabled = "debugMode" call VEMFr_fnc_getSetting;
 if not(_loggingEnabled isEqualTo 0) then
 {
+   private ["_prefix","_type","_line","_doLog"];
    _prefix = param [0, "", [""]];
    _type = param [1, 3, [0]];
    _line = param [2, "", [""]];

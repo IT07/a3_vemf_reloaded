@@ -1,18 +1,15 @@
 /*
-	DynamicLocationInvasion by Vampire, rewritten by IT07
+	DynamicLocationInvasion by IT07
 */
 
-if isNil"VEMFrInvasionCount" then
-{
-	VEMFrInvasionCount = 0;
-};
-
-if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call VEMFr_fnc_getSetting) select 0)) then
+if isNil"VEMFrInvasionCount" then { VEMFrInvasionCount = 0; };
+_missionName = param [0, "", [""]];
+if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getSetting) select 0)) then
 {
 	VEMFrInvasionCount = VEMFrInvasionCount + 1;
 	private ["_settings","_grpCount","_groupUnits","_skipDistance","_loc","_hasPlayers","_spawned","_grpArr","_unitArr","_done","_boxes","_box","_chute","_colors","_lightType","_light","_smoke"];
 	// Define _settings
-	_settings = [["DynamicLocationInvasion"],["groupCount","groupUnits","maxDistance","maxDistancePrefered","skipDistance","marker","parachuteCrate","markCrateVisual","markCrateOnMap","announce","streetLights","streetLightsRestore","streetLightsRange","allowCrateLift"]] call VEMFr_fnc_getSetting;
+	_settings = [[_missionName],["groupCount","groupUnits","maxDistance","maxDistancePrefered","skipDistance","marker","parachuteCrate","markCrateVisual","markCrateOnMap","announce","streetLights","streetLightsRestore","streetLightsRange","allowCrateLift"]] call VEMFr_fnc_getSetting;
 	_grpCount = _settings select 0;
 	_groupUnits = _settings select 1;
 	_range = _settings select 2;
@@ -29,18 +26,18 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 	_streetLightsRange = _settings select 12;
 	_allowCrateLift = _settings select 13;
 
-	_loc = ["loc", false, position (selectRandom allPlayers), _skipDistance, _maxPref, _skipDistance, "DynamicLocationInvasion"] call VEMFr_fnc_findPos;
+	_loc = ["loc", false, position (selectRandom allPlayers), _skipDistance, _maxPref, _skipDistance, _missionName] call VEMFr_fnc_findPos;
 	if (_loc isEqualTypeArray ["",[]]) then
 	{
 		_locName = _loc select 0;
 		_locPos = _loc select 1;
 		if (_locName isEqualTo "") then { _locName = "Area"; };
-		["DynamicLocationInvasion", 1, format["Invading %1...", _locName]] spawn VEMFr_fnc_log;
+		[_missionName, 1, format["Invading %1...", _locName]] spawn VEMFr_fnc_log;
 		VEMFrInvasionCount = VEMFrInvasionCount + 1;
 		// Send message to all players
 		private ["_mode"];
 		_mode = "aiMode" call VEMFr_fnc_getSetting;
-		_randomModes = ([["DynamicLocationInvasion"],["randomModes"]] call VEMFr_fnc_getSetting) select 0;
+		_randomModes = ([[_missionName],["randomModes"]] call VEMFr_fnc_getSetting) select 0;
 		if (_randomModes isEqualTo 1) then
 		{
 			_mode = selectRandom [0,1,2];
@@ -100,9 +97,8 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 		// Usage: POSITION, Radius
 		_playerNear = [_locPos, 800] call VEMFr_fnc_waitForPlayers;
 		if _playerNear then
-		{
-			// Player is Near, so Spawn the Units
-			_spawned = [_locPos, ((_grpCount select 0) + round random ((_grpCount select 1) - (_grpCount select 0))), ((_groupUnits select 0) + round random ((_groupUnits select 1) - (_groupUnits select 0))), _mode, "DynamicLocationInvasion"] call VEMFr_fnc_spawnInvasionAI;
+		{ // Player is Near, so Spawn the Units
+			_spawned = [_locPos, ((_grpCount select 0) + round random ((_grpCount select 1) - (_grpCount select 0))), ((_groupUnits select 0) + round random ((_groupUnits select 1) - (_groupUnits select 0))), _mode, _missionName, 200] call VEMFr_fnc_spawnInvasionAI;
 			if (_spawned isEqualType []) then
 			{
 				if (_spawned isEqualTypeArray [[],[]]) then
@@ -119,50 +115,80 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 					_cal50s = _spawned select 1;
 
 					private ["_heliUnits"];
-					_heliPatrolSettings = ([["DynamicLocationInvasion"],["heliPatrol"]] call VEMFr_fnc_getSetting) select 0;
+					_heliPatrolSettings = ([[_missionName],["heliPatrol"]] call VEMFr_fnc_getSetting) select 0;
 					if (_heliPatrolSettings select 0 isEqualTo 1) then
 					{ // If heliPatrol setting is enabled
-						["DynamicLocationInvasion", 1, format["Adding a heli patrol to the invasion of %1 at %2", _locName, mapGridPosition _locPos]] spawn VEMFr_fnc_log;
-						_heli = createVehicle [selectRandom (_heliPatrolSettings select 1), _locPos, [], 50, "FLY"];
-						_heli engineOn true; // Just to make sure
-						_spawnHeliGroup = [_locPos, 1, (((count allTurrets _heli) + (_heli emptyPositions "cargo") + (_heli emptyPositions "commander")) + 1), _mode, "DynamicLocationInvasion"] call VEMFr_fnc_spawnVEMFrAI;
-						if (_spawnHeliGroup isEqualType []) then
+						[_missionName, 1, format["Adding a heli patrol to the invasion of %1 at %2", _locName, mapGridPosition _locPos]] spawn VEMFr_fnc_log;
+						_classToSpawn = selectRandom (_heliPatrolSettings select 1);
+						if (_classToSpawn isKindOf "Air") then
 						{
-							_heliGroup = _spawnHeliGroup select 0;
-							_heliUnits = units _heliGroup;
+							_heli = createVehicle [_classToSpawn, _locPos, [], 50, "FLY"];
+							_heli engineOn true; // Just to make sure
+							_turrets = allTurrets [_heli, false];
+							_spawnHeliGroup = [_locPos, 1, ((count _turrets) + (_heli emptyPositions "commander") + 1), _mode, _missionName] call VEMFr_fnc_spawnVEMFrAI;
+							if (_spawnHeliGroup isEqualType []) then
 							{
-								_x moveInAny _heli;
-								removeBackpack _x;
-								_x addBackpack "B_Parachute";
-								_units pushBack _x;
-							} forEach _heliUnits;
+								_heliGroup = _spawnHeliGroup select 0;
+								_heliUnits = units _heliGroup;
+								{
+									if (_heli emptyPositions "driver" isEqualTo 1) then
+									{
+										_x moveInDriver _heli;
+									} else
+									{
+										private ["_path"];
+										{
+											_unitInTurret = _heli turretUnit _x;
+											if (isNull _unitInTurret) then
+											{
+												_path = _x;
+											};
+										} forEach _turrets;
+										if not isNil"_path" then
+										{
+											_x moveInTurret [_heli, _path];
+										} else
+										{
+											if (_heli emptyPositions "commander" > 0) then
+											{
+												_x moveInCommander _heli;
+											};
+										};
+									};
+									removeBackpack _x;
+									_x addBackpack "B_Parachute";
+									_units pushBack _x;
+								} forEach _heliUnits;
 
-							_loiterWaypoint = _heliGroup addWaypoint [_locPos, 50, 1];
-							_loiterWaypoint setWaypointType "LOITER";
-							_loiterWaypoint setWaypointSpeed "LIMITED";
-							_loiterWaypoint setWaypointCombatMode "RED";
-							_loiterWaypoint setWaypointBehaviour "AWARE";
-							_loiterWaypoint setWaypointLoiterType "CIRCLE_L";
-							_loiterWaypoint setWaypointLoiterRadius 25;
-							_heliGroup setCurrentWaypoint _loiterWaypoint;
+								_loiterWaypoint = _heliGroup addWaypoint [_locPos, 50, 1];
+								_loiterWaypoint setWaypointType "LOITER";
+								_loiterWaypoint setWaypointSpeed "LIMITED";
+								_loiterWaypoint setWaypointCombatMode "RED";
+								_loiterWaypoint setWaypointBehaviour "AWARE";
+								_loiterWaypoint setWaypointLoiterType "CIRCLE_L";
+								_loiterWaypoint setWaypointLoiterRadius 25;
+								_heliGroup setCurrentWaypoint _loiterWaypoint;
 
-							[_heliGroup] spawn VEMFr_fnc_signAI;
+								[_heliGroup] spawn VEMFr_fnc_signAI;
+							};
+						} else { // If the select classname is not an air vehicle
+							[_missionName, 0, format["%1 IS NOT AN AIR VEHICLE", _classToSpawn]] spawn VEMFr_fnc_log;
 						};
 					};
 
 					// Place mines if enabled
 					private ["_minesPlaced","_mines"];
-					_mines = [["DynamicLocationInvasion"],["mines"]] call VEMFr_fnc_getSetting param [0, 0, [0]];
+					_mines = [[_missionName],["mines"]] call VEMFr_fnc_getSetting param [0, 0, [0]];
 					if (_mines > 0) then
 					{
-						_minesPlaced = [_locPos, 5, 100] call VEMFr_fnc_placeMines param [0, [], [[]]];
+						_minesPlaced = [_locPos, 5, 100, _missionName] call VEMFr_fnc_placeMines param [0, [], [[]]];
 						if (count _minesPlaced > 0) then
 						{
-							["DynamicLocationInvasion", 1, format["Successfully placed mines at %1", _locName]] spawn VEMFr_fnc_log;
+							[_missionName, 1, format["Successfully placed mines at %1", _locName]] spawn VEMFr_fnc_log;
 						};
 						if (count _minesPlaced isEqualto 0) then
 						{
-							["DynamicLocationInvasion", 0, format["Failed to place mines at %1", _locName]] spawn VEMFr_fnc_log;
+							[_missionName, 0, format["Failed to place mines at %1", _locName]] spawn VEMFr_fnc_log;
 							_minesPlaced = nil;
 						};
 					};
@@ -197,7 +223,7 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 						if not isNil"_cal50s" then
 						{
 							private["_cal50sDelete"];
-							_cal50sDelete = ([["DynamicLocationInvasion"],["cal50sDelete"]] call VEMFr_fnc_getSetting) select 0;
+							_cal50sDelete = ([[_missionName],["cal50sDelete"]] call VEMFr_fnc_getSetting) select 0;
 							if (_cal50sDelete > 0) then
 							{
 								{
@@ -213,9 +239,9 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 							};
 						};
 						// Choose a box
-						_boxes = [["DynamicLocationInvasion"],["crateTypes"]] call VEMFr_fnc_getSetting;
-						_box = (_boxes select 0) call BIS_fnc_selectRandom;
-						_pos = [_locPos, 0, 100, 0, 0, 300, 0] call bis_fnc_findSafePos;
+						_boxes = [[_missionName],["crateTypes"]] call VEMFr_fnc_getSetting;
+						_box = selectRandom (_boxes select 0);
+						_pos = [_locPos, 0, 200, 0, 0, 300, 0] call bis_fnc_findSafePos;
 						private ["_crate"];
 						if (_useChute isEqualTo 1) then
 						{
@@ -233,9 +259,9 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 								{
 									_crate enableRopeAttach false;
 								};
-								["DynamicLocationInvasion", 1, format ["Crate parachuted at: %1 / Grid: %2", (getPosATL _crate), mapGridPosition (getPosATL _crate)]] spawn VEMFr_fnc_log;
+								[_missionName, 1, format ["Crate parachuted at: %1 / Grid: %2", (getPosATL _crate), mapGridPosition (getPosATL _crate)]] spawn VEMFr_fnc_log;
 								_lootLoaded = [_crate] call VEMFr_fnc_loadLoot;
-								if _lootLoaded then { ["DynamicLocationInvasion", 1, "Loot loaded successfully into parachuting crate"] spawn VEMFr_fnc_log };
+								if _lootLoaded then { [_missionName, 1, "Loot loaded successfully into parachuting crate"] spawn VEMFr_fnc_log };
 							};
 						};
 						if (_useChute isEqualTo 0) then
@@ -247,7 +273,7 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 								_crate enableRopeAttach false;
 							};
 							_lootLoaded = [_crate] call VEMFr_fnc_loadLoot;
-							if _lootLoaded then { ["DynamicLocationInvasion", 1, "Loot loaded successfully into crate"] spawn VEMFr_fnc_log };
+							if _lootLoaded then { [_missionName, 1, format["Loot loaded successfully into crate at %1", _locName]] spawn VEMFr_fnc_log };
 						};
 						if (_markCrateVisual isEqualTo 1) then
 						{
@@ -255,7 +281,7 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 							// If night, attach a chemlight
 							if (dayTime < 5 OR dayTime > 19) then
 							{
-								_colors = [["DynamicLocationInvasion"],["flairTypes"]] call VEMFr_fnc_getSetting param [0, [], [[]]];
+								_colors = [[_missionName],["flairTypes"]] call VEMFr_fnc_getSetting param [0, [], [[]]];
 								if (count _colors > 0) then
 								{
 									_lightType = selectRandom _colors;
@@ -264,7 +290,7 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 								};
 							};
 							// Attach smoke
-							_colors = [["DynamicLocationInvasion"],["smokeTypes"]] call VEMFr_fnc_getSetting param [0, [], [[]]];
+							_colors = [[_missionName],["smokeTypes"]] call VEMFr_fnc_getSetting param [0, [], [[]]];
 							if (count _colors > 0) then
 							{
 								_rndmColor = selectRandom _colors;
@@ -291,7 +317,7 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 							{
 								if not ([getPos _crate, 2] call VEMFr_fnc_checkPlayerPresence) then
 								{
-									_addMarker = [["DynamicLocationInvasion"],["markCrateOnMap"]] call VEMFr_fnc_getSetting param [0, 1, [0]];
+									_addMarker = [[_missionName],["markCrateOnMap"]] call VEMFr_fnc_getSetting param [0, 1, [0]];
 									if (_addMarker isEqualTo 1) then
 									{
 										private ["_crateMarker"];
@@ -314,14 +340,14 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 
 						if isNil "_crate" then
 						{
-							["DynamicLocationInvasion", 0, "ERROR! _crate not found"] spawn VEMFr_fnc_log;
+							[_missionName, 0, "ERROR! _crate not found"] spawn VEMFr_fnc_log;
 						};
 
 						// Explode or remove the mines
 						if not isNil"_minesPlaced" then
 						{
 							private ["_cleanMines"];
-							_cleanMines = [["DynamicLocationInvasion"],["minesCleanup"]] call VEMFr_fnc_getSetting param [0, 1, [0]];
+							_cleanMines = [[_missionName],["minesCleanup"]] call VEMFr_fnc_getSetting param [0, 1, [0]];
 							if (_cleanMines isEqualTo 2) then
 							{
 								{
@@ -331,7 +357,7 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 										uiSleep (2 + round random 2);
 									};
 								} forEach _minesPlaced;
-								["DynamicLocationInvasion", 1, format["Successfully exploded all %1 mines at %2", count _minesPlaced, _locName]] spawn VEMFr_fnc_log;
+								[_missionName, 1, format["Successfully exploded all %1 mines at %2", count _minesPlaced, _locName]] spawn VEMFr_fnc_log;
 								_minesPlaced = nil;
 							};
 							if (_cleanMines isEqualTo 1) then
@@ -342,7 +368,7 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 										deleteVehicle _x;
 									};
 								} forEach _minesPlaced;
-								["DynamicLocationInvasion", 1, format["Successfully deleted all %1 mines at %2", count _minesPlaced, _locName]] spawn VEMFr_fnc_log;
+								[_missionName, 1, format["Successfully deleted all %1 mines at %2", count _minesPlaced, _locName]] spawn VEMFr_fnc_log;
 								_minesPlaced = nil;
 							};
 						};
@@ -362,17 +388,15 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 						};
 					};
 				};
-			};
-			if not(_spawned isEqualType []) exitWith
+			} else
 			{
 				VEMFrInvasionCount = VEMFrInvasionCount - 1;
 				VEMFrMissionCount = VEMFrMissionCount - 1;
 				[[format["Failed to spawn AI in %1 @ %2", _locName, mapGridPosition (_locPos)], "ERROR!"], ""] spawn VEMFr_fnc_broadCast;
 			};
-		};
-		if not _playerNear then
-		{
-			["DynamicLocationInvasion", 1, format["Invasion of %1 timed out.", _locName]] spawn VEMFr_fnc_log;
+		} else
+		{ // If done waiting, and no players were detected
+			[_missionName, 1, format["Invasion of %1 @ %2 timed out.", _locName, mapGridPosition _locPos]] spawn VEMFr_fnc_log;
 			if not isNil"_marker" then
 			{
 				deleteMarker _marker
@@ -386,8 +410,7 @@ if (VEMFrInvasionCount < (([["DynamicLocationInvasion"],["maxInvasions"]] call V
 			VEMFrInvasionCount = VEMFrInvasionCount - 1;
 			VEMFrMissionCount = VEMFrMissionCount - 1;
 		};
-	};
-	if not(_loc isEqualType []) then
+	} else
 	{
 		VEMFrInvasionCount = VEMFrInvasionCount - 1;
 		VEMFrMissionCount = VEMFrMissionCount - 1;

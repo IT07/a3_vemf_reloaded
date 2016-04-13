@@ -7,16 +7,8 @@
 	Returns:
 	BOOL - true if everything went ok
 */
-private
-[
-	"_crate","_settings","_loot","_amount","_quant","_prim","_sec","_mags","_att","_items","_vests","_packs","_primaries","_secondaries",
-	"_magazines","_attachments","_items","_vests","_backpacks","_headGear","_blackList","_maxPrim","_minPrim","_maxSec","_minSec",
-	"_maxMagSlots","_minMagSlots","_maxAttSlots","_minAttSlots","_maxItemSlots","_minItemSlots","_maxVestSlots","_minVestSlots",
-	"_maxHeadGearSlots","_minHeadGearSlots","_maxBagSlots","_minBagSlots","_ok"
-];
-
+private ["_ok","_crate"];
 _ok = false;
-// Define _vars
 _crate = param [0, objNull, [objNull]];
 if not isNull _crate then
 {
@@ -24,6 +16,7 @@ if not isNull _crate then
 	clearMagazineCargoGlobal _crate;
 	clearBackpackCargoGlobal  _crate;
 	clearItemCargoGlobal _crate;
+	private ["_settings"];
 	_settings =
 	[
 		["crateLoot"],
@@ -33,6 +26,10 @@ if not isNull _crate then
 			"itemLoot","vestLoot","backpackLoot","headGearLoot","blackListLoot"
 		]
 	] call VEMFr_fnc_getSetting;
+	private [
+		"_maxPrim","_minPrim","_maxSec","_minSec","_maxMagSlots","_minMagSlots","_maxAttSlots","_minAttSlots","_maxItemSlots","_minItemSlots","_maxVestSlots","_minVestSlots",
+		"_maxHeadGearSlots","_minHeadGearSlots","_maxBagSlots","_minBagSlots","_primaries","_secondaries","_magazines","_attachments","_items","_vests","_backpacks","_headGear","_blackList"
+	];
 	_maxPrim = _settings select 0;
 	_minPrim = _settings select 1;
 	_maxSec = _settings select 2;
@@ -62,6 +59,7 @@ if not isNull _crate then
 	// Add primary weapons
 	for "_j" from 0 to (_maxPrim - _minPrim + floor random _minPrim) do
 	{
+		private ["_prim"];
 		_prim = _primaries call BIS_fnc_selectRandom;
 		if not((_prim select 0) in _blackList) then
 		{
@@ -72,6 +70,7 @@ if not isNull _crate then
 	// Secondary weapons
 	for "_j" from 0 to (_maxSec - _minSec + floor random _minSec) do
 	{
+		private ["_sec"];
 		_sec = _secondaries call BIS_fnc_selectRandom;
 		if not((_sec select 0) in _blackList) then
 		{
@@ -82,6 +81,7 @@ if not isNull _crate then
 	// Magazines
 	for "_j" from 0 to (_maxMagSlots - _minMagSlots + floor random _minMagSlots) do
 	{
+		private ["_mag"];
 		_mag = _magazines call BIS_fnc_selectRandom;
 		if not((_mag select 0) in _blackList) then
 		{
@@ -92,6 +92,7 @@ if not isNull _crate then
 	// Weapon attachments
 	for "_j" from 0 to (_maxAttSlots - _minAttSlots + floor random _minAttSlots) do
 	{
+		private ["_att"];
 		_att = _attachments call BIS_fnc_selectRandom;
 		if not((_att select 0) in _blackList) then
 		{
@@ -102,6 +103,7 @@ if not isNull _crate then
 	// Items
 	for "_j" from 0 to (_maxItemSlots - _minItemSlots + floor random _minItemSlots) do
 	{
+		private ["_item"];
 		_item = _items call BIS_fnc_selectRandom;
 		if not((_item select 0) in _blacklist) then
 		{
@@ -112,6 +114,7 @@ if not isNull _crate then
 	// Vests
 	for "_j" from 0 to (_maxVestSlots - _minVestSlots + floor random _minVestSlots) do
 	{
+		private ["_vest"];
 		_vest = _vests call BIS_fnc_selectRandom;
 		if not((_vest select 0) in _blackList) then
 		{
@@ -122,6 +125,7 @@ if not isNull _crate then
 	// Helmets / caps / berets / bandanas
 	for "_j" from 0 to (_maxHeadGearSlots - _minHeadGearSlots + floor random _minHeadGearSlots) do
 	{
+		private ["_headGearItem"];
 		_headGearItem = _headGear call BIS_fnc_selectRandom;
 		if not((_headGearItem select 0) in _blackList) then
 		{
@@ -132,6 +136,7 @@ if not isNull _crate then
 	// Backpacks
 	for "_j" from 0 to (_maxBagSlots - _minBagSlots + floor random _minBagSlots) do
 	{
+		private ["_pack"];
 		_pack = _backpacks call BIS_fnc_selectRandom;
 		if not((_pack select 0) in _blackList) then
 		{

@@ -9,12 +9,14 @@
    Returns: SIDE - unit's side
 */
 
-private ["_return","_cfg","_faction"];
+private ["_return"];
 if (_this isEqualType "") then
 {
+   private ["_cfg"];
    _cfg = configFile >> "CfgVehicles" >> _this >> "faction";
    if not isNull _cfg then
    {
+      private ["_faction"];
       _faction = getText _cfg;
       switch _faction do
       {

@@ -12,14 +12,16 @@
 	BOOL - true if there is a player present
 */
 
-private ["_playerNear","_pos","_rad","_time","_timeOutTime","_pp"];
+private ["_playerNear","_pos"];
 _playerNear = false;
 _pos = param [0, [], [[]]];
 if (count _pos isEqualTo 3) then
 {
+	private ["_rad"];
 	_rad = param [1, -1, [0]];
 	if (_rad > -1) then
 	{
+		private ["_time","_timeOutTime","_pp"];
 		_time = round time;
 		// Define _settings
 		_timeOutTime = ("timeOutTime" call VEMFr_fnc_getSetting)*60;
@@ -28,8 +30,7 @@ if (count _pos isEqualTo 3) then
 		if _pp then
 		{
 			_playerNear = true;
-		};
-		if not _pp then
+		} else
 		{
 			waitUntil { uiSleep 2; (([_pos, _rad] call VEMFr_fnc_checkPlayerPresence) OR (round time - _time > _timeOutTime)) };
 			if ([_pos, _rad] call VEMFr_fnc_checkPlayerPresence) then

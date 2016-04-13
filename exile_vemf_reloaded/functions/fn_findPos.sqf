@@ -14,12 +14,11 @@
 	_this select 6: STRING (optional) - Exact config name of mission override settings to load
 
 	Returns:
-	if mode = loc then: ARRAY - format [name of town/location, town position]
+	if mode = loc then: ARRAY - format [name of town/location, town center position]
 	if mode = pos then POSITION
 */
 
-private ["_settings","_locPos","_loc","_locName","_ret","_continue","_settings","_blackList","_usedLocs","_checkRange","_tooCloseRange","_maxPrefered","_skipDistance","_nonPopulated","_mode","_pos","_hasPlayers","_blackPos","_checkBlackPos"];
-
+private ["_ret","_settings","_nonPopulated","_blackPos","_missionDistance","_range","_missionConfigName"];
 _ret = false;
 // Define settings
 _settings = [["nonPopulated","noMissionPos","missionDistance"]] call VEMFr_fnc_getSetting;
@@ -31,6 +30,7 @@ _range = worldSize;
 _missionConfigName = param [6, "", [""]];
 if not(_missionConfigName isEqualTo "") then
 {
+	private ["_nonPopulatedOverride"];
 	_nonPopulatedOverride = ([[_missionConfigName],["nonPopulated"]] call VEMFr_fnc_getSetting) select 0;
 	if not isNil"_nonPopulatedOverride" then
 	{
@@ -40,34 +40,44 @@ if not(_missionConfigName isEqualTo "") then
 		};
 	};
 };
+
+private ["_checkBlackPos"];
 _checkBlackPos = false;
 if (count _blackPos > 0) then
 {
 	_checkBlackPos = true;
 };
+
+private ["_mode"];
 _mode = param [0, "", [""]];
 if not(_mode isEqualTo "") then
 {
+	private ["_onRoad","_roadRange","_cntr"];
 	_onRoad = param [1, false, [false]];
 	_roadRange = 5000;
 	_cntr = param [2, [], [[]]];
 	if (_cntr isEqualTypeArray [0,0,0]) then
 	{
+		private ["_tooCloseRange"];
 		_tooCloseRange = param [3, -1, [0]];
 		if (_tooCloseRange > -1) then
 		{
+			private ["_maxPrefered"];
 			_maxPrefered = param [4, -1, [0]];
 			if (_maxPrefered > -1) then
 			{
+				private ["_skipDistance"];
 				_skipDistance = param [5, -1, [0]];
 				if (_skipDistance > -1) then
 				{
 					if (_mode isEqualTo "loc") then
 					{
 						// Get a list of locations close to _cntr (position of player)
+						private ["_locs"];
 						_locs = nearestLocations [_cntr, ["CityCenter","Strategic","StrongpointArea","NameVillage","NameCity","NameCityCapital",if(_nonPopulated isEqualTo 1)then{"nameLocal","Area","BorderCrossing","Hill","fakeTown","Name","RockArea","ViewPoint"}], _range];
 						if (count _locs > 0) then
 						{
+							private ["_usedLocs","_remLocs","_blackListMapClasses","_listedMaps"];
 							_usedLocs = uiNamespace getVariable "VEMFrUsedLocs";
 							_remLocs = [];
 							_blackListMapClasses = "true" configClasses (configFile >> "CfgVemfReloaded" >> "locationBlackLists");
@@ -80,6 +90,7 @@ if not(_mode isEqualTo "") then
 							if not(worldName in _listedMaps) then { _blackList = ([["locationBlackLists","Other"],["locations"]] call VEMFr_fnc_getSetting) select 0 };
 
 							{ // Check _locs for invalid locations (too close, hasPlayers or inBlacklist)
+								private ["_hasPlayers"];
 								_hasPlayers = [locationPosition _x, _skipDistance] call VEMFr_fnc_checkPlayerPresence;
 								if _hasPlayers then
 								{
@@ -95,9 +106,11 @@ if not(_mode isEqualTo "") then
 										{
 											if (count _x isEqualTo 2) then
 											{
+												private ["_pos"];
 												_pos = _x param [0, [0,0,0], [[]]];
 												if not(_pos isEqualTo [0,0,0]) then
 												{
+													private ["_range"];
 													_range = _x param [1, 600, [0]];
 													if ((_pos distance _locPos) < _range) then
 													{
@@ -144,14 +157,17 @@ if not(_mode isEqualTo "") then
 							} forEach _locs;
 
 							{ // Remove all invalid locations from _locs
+								private ["_index"];
 								_index = _locs find _x;
 								_locs deleteAt _index;
 							} forEach _remLocs;
 
+							private ["_far","_pref"];
 							// Check what kind of distances we have
 							_far = []; // Further than _maxPrefered
 							_pref = []; // Closer then _maxPrefered
 							{
+								private ["_dist"];
 								_dist = _cntr distance (locationPosition _x);
 								if (_dist > _maxPrefered) then
 								{
@@ -164,6 +180,7 @@ if not(_mode isEqualTo "") then
 							} forEach _locs;
 
 							// Check if there are any prefered locations. If yes, randomly select one
+							private ["_loc"];
 							if (count _pref > 0) then
 							{
 								_loc = selectRandom _pref;
@@ -189,6 +206,7 @@ if not(_mode isEqualTo "") then
 					};
 					if (_mode isEqualTo "pos") then
 					{
+						private ["_valid"];
 						_valid = false;
 						for "_p" from 1 to 10 do
 						{
@@ -196,9 +214,11 @@ if not(_mode isEqualTo "") then
 							{
 								if not _ret then
 								{
+									private ["_pos"];
 									_pos = [_cntr, _tooCloseRange, -1, 2, 0, 50, 0] call BIS_fnc_findSafePos;
 									if _onRoad then
 									{
+										private ["_roads"];
 										_roads = _pos nearRoads _roadRange;
 										if (count _roads > 0) then
 										{
@@ -214,8 +234,7 @@ if not(_mode isEqualTo "") then
 											_pos = position (_closest select 0);
 										};
 									};
-									_hasPlayers = [_pos, _skipDistance] call VEMFr_fnc_checkPlayerPresence;
-									if not(_hasPlayers) then
+									if not([_pos, _skipDistance] call VEMFr_fnc_checkPlayerPresence) then
 									{
 										_ret = _pos;
 									};

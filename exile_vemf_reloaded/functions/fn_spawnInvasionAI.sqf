@@ -10,31 +10,35 @@
 	_this select 2: SCALAR - how many units to put in each group
 	_this select 3: SCALAR - AI mode
 	_this select 4: STRING - exact config name of mission
+	_this select 5: SCALAR (optional) - maximum spawn distance from center
 
 	Returns:
 	ARRAY format [[groups],[50cals]]
 */
 
-private // Make sure that the vars in this function do not interfere with vars in the calling script
-[
-	"_pos","_grpCount","_unitsPerGrp","_sldrClass","_groups","_settings","_hc","_skills","_newPos","_return","_waypoints","_wp","_cyc","_units","_missionName",
-	"_accuracy","_aimShake","_aimSpeed","_stamina","_spotDist","_spotTime","_courage","_reloadSpd","_commanding","_general","_loadInv","_noHouses","_cal50sVehs","_mode"
-];
-
+private ["_spawned","_pos"];
 _spawned = [[],[]];
 _pos = param [0, [], [[]]];
 if (count _pos isEqualTo 3) then
 {
+	private ["_grpCount"];
 	_grpCount = param [1, 1, [0]];
 	if (_grpCount > 0) then
 	{
+		private ["_unitsPerGrp"];
 		_unitsPerGrp = param [2, 1, [0]];
 		if (_unitsPerGrp > 0) then
 		{
+			private ["_mode","_missionName"];
 			_mode = param [3, -1, [0]];
 			_missionName = param [4, "", [""]];
 			if (_missionName in ("missionList" call VEMFr_fnc_getSetting)) then
 			{
+				private [
+					"_maxRange","_sldrClass","_groups","_hc","_aiDifficulty","_skills","_accuracy","_aimShake","_aimSpeed","_stamina","_spotDist","_spotTime",
+					"_courage","_reloadSpd","_commanding","_general","_houses","_notTheseHouses","_goodHouses","_noHouses","_cal50s","_units"
+				];
+				_maxRange = param [5, 175, [0]];
 				_sldrClass = "unitClass" call VEMFr_fnc_getSetting;
 				_groups = [];
 				_hc = "headLessClientSupport" call VEMFr_fnc_getSetting;
@@ -51,7 +55,7 @@ if (count _pos isEqualTo 3) then
 				_commanding = _skills select 8;
 				_general = _skills select 9;
 
-				_houses = nearestTerrainObjects [_pos, ["House"], 200]; // Find some houses to spawn in
+				_houses = nearestTerrainObjects [_pos, ["House"], _maxRange]; // Find some houses to spawn in
 				_notTheseHouses = "housesBlackList" call VEMFr_fnc_getSetting;
 				_goodHouses = [];
 				{ // Filter the houses that are too small for one group
@@ -85,15 +89,13 @@ if (count _pos isEqualTo 3) then
 							_noHouses = true
 						};
 					};
-					private ["_unitSide","_grp","_unit","_groupSide"];
+					private ["_groupSide"];
 					_groupSide = ("unitClass" call VEMFr_fnc_getSetting) call VEMFr_fnc_checkSide;
 					if not isNil"_groupSide" then
 					{
+						private ["_grp"];
 						_grp = createGroup _groupSide;
 						(_spawned select 0) pushBack _grp;
-					};
-					if not isNil"_grp" then
-					{
 						if not _noHouses then
 						{
 							_grp enableAttack false;
@@ -110,11 +112,15 @@ if (count _pos isEqualTo 3) then
 							_housePositions = [_house] call BIS_fnc_buildingPositions;
 						};
 
+						private ["_placed50"];
 						_placed50 = false;
 						for "_u" from 1 to _unitsPerGrp do
 						{
 							private ["_spawnPos","_hmg"];
-							if not _noHouses then
+							if _noHouses then
+							{
+								_spawnPos = [_pos,20,_maxRange,1,0,200,0] call BIS_fnc_findSafePos; // Find Nearby Position
+							} else
 							{
 								_spawnPos = selectRandom _housePositions;
 								if not _placed50 then
@@ -128,11 +134,8 @@ if (count _pos isEqualTo 3) then
 									};
 								};
 							};
-							if _noHouses then
-							{
-								_spawnPos = [_pos,20,250,1,0,200,0] call BIS_fnc_findSafePos; // Find Nearby Position
-							};
 
+							private ["_unit"];
 							_unit = _grp createUnit [_sldrClass, _spawnPos, [], 0, "CAN_COLLIDE"]; // Create Unit There
 							if not _noHouses then
 							{
@@ -150,6 +153,7 @@ if (count _pos isEqualTo 3) then
 									};
 								};
 
+								private ["_houseIndex"];
 								_houseIndex = _housePositions find _spawnPos;
 								_housePositions deleteAt _houseIndex;
 							};
@@ -167,22 +171,26 @@ if (count _pos isEqualTo 3) then
 							_unit setSkill ["commanding", _commanding];
 							_unit setSkill ["general", _general];
 							_unit setRank "Private"; // Set rank
+							if (_u isEqualTo _unitsPerGrp) then
+							{
+								_grp selectLeader _unit; // Leader Assignment
+							};
 						};
-						_grp selectLeader _unit; // Leader Assignment
+						private ["_invLoaded"];
 						_invLoaded = [units _grp, _missionName, _mode] call VEMFr_fnc_loadInv; // Load the AI's inventory
+						if not _invLoaded then
+						{
+							["fn_spawnInvasionAI", 0, "failed to load AI's inventory..."] spawn VEMFr_fnc_log;
+						};
 						_groups pushBack _grp; // Push it into the _groups array
 					};
-				};
-
-				if isNil"_invLoaded" then
-				{
-					["fn_spawnAI", 0, "failed to load AI's inventory..."] spawn VEMFr_fnc_log;
 				};
 
 				if (count _groups isEqualTo _grpCount) then
 				{
 					if _noHouses then
 					{
+						private ["_waypoints"];
 						_waypoints =
 						[
 							[(_pos select 0), (_pos select 1)+50, 0],
@@ -193,10 +201,12 @@ if (count _pos isEqualTo 3) then
 						{ // Make them Patrol
 							for "_z" from 1 to (count _waypoints) do
 							{
+								private ["_wp"];
 								_wp = _x addWaypoint [(_waypoints select (_z-1)), 10];
 								_wp setWaypointType "SAD";
 								_wp setWaypointCompletionRadius 20;
 							};
+							private ["_cyc"];
 							_cyc = _x addWaypoint [_pos,10];
 							_cyc setWaypointType "CYCLE";
 							_cyc setWaypointCompletionRadius 20;
@@ -207,4 +217,5 @@ if (count _pos isEqualTo 3) then
 		};
 	};
 };
+
 _spawned
