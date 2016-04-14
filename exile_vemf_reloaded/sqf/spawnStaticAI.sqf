@@ -22,7 +22,7 @@ if ([["aiStatic"],["enabled"]] call VEMFr_fnc_getSetting isEqualTo 1) then
         _amounts = _settings select 1;
         {
             _amount = _amounts select _foreachindex;
-            [_x, 2, _amount / 2, "aiMode" call VEMFr_fnc_getSetting] spawn VEMFr_fnc_spawnAI;
+            [_x, 2, _amount / 2, "aiMode" call VEMFr_fnc_getSetting] spawn VEMFr_fnc_spawnVEMFrAI;
         } forEach _positions;
     };
 };
