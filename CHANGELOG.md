@@ -1,5 +1,10 @@
 ## VEMF Changelog
 
+#### `v0741.2 HOTFIX`
+*Server-side* <br />
+**[FIXED]** spawnStaticAI broken since v0741.1 <br />
+<br />
+
 #### `v0741.2`
 *Server-side* <br />
 **[CHANGED]** Some functions are now not a function anymore <br />
