@@ -5,8 +5,14 @@
 	will alert players
 
 	Params:
+	for global systemChat message:
 	_this select 0: FORMATTED STRING - thing to send
 	_this select 1: STRING - mode to send to client
+	for mission announcement:
+	_this select 0: ARRAY
+	_this select 0 select 0: FORMATTED STRING - Message line
+	_this select 0 select 1: STRING - announcement title
+	_this select 1: STRING - must be empty
 
 	Returns:
 	nothing
