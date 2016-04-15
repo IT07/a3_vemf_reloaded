@@ -32,7 +32,7 @@ if (_pos isEqualTypeArray [0,0,0]) then
 			private ["_mode","_missionName"];
 			_mode = param [3, -1, [0]];
 			_missionName = param [4, "", [""]];
-			if (_missionName in ("missionList" call VEMFr_fnc_getSetting)) then
+			if (_missionName in ("missionList" call VEMFr_fnc_getSetting) OR _missionName isEqualTo "Static") then
 			{
 				private [
 					"_sldrClass","_hc","_aiDifficulty","_skills","_accuracy","_aimShake","_aimSpeed","_stamina","_spotDist","_spotTime","_courage","_reloadSpd","_commanding","_general","_units"
