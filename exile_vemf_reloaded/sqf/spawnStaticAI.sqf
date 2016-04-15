@@ -11,14 +11,14 @@
     nothing
 */
 
-if ([["aiStatic"],["enabled"]] call VEMFr_fnc_getSetting isEqualTo 1) then
+if (([["aiStatic"],["enabled"]] call VEMFr_fnc_getSetting) select 0 isEqualTo 1) then
 {
-    ["spawnStaticAI", 3, "launching..."] spawn VEMFr_fnc_log;
+    ["spawnStaticAI", 2, "launching..."] spawn VEMFr_fnc_log;
     _settings = [["aiStatic"],["positions","amount"]] call VEMFr_fnc_getSetting;
     _positions = _settings select 0;
     if (count _positions > 0) then
     {
-        ["spawnStaticAI", 3, "spawning AI on positions..."] spawn VEMFr_fnc_log;
+        ["spawnStaticAI", 2, "spawning AI on positions..."] spawn VEMFr_fnc_log;
         _amounts = _settings select 1;
         {
             _amount = _amounts select _foreachindex;
