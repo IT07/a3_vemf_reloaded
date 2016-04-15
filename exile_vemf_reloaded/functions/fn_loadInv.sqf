@@ -25,7 +25,7 @@ if (_this isEqualType []) then
 	{
 		private ["_missionName"];
 		_missionName = param [1, "", [""]];
-		if (_missionName in ("missionList" call VEMFr_fnc_getSetting)) then
+		if (_missionName in ("missionList" call VEMFr_fnc_getSetting) OR _missionName isEqualTo "Static") then
 		{
 			private ["_aiMode"];
 			_aiMode = param [2, 0, [0]];
