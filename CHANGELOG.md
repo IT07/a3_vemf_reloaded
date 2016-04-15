@@ -1,5 +1,10 @@
 ## VEMF Changelog
 
+#### `v0741.4`
+*Server-side* <br />
+**[ACTUALLY FIXED]** static AI spawns not working <br />
+<br />
+
 #### `v0741.3`
 *Server-side* <br />
 **[FIXED]** static AI spawns not working <br />
