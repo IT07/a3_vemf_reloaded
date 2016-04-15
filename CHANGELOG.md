@@ -1,5 +1,13 @@
 ## VEMF Changelog
 
+#### `v0741.3`
+*Server-side* <br />
+**[FIXED]** static AI spawns not working <br />
+**[FIXED]** no respect gain when killing with Pawnee <br />
+**[FIXED]** unreliable detection of roadkills <br />
+**[IMRPOVED]** fn_aiKilled's code <br />
+<br />
+
 #### `v0741.2 HOTFIX`
 *Server-side* <br />
 **[FIXED]** spawnStaticAI broken since v0741.1 <br />
