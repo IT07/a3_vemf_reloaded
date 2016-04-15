@@ -1,5 +1,10 @@
 ## VEMF Changelog
 
+#### `v0741.4 HOTFIX`
+*Server-side* <br />
+**[FIXED]** "Failed to load AI's inventory" error related to AI Static spawns <br />
+<br />
+
 #### `v0741.4`
 *Server-side* <br />
 **[ACTUALLY FIXED]** static AI spawns not working <br />
