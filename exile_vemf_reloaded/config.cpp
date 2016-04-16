@@ -71,6 +71,11 @@ class CfgVemfReloaded
 		};
 	};
 
+	class BaseAttack // WORK IN PROGRESS!!
+	{ // BaseAttack (mission) settings
+		heliTypes[] = {"B_Heli_Transport_03_F","I_Heli_light_03_unarmed_F","I_Heli_Transport_02_F"};
+	};
+
 	class DynamicLocationInvasion
 	{ // DynamicLocationInvasion (mission) settings
 		allowCrateLift = 0; // Allow/disallow the loot crate to be lifted with helicopter
@@ -104,13 +109,6 @@ class CfgVemfReloaded
 	   streetLightsRange = 500; // Affects streetlights within this distance from mission's center
 	};
 
-	class aiCleanUp
-	{ // Contains settings for removal of items from each AI that gets eliminated
-		aiDeathRemovalEffect = 0; // Enable/disable the "death effect" from Virtual Arsenal. Flashes AI and deletes it after being eliminated
-		removeHeadGear = 0; // Enable/disable removal of headgear after AI has been eliminated, obviously
-		removeLaunchers = 0; // Enable/disable removal of rocket launchers from AI after they are eliminated
-	};
-
 	class aiStatic
 	{ // Simply spawns units at desired positions
 		amount[] = {10,20,12,11,40,21,19}; // How much AI units on each seperate position. Example: 1st location, 10. 2nd location, 20. 3rd location, 12. And so on....
@@ -118,6 +116,14 @@ class CfgVemfReloaded
 		positions[] = {}; // Add positions here. Each position must have {} around it and must be seperated with a comma if multiple positions present. Last position in list should NOT have a comma behind it!
 		random = 1; // Enable/disable randomization of AI units amount
 	};
+
+	class aiCleanUp
+	{ // Contains settings for removal of items from each AI that gets eliminated
+		aiDeathRemovalEffect = 0; // Enable/disable the "death effect" from Virtual Arsenal. Flashes AI and deletes it after being eliminated
+		removeHeadGear = 0; // Enable/disable removal of headgear after AI has been eliminated, obviously
+		removeLaunchers = 0; // Enable/disable removal of rocket launchers from AI after they are eliminated
+	};
+
 
 	class aiSkill // Minimum: 0 | Maximum: 1
 	{ // Global AI skill settings. They affect each VEMF unit for any default VEMF mission
