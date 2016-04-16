@@ -10,6 +10,8 @@
 	_this select 2: SCALAR - how many units to put in each group
 	_this select 3: SCALAR - AI mode
 	_this select 4: STRING - exact config name of mission
+	_this select 5: SCALAR - (optional) altitude to create units at
+	_this select 6: SCALAR - (optional) spawn radius
 
 	Returns:
 	ARRAY with group(s)
@@ -21,6 +23,7 @@ _allUnits = [];
 _pos = param [0, [], [[]]];
 if (_pos isEqualTypeArray [0,0,0]) then
 {
+	scopeName "outer";
 	private ["_grpCount"];
 	_grpCount = param [1, 1, [0]];
 	if (_grpCount > 0) then
@@ -34,6 +37,12 @@ if (_pos isEqualTypeArray [0,0,0]) then
 			_missionName = param [4, "", [""]];
 			if (_missionName in ("missionList" call VEMFr_fnc_getSetting) OR _missionName isEqualTo "Static") then
 			{
+				_altitude = param [5, 0, [0]];
+				if not(_altitude isEqualTo 0) then
+				{
+					_pos = [_pos select 0, _pos select 1, _altitude];
+				};
+				_spawnRadius = param [6, 20, [0]];
 				private [
 					"_sldrClass","_hc","_aiDifficulty","_skills","_accuracy","_aimShake","_aimSpeed","_stamina","_spotDist","_spotTime","_courage","_reloadSpd","_commanding","_general","_units"
 				];
@@ -67,7 +76,7 @@ if (_pos isEqualTypeArray [0,0,0]) then
 						for "_u" from 1 to _unitsPerGrp do
 						{
 							private ["_unit"];
-							_unit = _grp createUnit [_sldrClass, _pos, [], 10, "FORM"]; // Create Unit There
+							_unit = _grp createUnit [_sldrClass, _pos, [], _spawnRadius, "FORM"]; // Create Unit There
 							_allUnits pushBack _unit;
 							_unit addMPEventHandler ["mpkilled","if (isDedicated) then { [_this select 0, _this select 1] spawn VEMFr_fnc_aiKilled }"];
 
@@ -100,6 +109,10 @@ if (_pos isEqualTypeArray [0,0,0]) then
 					_spawned = false;
 					["fn_spawnVEMFrAI", 0, "failed to load AI's inventory..."] spawn VEMFr_fnc_log;
 				};
+			} else
+			{
+				["fn_spawnVEMFrAI", 0, format["(%1) is not in missionList!"]] spawn VEMFr_fnc_log;
+				breakOut "outer";
 			};
 		};
 	};
