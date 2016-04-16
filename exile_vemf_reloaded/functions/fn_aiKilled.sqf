@@ -25,7 +25,7 @@ if (_this isEqualType []) then
 			{
 				if (vehicle _killer isEqualTo _killer) then // If on foot
 				{
-					[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\handleKillMessage.sqf";
+					[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\handleRespectGain.sqf";
 				} else // If in vehicle (a.k.a. roadkill)
 				{
 					if (("punishRoadKills" call VEMFr_fnc_getSetting) isEqualTo 1) then
@@ -48,10 +48,15 @@ if (_this isEqualType []) then
 						};
 					};
 				};
-			} else // If kill using vehicle
+			} else // If kill from vehicle (NOT a roadkill)
 			{
 				_killer = effectiveCommander _killer;
-				[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\handleKillMessage.sqf";
+				[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\handleRespectGain.sqf";
+				_sayKilled = "sayKilled" call VEMFr_fnc_getSetting;
+				if (_sayKilled > 0) then // Send kill message if enabled
+				{
+					[_killer, _sayKilled] ExecVM "exile_vemf_reloaded\sqf\sayKilledWeapon.sqf";
+				};
 			};
 		};
 
