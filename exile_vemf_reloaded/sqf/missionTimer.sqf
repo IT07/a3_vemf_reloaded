@@ -61,7 +61,7 @@ if (_maxGlobalMissions > 0) then
                              {
                                   _missionName = selectRandom _missionList;
                                   [_missionName] execVM format["exile_vemf_reloaded\missions\%1.sqf", _missionName];
-                                  VEMFrMissionCount = VEMFrMissionCount +1;
+                                  VEMFrMissionCount = VEMFrMissionCount + 1;
                                   _lastMission = serverTime;
                              };
                          };
