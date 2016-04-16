@@ -30,7 +30,7 @@ if (_this isEqualType []) then
 			scopeName "this";
 			private ["_aiMode"];
 			_aiMode = param [2, 0, [0]];
-			if (_aiMode isEqualTo 0) then
+			if (_aiMode isEqualTo 0) then // "Militia"
 			{
 				private ["_aiGear","_uniforms","_headGear","_vests","_backpacks","_rifles","_pistols","_aiLaunchers","_launchers","_launcherChance"];
 				// Define settings
@@ -118,7 +118,7 @@ if (_this isEqualType []) then
 				_ok = true;
 				breakOut "this";
 			};
-			if (_aiMode isEqualTo 1) then
+			if (_aiMode isEqualTo 1) then // Regular police
 			{
 				private ["_policeGear","_headGear","_vests","_uniforms","_rifles","_pistols","_backpacks"];
 				_policeGear = [["policeConfig"],["headGear","vests","uniforms","rifles","pistols","backpacks"]] call VEMFr_fnc_getSetting;
@@ -174,7 +174,7 @@ if (_this isEqualType []) then
 				_ok = true;
 				breakOut "this";
 			};
-			if (_aiMode isEqualTo 2) then
+			if (_aiMode isEqualTo 2) then // S.W.A.T.
 			{
 				private ["_policeGear","_rifles","_pistols"];
 				_policeGear = [["policeConfig"],["rifles","pistols"]] call VEMFr_fnc_getSetting;
@@ -218,7 +218,11 @@ if (_this isEqualType []) then
 						["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _unit]] spawn VEMFr_fnc_log;
 					};
 				} forEach _units;
-				_ok = true;	
+				_ok = true;
+			};
+			if (_aiMode isEqualTo 3) then // Paratroopers
+			{
+
 			};
 		};
 	};
