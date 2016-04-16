@@ -34,7 +34,7 @@ class CfgVemfReloaded
 	minPlayers = 1; // Enable/disable minimal required player count for (new) missions to (start) spawn(ing)
 	minServerFPS = 20; // Enable/disable minimum server FPS for VEMF to keep spawning missions
 	missionDistance = 2000; // Enable/disable minimum distance between missions
-	missionList[] = {"DynamicLocationInvasion"}; // Each entry should represent an .sqf file in the missions folder
+	missionList[] = {"DynamicLocationInvasion","BaseAttack"}; // Each entry should represent an .sqf file in the missions folder
 	noMissionPos[] = {{{2998.62,18175.4,0.00143886},500},{{14601.3,16799.3,0.00143814},800},{{23334.8,24189.5,0.00132132},600}}; // Format: {{position},radius} | Default: Exile Altis safezones
 	nonPopulated = 1; // Enable/disable allowance of missions at locations WITHOUT (enterable) buildings
 	punishRoadKills = 1; // Enable/disable respect deduction if player roadkills AI
