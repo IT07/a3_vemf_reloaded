@@ -1,3 +1,14 @@
+/*
+   Author: IT07
+
+   Description:
+   handles giving respect to players after killing AI
+
+   Params:
+   _this select 0: OBJECT - the AI that was killed
+   _this select 1: OBJECT - the killer (must be a player)
+*/
+
 _target = param [0, objNull, [objNull]];
 _killer = param [1, objNull, [objNull]];
 if not(isNull _target AND isNull _killer) then
