@@ -27,6 +27,7 @@ class CfgVemfReloaded
 	headLessClientNames[] = {"HC1"};
 	housesBlackList[] = {"Land_Pier_F"};
 	killPercentage = 100; // How much of total AI has to be killed for mission completion (in percentage)
+	logCowardKills = 1; // Enable/disable logging of who killed AI whilst it was parachuting down
 	maxGlobalMissions = 10; // Enable/disable global mission amount limit
 	maxNew = 2; // Enable/disable MAXIMUM time (in minutes) before new mission can run
 	minNew = 1; // Enable/disable MINIMUM time (in minutes) before new mission can run
@@ -73,7 +74,15 @@ class CfgVemfReloaded
 
 	class BaseAttack // WORK IN PROGRESS!!
 	{ // BaseAttack (mission) settings
-		heliTypes[] = {"B_Heli_Transport_03_F","I_Heli_light_03_unarmed_F","I_Heli_Transport_02_F"};
+		aiMode = 1; // 0 = "military" | 1 = Police | 2 = S.W.A.T.
+		aiSetup[] = {2,5}; // format: {amountOfGroups,unitsInEachGroup};
+		maxAttacks = 5; // Maximum amount of active attacks at the same time | can not be turned off
+		/*
+			NOTES:
+			1) every territory flag can only be attacked once every restart
+			2) only players within a certain range of the attacked territory can see the mission announcement
+			3) as a "punishment" for killing AI, players do NOT get any respect increase/decrease for killing AI
+		*/
 	};
 
 	class DynamicLocationInvasion
