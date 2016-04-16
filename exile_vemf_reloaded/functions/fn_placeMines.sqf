@@ -19,6 +19,7 @@ _ok = false;
 _missionName = param [3, "", [""]];
 if (_missionName in ("missionList" call VEMFr_fnc_getSetting)) then
 {
+   scopeName "main";
    private ["_mineSetting"];
    _mineSetting = ([[_missionName],["mines"]] call VEMFr_fnc_getSetting) select 0;
    if (_mineSetting > 0) then
@@ -39,24 +40,14 @@ if (_missionName in ("missionList" call VEMFr_fnc_getSetting)) then
                _amount = ([[_missionName],["minesAmount"]] call VEMFr_fnc_getSetting) select 0;
                if (_amount > -1) then
                {
-                  switch _mineSetting do
+                  private ["_mineTypes"];
+                  if (_mineSetting isEqualTo 1) then { _mineTypes = ["ATMine"] };
+                  if (_mineSetting isEqualTo 2) then { _mineTypes = ["APERSMine"] };
+                  if (_mineSetting isEqualTo 3) then { _mineTypes = ["ATMine","APERSMine"] };
+                  if (_mineSetting < 1 OR _mineSetting > 3) then
                   {
-                     case 1:
-                     {
-                        _mineTypes = ["ATMine"]
-                     };
-                     case 2:
-                     {
-                        _mineTypes = ["APERSMine"]
-                     };
-                     case 3:
-                     {
-                        _mineTypes = ["ATMine","APERSMine"]
-                     };
-                     default
-                     {
-                        ["fn_placeMines", 0, "Invalid mines mode!"] spawn VEMFr_fnc_log;
-                     };
+                     ["fn_placeMines", 0, "Invalid mines mode!"] spawn VEMFr_fnc_log;
+                     breakOut "main"
                   };
 
                   _mines = [];
@@ -65,7 +56,7 @@ if (_missionName in ("missionList" call VEMFr_fnc_getSetting)) then
                   {
                      private ["_mine"];
                      _mine = createMine [selectRandom _mineTypes, ([_pos, _min, _max, 2, 0, 20, 0] call BIS_fnc_findSafePos), [], 0];
-                     uiSleep (0.5 + random 1);
+                     uiSleep 0.1;
                      _mines pushBack _mine;
                   };
                   _ok = [_mines];
