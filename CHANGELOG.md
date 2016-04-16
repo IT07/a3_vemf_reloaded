@@ -1,5 +1,15 @@
 ## VEMF Changelog
 
+#### `v0741.5`
+*Server-side* <br />
+**[ADDED]** separate sqf file for handling respect <br />
+**[ADDED]** separate sqf file for handling kill messages <br />
+**[CHANGED]** Order of config classes in config.cpp <br />
+**[FIXED]** "failed to get respect from" error if killer has negative respect <br />
+**[FIXED]** script error related to fn_placeMines.sqf <br />
+**[IMPROVED]** Overal code performance and speed <br />
+<br />
+
 #### `v0741.4 HOTFIX`
 *Server-side* <br />
 **[FIXED]** "Failed to load AI's inventory" error related to AI Static spawns <br />
@@ -26,7 +36,7 @@
 #### `v0741.2`
 *Server-side* <br />
 **[CHANGED]** Some functions are now not a function anymore <br />
-**[CHANGED]** CfgPatches and CfgFunctions now have their own seperate file <br />
+**[CHANGED]** CfgPatches and CfgFunctions now have their own separate file <br />
 **[FIXED]** hasLauncherChance was not working at all <br />
 **[IMPROVED]** Overall variable structure <br />
 **[IMPROVED]** Loggin feedback in RPT. Was sometimes too cryptic <br />
@@ -77,7 +87,7 @@
 #### `v0740.6`
 *Server-side* <br />
 **[CHANGED]** BIS_fnc_param replaced by new param command <br />
-**[CHANGED]** Blacklist method for locations. Seperate classes for each map for easier use <br />
+**[CHANGED]** Blacklist method for locations. separate classes for each map for easier use <br />
 <br />
 *Client-side* <br />
 No Changes. <br />
