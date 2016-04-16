@@ -1,5 +1,12 @@
 ## VEMF Changelog
 
+#### `v0742.0`
+*Server-side* <br />
+**[ADDED]** New mission "BaseAttack"! <br />
+**[ADDED]** "logCowardKills" option to config.cpp | logs information to RPT if player kills a parachuting AI <br />
+**[CHANGED]** params of several functions <br />
+<br />
+
 #### `v0741.5`
 *Server-side* <br />
 **[ADDED]** separate sqf file for handling respect <br />
