@@ -7,6 +7,7 @@
 
 ["Launcher", 2, format["/// STARTING v%1 \\\", getNumber (configFile >> "CfgPatches" >> "exile_vemf_reloaded" >> "version")]] spawn VEMFr_fnc_log;
 uiNamespace setVariable ["VEMFrUsedLocs", []];
+uiNamespace setVariable ["VEMFrAttackedFlags", []];
 uiNamespace setVariable ["VEMFrHcLoad", []];
 
 [] spawn
