@@ -16,36 +16,33 @@ if (_this isEqualType "") then
    _cfg = configFile >> "CfgVehicles" >> _this >> "faction";
    if not isNull _cfg then
    {
+      scopeName "isNull";
       private ["_faction"];
       _faction = getText _cfg;
-      switch _faction do
+      if (_faction isEqualTo "BLU_G_F") then
       {
-         case "BLU_G_F":
-         {
-            _return = WEST;
-         };
-         case "CIV_F":
-         {
-            _return = civilian;
-         };
-         case "IND_F":
-         {
-            _return = independent;
-         };
-         case "IND_G_F":
-         {
-            _return = resistance;
-         };
-         case "OPF_F":
-         {
-            _return = EAST;
-         };
-         default
-         {
-            ["fn_checkSide", 0, format["Fatal error; Unknown faction '%1'", _faction]] spawn VEMFr_fnc_log;
-         };
+         _return = WEST;
+         breakOut "isNull";
+      };
+      if (_faction isEqualTo "CIV_F") then
+      {
+         _return = civilian;
+         breakOut "isNull";
+      };
+      if (_faction isEqualTo "IND_F") then
+      {
+         _return = independent;
+         breakOut "isNull";
+      };
+      if (_faction isEqualTo "IND_G_F") then
+      {
+         _return = resistance;
+         breakOut "isNull";
+      };
+      if (_faction isEqualTo "OPF_F") then
+      {
+         _return = EAST;
       };
    };
+   _return
 };
-
-_return

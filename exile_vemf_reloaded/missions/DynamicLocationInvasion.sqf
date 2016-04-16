@@ -6,6 +6,7 @@ if isNil"VEMFrInvasionCount" then { VEMFrInvasionCount = 0; };
 _missionName = param [0, "", [""]];
 if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getSetting) select 0)) then
 {
+	scopeName "outer";
 	VEMFrInvasionCount = VEMFrInvasionCount + 1;
 	private ["_settings","_grpCount","_groupUnits","_skipDistance","_loc","_hasPlayers","_spawned","_grpArr","_unitArr","_done","_boxes","_box","_chute","_colors","_lightType","_light","_smoke"];
 	// Define _settings
@@ -63,20 +64,24 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 			_marker = createMarker [format["VEMFr_DynaLocInva_ID%1", random 9000], _locPos];
 			_marker setMarkerShape "ICON";
 			_marker setMarkerType "o_unknown";
-			switch true do
+			if (_mode < 0 OR _mode > 2) then
 			{
-				case (_mode isEqualTo 0):
-				{
-					_marker setMarkerColor "ColorEAST";
-				};
-				case (_mode isEqualTo 1):
-				{
-					_marker setMarkerColor "ColorWEST";
-				};
-				case (_mode isEqualTo 2):
-				{
-					_marker setMarkerColor "ColorBlack";
-				};
+				["DynamicLocationInvasion", 0, format["Invalid aiMode (%1) detected, failed to setMarkerColor!", _aiMode]] spawn VEMFr_fnc_log;
+				VEMFrInvasionCount = VEMFrInvasionCount - 1;
+				VEMFrMissionCount = VEMFrMissionCount - 1;
+				breakOut "outer";
+			};
+			if (_mode isEqualTo 0) then
+			{
+				_marker setMarkerColor "ColorEAST";
+			};
+			if (_mode isEqualTo 1) then
+			{
+				_marker setMarkerColor "ColorWEST";
+			};
+			if (_mode isEqualTo 2) then
+			{
+				_marker setMarkerColor "ColorBlack";
 			};
 		};
 

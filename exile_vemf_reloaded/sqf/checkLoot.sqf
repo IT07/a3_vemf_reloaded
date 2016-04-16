@@ -54,17 +54,12 @@ if ("validateLoot" call VEMFr_fnc_getSetting isEqualTo 1) then
           } forEach _x;
       } forEach _loot;
 
-      _invalid = if (count _invalidClasses isEqualTo 0) then { false } else { true };
-      switch true do
+      if (count _invalidClasses isEqualTo 0) then
       {
-          case _invalid:
-          {
-              ["CheckLoot", 0, format["Invalid classes found in loot! | %1", _invalidClasses]] spawn VEMFr_fnc_log;
-          };
-          case (not _invalid):
-          {
-              ["CheckLoot", 1, "Loot tables are all valid :)"] spawn VEMFr_fnc_log;
-          };
+         ["CheckLoot", 1, "Loot tables are all valid :)"] spawn VEMFr_fnc_log;
+      } else
+      {
+         ["CheckLoot", 0, format["Invalid classes found in loot! | %1", _invalidClasses]] spawn VEMFr_fnc_log;
       };
     };
 };
