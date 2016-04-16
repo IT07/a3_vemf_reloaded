@@ -47,15 +47,15 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 		{
 			if (_mode isEqualTo 0) then
 			{
-				[[format["Plundering groups have invaded %1 @ %2", _locName, mapGridPosition _locPos], "NEW INVASION"], ""] spawn VEMFr_fnc_broadCast;
+				[[format["Plundering groups have invaded %1 @ %2", _locName, mapGridPosition _locPos], "NEW INVASION"]] spawn VEMFr_fnc_broadCast;
 			};
 			if (_mode isEqualTo 1) then
 			{
-				[[format["%1 Police forces are now controlling %2 @ %3", worldName, _locName, mapGridPosition _locPos], "NEW MISSION"], ""] spawn VEMFr_fnc_broadCast;
+				[[format["%1 Police forces are now controlling %2 @ %3", worldName, _locName, mapGridPosition _locPos], "NEW MISSION"]] spawn VEMFr_fnc_broadCast;
 			};
 			if (_mode isEqualTo 2) then
 			{
-				[[format["%1 S.W.A.T. teams are now raiding %2 @ %3", worldName, _locName, mapGridPosition _locPos], "NEW RAID"], ""] spawn VEMFr_fnc_broadCast;
+				[[format["%1 S.W.A.T. teams are now raiding %2 @ %3", worldName, _locName, mapGridPosition _locPos], "NEW RAID"]] spawn VEMFr_fnc_broadCast;
 			};
 		};
 		private["_marker"];
@@ -213,15 +213,15 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 						{
 							if (_mode isEqualTo 0) then
 							{
-								[[format["%1 @ %2 has been cleared of %3 bad guys", _locName, mapGridPosition (_locPos), worldName], "COMPLETED"], ""] spawn VEMFr_fnc_broadCast;
+								[[format["%1 @ %2 has been cleared of %3 bad guys", _locName, mapGridPosition (_locPos), worldName], "COMPLETED"]] spawn VEMFr_fnc_broadCast;
 							};
 							if (_mode isEqualTo 1) then
 							{
-								[[format["%1 @ %2 has been cleared of %3 Police forces", _locName, mapGridPosition (_locPos), worldName], "CLEARED"], ""] spawn VEMFr_fnc_broadCast;
+								[[format["%1 @ %2 has been cleared of %3 Police forces", _locName, mapGridPosition (_locPos), worldName], "CLEARED"]] spawn VEMFr_fnc_broadCast;
 							};
 							if (_mode isEqualTo 2) then
 							{
-								[[format["S.W.A.T. raid on %1 @ %2 has been eliminated", _locName, mapGridPosition (_locPos)], "DEFEATED"], ""] spawn VEMFr_fnc_broadCast;
+								[[format["S.W.A.T. raid on %1 @ %2 has been eliminated", _locName, mapGridPosition (_locPos)], "DEFEATED"]] spawn VEMFr_fnc_broadCast;
 							};
 						};
 						// Deal with the 50s
@@ -397,7 +397,7 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 			{
 				VEMFrInvasionCount = VEMFrInvasionCount - 1;
 				VEMFrMissionCount = VEMFrMissionCount - 1;
-				[[format["Failed to spawn AI in %1 @ %2", _locName, mapGridPosition (_locPos)], "ERROR!"], ""] spawn VEMFr_fnc_broadCast;
+				[[format["Failed to spawn AI in %1 @ %2", _locName, mapGridPosition (_locPos)], "ERROR!"]] spawn VEMFr_fnc_broadCast;
 			};
 		} else
 		{ // If done waiting, and no players were detected
