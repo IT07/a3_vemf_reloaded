@@ -1,6 +1,6 @@
 #ArmA3_exile_vemf_reloaded
 ###VEMFr; a mission system for ArmA3 Exile Mod
-####Based on VEMF (Vempire's Epoch Mission Framework)
+####Based on VEMF (Vampire's Epoch Mission Framework)
 <br />
 ######INSTALLATION GUIDE<br />
 ```
