@@ -1,5 +1,15 @@
 ## VEMF Changelog
 
+#### `v0742.1`
+*Server-side* <br />
+**[ADDED]** heliLocked option to class DynamicLocationInvasion <br />
+**[CHANGED]** default unitClass is now "O_G_Sharpshooter_F". Switch to "B_G_Soldier_AR_F" if you are having issues with the new unitClass <br />
+**[CHANGED]** heliPatrol of DynamicLocationInvasion mission now spawns higher for increased immersion <br />
+**[FIXED]** heliPatrol heli just won't loiter <br />
+**[FIXED]** missing code in fn_aiKilled.sqf <br />
+**[IMPROVED]** missionTimer now is much smarter <br />
+<br />
+
 #### `v0742.0`
 *Server-side* <br />
 **[ADDED]** New mission "BaseAttack"! <br />
