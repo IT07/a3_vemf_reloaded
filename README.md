@@ -13,7 +13,7 @@ Exile.MapName\description.ext (contents) >> MPmissions\Exile.*nameOfMap*\descrip
 exile_vemf_reloaded (contents) >> @ExileServer\addons\exile_vemf_reloaded.pbo
 ```
 ######CONFIGURATION GUIDE
-Detailed information on how to modify settings are located in:<br />
+Detailed configuration information located in:<br />
 ```
 exile_vemf_reloaded\config_override.cpp
 ```
