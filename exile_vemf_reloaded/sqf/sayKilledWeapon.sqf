@@ -5,8 +5,9 @@
    handles the broadcast of a systemChat kill message
 */
 
-_killer = param [0, objNull, [objNull]];
-if not isNull _killer then
+_target = param [0, objNull, [objNull]];
+_killer = param [1, objNull, [objNull]];
+if not(isNull _target AND isNull _killer) then
 {
    scopeName "outer";
    _dist = _target distance _killer;
@@ -21,7 +22,7 @@ if not isNull _killer then
       {
          _curWeapon = currentWeapon (vehicle _killer);
       };
-      _sayKilled = param [1, 1, [1]];
+      _sayKilled = param [2, 1, [1]];
       if (_sayKilled isEqualTo 1) then
       {
          _kMsg = format["(VEMFr) %1 [%2, %3m] AI", name _killer, getText(configFile >> "CfgWeapons" >> _curWeapon >> "displayName"), round _dist];
