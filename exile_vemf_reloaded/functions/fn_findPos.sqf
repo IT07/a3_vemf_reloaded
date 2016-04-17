@@ -14,8 +14,8 @@
 	_this select 6: STRING (optional) - Exact config name of mission override settings to load
 
 	Returns:
-	if mode = loc then: ARRAY - format [name of town/location, town center position]
-	if mode = pos then POSITION
+	if mode = loc: LOCATION
+	if mode = pos: POSITION
 */
 
 private ["_ret","_settings","_nonPopulated","_blackPos","_missionDistance","_range","_missionConfigName"];
@@ -136,7 +136,7 @@ if not(_mode isEqualTo "") then
 										};
 										if (_cntr distance (locationPosition _x) > _tooCloseRange) then
 										{
-											if (([text _x, locationPosition _x]) in _usedLocs) then
+											if (_x in _usedLocs) then
 											{
 												_remLocs pushBack _x;
 											};
@@ -147,7 +147,7 @@ if not(_mode isEqualTo "") then
 										private ["_loc"];
 										_loc = _x;
 										{
-											if (((locationPosition _loc) distance (_x select 1)) < _missionDistance) then
+											if (((locationPosition _loc) distance (locationPosition _x)) < _missionDistance) then
 											{
 												_remLocs pushBack _loc;
 											};
@@ -199,8 +199,8 @@ if not(_mode isEqualTo "") then
 							if (count _locs > 0) then
 							{
 								// Return Name and POS
-								_ret = [text _loc, locationPosition _loc];
-								(uiNamespace getVariable "VEMFrUsedLocs") pushBack _ret;
+								_ret = _loc;
+								(uiNamespace getVariable "VEMFrUsedLocs") pushBack _loc;
 							};
 						};
 					};
