@@ -49,7 +49,7 @@ class CfgVemfReloaded
 	respectRoadKillDeduct = 20; // 0 = no deduction for roadkilling AI | respectRoadKillDeduct > = amount of respect to deduct from player;
 
 	// AI Unit settings
-	unitClass = "B_G_Soldier_AR_F"; // Default: "B_G_Soldier_AR_F"
+	unitClass = "O_G_Sharpshooter_F"; // Default: "O_G_Sharpshooter_F" | optional: "B_G_Soldier_AR_F"
 	// NOTE: VEMFr will automatically adjust the AI's side that belongs to the unit of given unitClass
 
 	class locationBlackLists
@@ -99,6 +99,7 @@ class CfgVemfReloaded
 		groupUnits[] = {4,6}; // How much units in each group. Works the same like groupCount
 		hasLauncherChance = 25; // In percentage. How big the chance that each AI gets a launcher
 		heliPatrol[] = {1, {"B_Heli_Light_01_armed_F","B_Heli_Attack_01_F","B_Heli_Transport_03_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F"}}; // Enable/disable heli patrol at mission location and set the types of heli(s)
+		heliLocked = 0; // Enable/disable heli lock to prevent/allow players from flying it
 		marker = 1; // Enable/disable mission markers
 		markCrateOnMap = 1; // Enable/disable loot crate marker on map called "Loot"
 		markCrateVisual = 1; // Enable/disable loot crate VISUAL marker (smoke and/or chem)
@@ -314,14 +315,14 @@ class CfgVemfReloaded
 		aiUniforms[] =
 		{
 			"U_I_CombatUniform","U_I_CombatUniform_tshirt","U_I_CombatUniform_shortsleeve","U_I_pilotCoveralls",
-			"U_I_GhillieSuit","U_I_OfficerUniform","U_MillerBody","U_KerryBody","U_IG_Guerilla1_1","U_IG_Guerilla2_1",
-			"U_IG_Guerilla2_2","U_IG_Guerilla2_3","U_IG_Guerilla3_1","U_IG_Guerilla3_2","U_IG_leader","U_BG_Guerilla1_1",
-			"U_BG_Guerilla2_1","U_BG_Guerilla2_3","U_BG_Guerilla3_1","U_BG_Guerilla3_2","U_BG_leader","U_OG_Guerilla1_1",
-			"U_OG_Guerilla2_1","U_OG_Guerilla2_2","U_OG_Guerilla2_3","U_OG_Guerilla3_1","U_OG_Guerilla3_2","U_OG_leader",
-			"U_C_WorkerCoveralls","U_C_HunterBody_grn","U_C_HunterBody_brn","U_B_CTRG_1","U_B_CTRG_2","U_B_CTRG_3","U_B_survival_uniform",
-			"U_I_G_Story_Protagonist_F","U_I_G_resistanceLeader_F","U_IG_Guerrilla_6_1","U_BG_Guerrilla_6_1","U_OG_Guerrilla_6_1",
-			"U_B_FullGhillie_lsh","U_B_FullGhillie_sard","U_B_FullGhillie_ard","U_O_FullGhillie_lsh","U_O_FullGhillie_sard",
-			"U_O_FullGhillie_ard","U_I_FullGhillie_lsh","U_I_FullGhillie_sard","U_I_FullGhillie_ard"
+			"U_I_GhillieSuit","U_I_OfficerUniform","U_IG_Guerilla1_1","U_IG_Guerilla2_1","U_IG_Guerilla2_2","U_IG_Guerilla2_3",
+			"U_IG_Guerilla3_1","U_IG_Guerilla3_2","U_IG_leader","U_BG_Guerilla1_1","U_BG_Guerilla2_1","U_BG_Guerilla2_3",
+			"U_BG_Guerilla3_1","U_BG_Guerilla3_2","U_BG_leader","U_OG_Guerilla1_1","U_OG_Guerilla2_1","U_OG_Guerilla2_2",
+			"U_OG_Guerilla2_3","U_OG_Guerilla3_1","U_OG_Guerilla3_2","U_OG_leader","U_C_WorkerCoveralls","U_C_HunterBody_grn",
+			"U_C_HunterBody_brn","U_B_CTRG_1","U_B_CTRG_2","U_B_CTRG_3","U_B_survival_uniform","U_I_G_Story_Protagonist_F",
+			"U_I_G_resistanceLeader_F","U_IG_Guerrilla_6_1","U_BG_Guerrilla_6_1","U_OG_Guerrilla_6_1","U_B_FullGhillie_lsh",
+			"U_B_FullGhillie_sard","U_B_FullGhillie_ard","U_O_FullGhillie_lsh","U_O_FullGhillie_sard","U_O_FullGhillie_ard",
+			"U_I_FullGhillie_lsh","U_I_FullGhillie_sard","U_I_FullGhillie_ard"
 		};
 		aiVests[] =
 		{
