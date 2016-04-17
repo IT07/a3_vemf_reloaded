@@ -28,10 +28,10 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 	_allowCrateLift = _settings select 13;
 
 	_loc = ["loc", false, position (selectRandom allPlayers), _skipDistance, _maxPref, _skipDistance, _missionName] call VEMFr_fnc_findPos;
-	if (_loc isEqualTypeArray ["",[]]) then
+	if (_loc isEqualType locationNull) then
 	{
-		_locName = _loc select 0;
-		_locPos = _loc select 1;
+		_locName = text _loc;
+		_locPos = position _loc;
 		if (_locName isEqualTo "") then { _locName = "Area"; };
 		[_missionName, 1, format["Invading %1...", _locName]] spawn VEMFr_fnc_log;
 		VEMFrInvasionCount = VEMFrInvasionCount + 1;
@@ -127,8 +127,13 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 						_classToSpawn = selectRandom (_heliPatrolSettings select 1);
 						if (_classToSpawn isKindOf "Air") then
 						{
-							_heli = createVehicle [_classToSpawn, _locPos, [], 50, "FLY"];
-							_heli engineOn true; // Just to make sure
+							_heli = createVehicle [_classToSpawn, _locPos, [], 750, "FLY"];
+							_heli setPosATL [(getPos _heli) select 0, (getPos _heli) select 1, 1000];
+							_heli flyInHeight 80;
+							if ([["DynamicLocationInvasion"],["heliLocked"]] call VEMFr_fnc_getSetting select 0 isEqualTo 1) then
+							{
+								_heli lock true;
+							};
 							_turrets = allTurrets [_heli, false];
 							_spawnHeliGroup = [_locPos, 1, ((count _turrets) + (_heli emptyPositions "commander") + 1), _mode, _missionName] call VEMFr_fnc_spawnVEMFrAI;
 							if (_spawnHeliGroup isEqualType []) then
@@ -136,7 +141,7 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 								_heliGroup = _spawnHeliGroup select 0;
 								_heliUnits = units _heliGroup;
 								{
-									if (_heli emptyPositions "driver" isEqualTo 1) then
+									if (_heli emptyPositions "driver" isEqualTo 1 AND (_x isEqualTo (leader(group _x)))) then
 									{
 										_x moveInDriver _heli;
 									} else
@@ -160,19 +165,22 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 											};
 										};
 									};
-									removeBackpack _x;
+									if not(backPack _x isEqualTo "") then
+									{
+										removeBackpack _x;
+									};
 									_x addBackpack "B_Parachute";
 									_units pushBack _x;
 								} forEach _heliUnits;
 
-								_loiterWaypoint = _heliGroup addWaypoint [_locPos, 50, 1];
-								_loiterWaypoint setWaypointType "LOITER";
-								_loiterWaypoint setWaypointSpeed "LIMITED";
-								_loiterWaypoint setWaypointCombatMode "RED";
-								_loiterWaypoint setWaypointBehaviour "AWARE";
-								_loiterWaypoint setWaypointLoiterType "CIRCLE_L";
-								_loiterWaypoint setWaypointLoiterRadius 25;
-								_heliGroup setCurrentWaypoint _loiterWaypoint;
+								_wpLoiter = _heliGroup addWaypoint [_locPos, 2];
+								_wpLoiter setWaypointType "LOITER";
+								_wpLoiter setWaypointSpeed "LIMITED";
+								_wpLoiter setWaypointBehaviour "AWARE";
+								_wpLoiter setWaypointCombatMode "RED";
+								_wpLoiter setWaypointLoiterType "CIRCLE";
+								_wpLoiter setWaypointLoiterRadius 200;
+								_heliGroup setCurrentWaypoint _wpLoiter;
 
 								[_heliGroup] spawn VEMFr_fnc_signAI;
 							};
@@ -199,9 +207,9 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 					};
 
 					// Wait for Mission Completion
-					_done = [_loc select 0, _locPos, _units, _skipDistance] call VEMFr_fnc_waitForMissionDone;
+					_done = [_locName, _locPos, _units, _skipDistance] call VEMFr_fnc_waitForMissionDone;
 					_usedLocs = uiNamespace getVariable "VEMFrUsedLocs";
-					_index = _usedLocs find [_loc select 0, _locPos];
+					_index = _usedLocs find _loc;
 					if (_index > -1) then
 					{
 						_usedLocs deleteAt _index;
