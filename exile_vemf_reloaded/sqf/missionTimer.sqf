@@ -41,28 +41,56 @@ if (_maxGlobalMissions > 0) then
                   {
                       _ignoreLimit = true;
                   };
+                  _waitForFail =
+                  {
+                     _count = 0;
+                     waitUntil { if (scriptDone _this) then { true } else { _count = _count + 1; if(_count isEqualTo 5) then { true } else { false }} };
+                  };
+                  _sleep = {
+                     // Wait random amount
+                     uiSleep ((_minNew*60)+ floor random ((_maxNew*60)-(_minNew*60)));
+                  };
+                  call _sleep;
                   while {true} do
                   {
-                      // Wait random amount
-                      uiSleep ((_minNew*60)+ floor random ((_maxNew*60)-(_minNew*60)));
-
                       // Pick A Mission if enough players online
                       if ([_minPlayers] call VEMFr_fnc_playerCount) then
                       {
+                        scopeName "pick";
                          if _ignoreLimit then
                          {
                              _missionName = selectRandom _missionList;
-                             [_missionName] execVM format["exile_vemf_reloaded\missions\%1.sqf", _missionName];
-                             _lastMission = serverTime;
+                             _mission = [_missionName] execVM format["exile_vemf_reloaded\missions\%1.sqf", _missionName];
+                             private["_count"];
+                             _mission call _waitForFail;
+                             if (_count isEqualTo 5) then
+                             {
+                                _lastMission = serverTime;
+                                call _sleep;
+                                breakOut "pick";
+                             } else
+                             {
+                                uiSleep (_minNew*60); // Wait a little bit if mission failed
+                             };
                          };
                          if not _ignoreLimit then
                          {
                              if (VEMFrMissionCount <= _maxGlobalMissions) then
                              {
                                   _missionName = selectRandom _missionList;
-                                  [_missionName] execVM format["exile_vemf_reloaded\missions\%1.sqf", _missionName];
-                                  VEMFrMissionCount = VEMFrMissionCount + 1;
-                                  _lastMission = serverTime;
+                                  _mission = [_missionName] execVM format["exile_vemf_reloaded\missions\%1.sqf", _missionName];
+                                  private["_count"];
+                                  _mission call _waitForFail;
+                                  if (_count isEqualTo 5) then
+                                  {
+                                     VEMFrMissionCount = VEMFrMissionCount + 1;
+                                     _lastMission = serverTime;
+                                     call _sleep;
+                                     breakOut "pick";
+                                  } else
+                                  {
+                                     uiSleep (_minNew*60); // Wait a little bit if mission failed
+                                  };
                              };
                          };
                       };
