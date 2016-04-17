@@ -2,7 +2,11 @@
 ###VEMFr; a mission system for ArmA3 Exile Mod
 ####Based on VEMF (Vampire's Epoch Mission Framework)
 <br />
-######INSTALLATION GUIDE<br />
+######HOW TO DOWNLOAD
+```
+ArmA3_exile_vemf_reloaded.7z (click it) >> Raw button (click it)
+```
+######INSTALLATION GUIDE
 ```
 Exile.MapName\init.sqf (contents) >> MPmissions\Exile.*nameOfMap*\init.sqf
 ```
