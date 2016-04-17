@@ -99,6 +99,10 @@ if (_pos isEqualTypeArray [0,0,0]) then
 						};
 						_grp enableAttack true;
 						_spawned pushBack _grp;
+					} else
+					{
+						["fn_spawnVEMFrAI", 0, "failed to retrieve _groupSide"] spawn VEMFr_fnc_log;
+						breakOut "outer";
 					};
 				};
 
@@ -108,6 +112,7 @@ if (_pos isEqualTypeArray [0,0,0]) then
 				{
 					_spawned = false;
 					["fn_spawnVEMFrAI", 0, "failed to load AI's inventory..."] spawn VEMFr_fnc_log;
+					breakOut "outer";
 				};
 			} else
 			{
