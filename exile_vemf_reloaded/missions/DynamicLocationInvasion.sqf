@@ -2,6 +2,7 @@
 	DynamicLocationInvasion by IT07
 */
 
+VEMFrMissionCount = VEMFrMissionCount + 1;
 if isNil"VEMFrInvasionCount" then { VEMFrInvasionCount = 0; };
 _missionName = param [0, "", [""]];
 if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getSetting) select 0)) then
@@ -34,7 +35,6 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 		_locPos = position _loc;
 		if (_locName isEqualTo "") then { _locName = "Area"; };
 		[_missionName, 1, format["Invading %1...", _locName]] spawn VEMFr_fnc_log;
-		VEMFrInvasionCount = VEMFrInvasionCount + 1;
 		// Send message to all players
 		private ["_mode"];
 		_mode = "aiMode" call VEMFr_fnc_getSetting;
@@ -67,8 +67,6 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 			if (_mode < 0 OR _mode > 2) then
 			{
 				["DynamicLocationInvasion", 0, format["Invalid aiMode (%1) detected, failed to setMarkerColor!", _aiMode]] spawn VEMFr_fnc_log;
-				VEMFrInvasionCount = VEMFrInvasionCount - 1;
-				VEMFrMissionCount = VEMFrMissionCount - 1;
 				breakOut "outer";
 			};
 			if (_mode isEqualTo 0) then
@@ -320,8 +318,6 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 						{
 							deleteMarker _marker
 						};
-						VEMFrInvasionCount = VEMFrInvasionCount - 1;
-						VEMFrMissionCount = VEMFrMissionCount - 1;
 
 						// Put a marker on the crate if enabled
 						if not isNil "_crate" then
@@ -403,32 +399,21 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 				};
 			} else
 			{
-				VEMFrInvasionCount = VEMFrInvasionCount - 1;
-				VEMFrMissionCount = VEMFrMissionCount - 1;
 				[[format["Failed to spawn AI in %1 @ %2", _locName, mapGridPosition (_locPos)], "ERROR!"]] spawn VEMFr_fnc_broadCast;
+				breakOut "outer";
 			};
 		} else
 		{ // If done waiting, and no players were detected
 			[_missionName, 1, format["Invasion of %1 @ %2 timed out.", _locName, mapGridPosition _locPos]] spawn VEMFr_fnc_log;
-			if not isNil"_marker" then
-			{
-				deleteMarker _marker
-			};
+			if not isNil"_marker" then { deleteMarker _marker };
 			_usedLocs = uiNamespace getVariable "VEMFrUsedLocs";
 			_index = _usedLocs find _loc;
 			if (_index > -1) then
 			{
 				_usedLocs deleteAt _index;
 			};
-			VEMFrInvasionCount = VEMFrInvasionCount - 1;
-			VEMFrMissionCount = VEMFrMissionCount - 1;
 		};
-	} else
-	{
-		VEMFrInvasionCount = VEMFrInvasionCount - 1;
-		VEMFrMissionCount = VEMFrMissionCount - 1;
 	};
-} else
-{
-	VEMFrMissionCount = VEMFrMissionCount - 1;
 };
+VEMFrInvasionCount = VEMFrInvasionCount - 1;
+VEMFrMissionCount = VEMFrMissionCount - 1;
