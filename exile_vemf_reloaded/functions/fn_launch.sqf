@@ -14,21 +14,21 @@ uiNamespace setVariable ["VEMFrHcLoad", []];
 {
 	if ("overridesToRPT" call VEMFr_fnc_getSetting isEqualTo 1) then
 	{
-		_root = configProperties [configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride", "true", false];
+		_root = configProperties [configFile >> "CfgVemfReloadedOverrides", "true", false];
 		if (count _root > 0) then
 		{
 			{
 				if (isClass _x) then
 				{
 					_classLv1Name = configName _x;
-					_levelOne = configProperties [configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride" >> _classLv1Name, "true", false];
+					_levelOne = configProperties [configFile >> "CfgVemfReloadedOverrides" >> _classLv1Name, "true", false];
 					if (count _levelOne > 0) then
 					{
 						{
 							if (isClass _x) then
 							{
 								_classLv2Name = configName _x;
-								_levelTwo = configProperties [configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride" >> _classLv1Name >> _classLv2Name, "true", false];
+								_levelTwo = configProperties [configFile >> "CfgVemfReloadedOverrides" >> _classLv1Name >> _classLv2Name, "true", false];
 								if (count _levelTwo > 0) then
 								{
 									{
