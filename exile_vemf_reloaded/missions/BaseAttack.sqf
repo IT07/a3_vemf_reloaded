@@ -96,8 +96,6 @@ if (VEMFrAttackCount < ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSettin
                      };
                      _players = nearestObjects [_flagPos, ["Exile_Unit_Player"], 275];
                      [[format["Attack on %1's location has been stopped", _nameOfTarget],"SUCCESS", _players]] spawn VEMFr_fnc_broadCast;
-                     VEMFrAttackCount = VEMFrAttackCount - 1;
-                     VEMFrMissionCount = VEMFrMissionCount - 1;
                      breakOut "outer";
                   } else
                   {
@@ -107,15 +105,11 @@ if (VEMFrAttackCount < ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSettin
                         } forEach (units _x);
                      } forEach _paraGroups;
                      ["BaseAttack", 0, format["Incorrect amount of total units (%1). Should be %2", _unitCount, (_aiSetup select 0) * (_aiSetup select 1)]] spawn VEMFr_fnc_log;
-                     VEMFrAttackCount = VEMFrAttackCount - 1;
-                     VEMFrMissionCount = VEMFrMissionCount - 1;
                      breakOut "outer";
                   };
                } else
                {
                   ["BaseAttack", 0, format["Incorrect spawned group count (%1). Should be %2", count _paraGroups, _aiSetup select 0]] spawn VEMFr_fnc_log;
-                  VEMFrAttackCount = VEMFrAttackCount - 1;
-                  VEMFrMissionCount = VEMFrMissionCount - 1;
                   breakOut "outer";
                };
             } else
@@ -130,32 +124,22 @@ if (VEMFrAttackCount < ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSettin
                   ["BaseAttack", 0, "Unable to locate and remove attacked flag!"] spawn VEMFr_fnc_log;
                };
                ["BaseAttack", 0, "Can not find player near flag!"] spawn VEMFr_fnc_log;
-               VEMFrAttackCount = VEMFrAttackCount - 1;
-               VEMFrMissionCount = VEMFrMissionCount - 1;
                breakOut "outer";
             };
          } else
          {
-            VEMFrAttackCount = VEMFrAttackCount - 1;
-            VEMFrMissionCount = VEMFrMissionCount - 1;
             breakOut "outer";
          };
       } else
       {
          ["BaseAttack", 0, format["invalid aiSetup setting! (%1)", _aiSetup]] spawn VEMFr_fnc_log;
-         VEMFrAttackCount = VEMFrAttackCount - 1;
-         VEMFrMissionCount = VEMFrMissionCount - 1;
          breakOut "outer";
       };
    } else
    {
       ["BaseAttack", 0, format["Failed to start mission. Given _missionName (%1) is not in active missionList", _missionName]] spawn VEMFr_fnc_log;
-      VEMFrAttackCount = VEMFrAttackCount - 1;
-      VEMFrMissionCount = VEMFrMissionCount - 1;
       breakOut "outer";
    };
-   //
-} else
-{
-   VEMFrMissionCount = VEMFrMissionCount - 1;
+   VEMFrAttackCount = VEMFrAttackCount - 1;
 };
+VEMFrMissionCount = VEMFrMissionCount - 1;
