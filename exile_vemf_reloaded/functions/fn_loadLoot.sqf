@@ -12,6 +12,7 @@ _ok = false;
 _crate = param [0, objNull, [objNull]];
 if not isNull _crate then
 {
+	_crate setVariable ["VEMFrCrate", 1, true];
 	clearWeaponCargoGlobal _crate;
 	clearMagazineCargoGlobal _crate;
 	clearBackpackCargoGlobal  _crate;
