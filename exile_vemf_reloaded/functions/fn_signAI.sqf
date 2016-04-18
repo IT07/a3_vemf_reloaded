@@ -17,7 +17,10 @@ _ok = false;
 _group = param [0, grpNull, [grpNull]];
 if not isNull _group then
 {
-    (uiNamespace getVariable "vemfGroups") pushBack _group;
+    (uiNamespace getVariable ["VEMFrAIgroups",[]]) pushBack _group;
+    {
+      _x setVariable ["VEMFrAIunit", 1, true];
+    } forEach (units _group);
     _ok = true
 };
 
