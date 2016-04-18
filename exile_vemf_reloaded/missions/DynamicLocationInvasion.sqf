@@ -414,6 +414,6 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 			};
 		};
 	};
+	VEMFrInvasionCount = VEMFrInvasionCount - 1;
 };
-VEMFrInvasionCount = VEMFrInvasionCount - 1;
 VEMFrMissionCount = VEMFrMissionCount - 1;
