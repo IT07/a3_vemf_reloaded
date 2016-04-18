@@ -42,12 +42,12 @@ _check =
 if (_this isEqualType "") then
 {
 	private ["_cfg"];
-	if (isNull (configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride" >> _this)) then
+	if (isNull (configFile >> "CfgVemfReloadedOverrides" >> _this)) then
 	{
 		_cfg = configFile >> "CfgVemfReloaded" >> _this;
 	} else
 	{
-		_cfg = configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride" >> _this;
+		_cfg = configFile >> "CfgVemfReloadedOverrides" >> _this;
 	};
 	call _check;
 	if not isNil"_v" then
@@ -71,7 +71,7 @@ if (_this isEqualType []) then
 		};
 		{
 			private ["_cfg"];
-			_cfg = configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride";
+			_cfg = configFile >> "CfgVemfReloadedOverrides";
 			call _build;
 			_cfg = _cfg >> _x;
 			//["fn_getSetting", 1, format["_cfg after first build = %1", _cfg]] spawn VEMFr_fnc_log;
@@ -95,7 +95,7 @@ if (_this isEqualType []) then
 	{
 		{
 			private ["_cfg"];
-			_cfg = configFile >> "CfgVemfReloaded" >> "CfgSettingsOverride" >> _x;
+			_cfg = configFile >> "CfgVemfReloadedOverrides" >> _x;
 			if (isNull _cfg) then
 			{
 				_cfg = configFile >> "CfgVemfReloaded" >> _x;
