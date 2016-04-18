@@ -1,8 +1,8 @@
 /*
-   	Author: IT07
+   Author: IT07
 
-   	Description:
-   	cpp config file for exile_vemf_reloaded
+   Description:
+	cpp config file for exile_vemf_reloaded
 
 	What is exile_vemf_reloaded? (short: VEMFr)
 	It is a complete remake (and port to Exile) of VEMF (for Epoch) by TheVampire.
@@ -318,7 +318,7 @@ class CfgVemfReloaded
 			"U_I_GhillieSuit","U_I_OfficerUniform","U_IG_Guerilla1_1","U_IG_Guerilla2_1","U_IG_Guerilla2_2","U_IG_Guerilla2_3",
 			"U_IG_Guerilla3_1","U_IG_Guerilla3_2","U_IG_leader","U_BG_Guerilla1_1","U_BG_Guerilla2_1","U_BG_Guerilla2_3",
 			"U_BG_Guerilla3_1","U_BG_Guerilla3_2","U_BG_leader","U_OG_Guerilla1_1","U_OG_Guerilla2_1","U_OG_Guerilla2_2",
-			"U_OG_Guerilla2_3","U_OG_Guerilla3_1","U_OG_Guerilla3_2","U_OG_leader","U_C_WorkerCoveralls","U_C_HunterBody_grn",
+			"U_OG_Guerilla2_3","U_OG_Guerilla3_1","U_OG_Guerilla3_2","U_C_WorkerCoveralls","U_C_HunterBody_grn",
 			"U_C_HunterBody_brn","U_B_CTRG_1","U_B_CTRG_2","U_B_CTRG_3","U_B_survival_uniform","U_I_G_Story_Protagonist_F",
 			"U_I_G_resistanceLeader_F","U_IG_Guerrilla_6_1","U_BG_Guerrilla_6_1","U_OG_Guerrilla_6_1","U_B_FullGhillie_lsh",
 			"U_B_FullGhillie_sard","U_B_FullGhillie_ard","U_O_FullGhillie_lsh","U_O_FullGhillie_sard","U_O_FullGhillie_ard",
@@ -360,10 +360,6 @@ class CfgVemfReloaded
 		{
 			"hgun_ACPC2_F","hgun_Rook40_F","hgun_P07_F","hgun_Pistol_heavy_01_F","hgun_Pistol_heavy_02_F"
 		};
-	};
-	class CfgSettingsOverride
-	{
-		#include "config_override.cpp"
 	};
 };
 
