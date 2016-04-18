@@ -15,10 +15,10 @@
 [] spawn
 {
     uiNamespace setVariable ["VEMFrHcLoad", []];
-    uiNamespace setVariable ["vemfGroups", []];
+    uiNamespace setVariable ["VEMFrAIgroups", []];
     while {true} do
     {
-        _groups = uiNamespace getVariable "vemfGroups";
+        _groups = uiNamespace getVariable "VEMFrAIgroups";
         waitUntil { uiSleep 1; count _groups > 0 };
         {
             if (local _x) then
