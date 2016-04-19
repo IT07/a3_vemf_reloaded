@@ -125,8 +125,8 @@ if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getS
 						_classToSpawn = selectRandom (_heliPatrolSettings select 1);
 						if (_classToSpawn isKindOf "Air") then
 						{
-							_heli = createVehicle [_classToSpawn, _locPos, [], 750, "FLY"];
-							_heli setPosATL [(getPos _heli) select 0, (getPos _heli) select 1, 1000];
+							_heli = createVehicle [_classToSpawn, _locPos, [], 5, "FLY"];
+							_heli setPosATL [(getPos _heli) select 0, (getPos _heli) select 1, 750];
 							_heli flyInHeight 80;
 							if ([["DynamicLocationInvasion"],["heliLocked"]] call VEMFr_fnc_getSetting select 0 isEqualTo 1) then
 							{
