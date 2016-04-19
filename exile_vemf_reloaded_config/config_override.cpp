@@ -29,6 +29,3 @@ class aiGear
    aiPistols[] = {"hgun_ACPC2_F","hgun_Rook40_F"}; // Overrides CfgVemfReloaded >> aiGear >> aiPistols
 };
 */
-
-missionlist[] = {"DynamicLocationInvasion"};
-timeOutTime = 5;
