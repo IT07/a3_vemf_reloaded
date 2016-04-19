@@ -5,32 +5,25 @@ if (hasInterface) then
 	// custom addPublicVariableEventHandler. Those bloody BE filters.....
 	[] spawn
 	{
+		_handleMessage =
+		{
+			_data = _this;
+			_msg = param [0, "", [[],format[""]]];
+			_mode = param [1, "", [""]];
+			if (_mode isEqualTo "sys") then
+			{
+				systemChat _msg;
+			} else
+			{
+				[_msg select 0, _msg select 1] ExecVM "VEMFr_client\sqf\handleMessage.sqf";
+			};
+		};
 		while {true} do
 		{
-			waitUntil { uiSleep 0.05; not isNil"VEMFrClientMsg" };
-			if (typeName VEMFrClientMsg isEqualTo "ARRAY") then
-			{
-				_data = +[VEMFrClientMsg];
-				VEMFrClientMsg = nil;
-				_data = _data select 0;
-				[_data] spawn
-				{
-					_data = _this select 0;
-					_mode = _data param [1, "", [""]];
-					_msg = _data param [0, "", [[],format[""]]];
-					switch _mode do
-					{
-						case "sys":
-						{
-							systemChat _msg;
-						};
-						default
-						{
-							[_msg select 0, _msg select 1] ExecVM "VEMFr_client\sqf\handleMessage.sqf";
-						};
-					};
-				};
-			};
+			waitUntil { if isNil"VEMFrClientMsg" then { uiSleep 0.05; false } else { true }};
+			_data = VEMFrClientMsg;
+			VEMFrClientMsg = nil;
+			_data spawn _handleMessage;
 		};
 	};
 };
