@@ -1,5 +1,12 @@
 ## VEMFr Changelog
 
+#### `v0742.3`
+*Server-side* <br />
+**[CHANGED]** heli spawn distance for DynamicLocationInvasion mission in attempt to prevent it from just hovering <br />
+*Client-side* <br />
+**[IMPROVED]** initClient.sqf <br />
+<br />
+
 #### `v0742.2`
 *Server-side* <br />
 **[CHANGED]** config_override now has its own PBO file: exile_vemf_reloaded_config <br />
