@@ -40,12 +40,9 @@ if (_this isEqualType []) then
                   _indexes pushBack _forEachIndex;
                };
             } forEach _scopes;
-            if (count _indexes > 0) then
             {
-               {
-                  _scopes deleteAt _x;
-               } forEach _indexes;
-            };
+               _scopes deleteAt _x;
+            } forEach _indexes;
          };
          _unit addPrimaryWeaponItem (selectRandom _scopes);
       };

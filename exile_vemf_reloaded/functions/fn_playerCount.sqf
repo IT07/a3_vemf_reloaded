@@ -19,19 +19,16 @@ if (_this isEqualType []) then
    _minimum = param [0, -1, [0]];
    if (_minimum > -1) then
    {
-      if (count allPlayers >= _minimum) then
+      _players = 0;
       {
-         _players = 0;
+         if (isPlayer _x) then
          {
-            if (isPlayer _x) then
-            {
-               _players = _players + 1;
-            };
-         } forEach allPlayers;
-         if not(_players isEqualTo 0) then
-         {
-            _ok = true
+            _players = _players + 1;
          };
+      } forEach allPlayers;
+      if (_players > 0) then
+      {
+         _ok = true
       };
    };
 };
