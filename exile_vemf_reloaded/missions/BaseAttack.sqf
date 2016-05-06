@@ -21,14 +21,13 @@ if (VEMFrAttackCount < ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSettin
          {
             if (speed _x < 25 AND (vehicle _x isEqualTo _x)) then
             {
-               _flag = selectRandom (nearestObjects [position _x, ["Exile_Construction_Flag_Static"], 150]);
-               if not isNil"_flag" then
+               _flagsObjs = nearestObjects [position _x, ["Exile_Construction_Flag_Static"], 150];
                {
-                  if not(_flag in _attackedFlags) then
-                  {
-                     _flags pushBackUnique _flag;
-                  };
-               };
+                  if not(_x in _attackedFlags) then
+                     {
+                        _flags pushBack _x;
+                     };
+               } forEach _flagObjs;
             };
          } forEach allPlayers;
          if (count _flags > 0) then
