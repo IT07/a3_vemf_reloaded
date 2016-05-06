@@ -1,5 +1,13 @@
 ## VEMFr Changelog
 
+#### `v0742.4`
+*Server-side* <br />
+**[ADDED]** ability for Admin to set VEMFrForceStart to true on server to force VEMFr to start <br />
+**[FIXED]** VEMFr will not start <br />
+**[FIXED]** VEMFr version not correctly displayed in RPT <br />
+**[IMPROVED]** overall code execution time <br />
+<br />
+
 #### `v0742.3`
 *Server-side* <br />
 **[CHANGED]** heli spawn distance for DynamicLocationInvasion mission in attempt to prevent it from just hovering <br />
