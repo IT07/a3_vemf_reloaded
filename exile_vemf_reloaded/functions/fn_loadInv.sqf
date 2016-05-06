@@ -220,10 +220,6 @@ if (_this isEqualType []) then
 				} forEach _units;
 				_ok = true;
 			};
-			if (_aiMode isEqualTo 3) then // Paratroopers
-			{
-
-			};
 		};
 	};
 };
