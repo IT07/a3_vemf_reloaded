@@ -27,7 +27,7 @@ if (VEMFrAttackCount < ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSettin
                      {
                         _flags pushBack _x;
                      };
-               } forEach _flagObjs;
+               } forEach _flagsObjs;
             };
          } forEach allPlayers;
          if (count _flags > 0) then
