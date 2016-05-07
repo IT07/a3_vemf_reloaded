@@ -6,6 +6,7 @@
 **[FIXED]** Selekano instead of Selakano <br />
 **[FIXED]** AI still have TWS scopes even when allowTWS is set to 0 <br />
 **[FIXED]** Error in BaseAttack.sqf <br />
+**[FIXED]** VEMFr still starts even if player count is below the threshold <br />
 **[REWORKED]** fn_giveAmmo.sqf <br />
 <br />
 
