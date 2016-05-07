@@ -57,15 +57,17 @@ if (_this isEqualType []) then
 					{
 						removeAllAssignedItems _unit;
 					};
-					removeUniform _unit;
 					removeVest _unit;
 					removeBackpack _unit;
 					removeGoggles _unit;
 					removeHeadGear _unit;
 
-					_gear = selectRandom _uniforms;
-					_unit forceAddUniform _gear; // Give the poor naked guy some clothing :)
-
+					if (count _uniforms > 0) then
+						{
+							removeUniform _unit;
+							_gear = selectRandom _uniforms;
+							_unit forceAddUniform _gear; // Give the poor naked guy some clothing :)
+						};
 					_gear = selectRandom _headGear;
 					_unit addHeadGear _gear;
 
