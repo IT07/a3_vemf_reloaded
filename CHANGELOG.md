@@ -1,5 +1,14 @@
 ## VEMFr Changelog
 
+#### `v0742.5`
+*Server-side* <br />
+**[CHANGED]** the allowTWS option is now a global setting <br />
+**[FIXED]** Selekano instead of Selakano <br />
+**[FIXED]** AI still have TWS scopes even when allowTWS is set to 0 <br />
+**[FIXED]** Error in BaseAttack.sqf <br />
+**[REWORKED]** fn_giveAmmo.sqf <br />
+<br />
+
 #### `v0742.4`
 *Server-side* <br />
 **[ADDED]** ability for Admin to set VEMFrForceStart to true on server to force VEMFr to start <br />
