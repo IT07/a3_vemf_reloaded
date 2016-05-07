@@ -23,6 +23,7 @@ class CfgVemfReloaded
 
 	// Global settings
 	addons[] = {}; // Not used for now
+	allowTWS = 0; // Enable/disable the usage of TWS scopes by AI
 	headLessClientSupport = 0;
 	headLessClientNames[] = {"HC1"};
 	housesBlackList[] = {"Land_Pier_F"};
@@ -56,7 +57,7 @@ class CfgVemfReloaded
 	{ // NOTE: If the map you use is not listed below, simply add it by yourself or put the locations you want to blacklist into the locations array of the Other class
 		class Altis
 		{
-			locations[] = {"Kavala","Syrta","Zaros","Pyrgos","Selekano","Sofia","Sagonisi","Monisi","Fournos","Savri","Atsalis","Polemista","Cap Makrinos","Pyrgi","Makrynisi","Chelonisi","Almyra","Surf Club"};
+			locations[] = {"Kavala","Syrta","Zaros","Pyrgos","Selakano","Sofia","Sagonisi","Monisi","Fournos","Savri","Atsalis","Polemista","Cap Makrinos","Pyrgi","Makrynisi","Chelonisi","Almyra","Surf Club"};
 		};
 		class Stratis
 		{
@@ -89,7 +90,6 @@ class CfgVemfReloaded
 	{ // DynamicLocationInvasion (mission) settings
 		allowCrateLift = 0; // Allow/disallow the loot crate to be lifted with helicopter
 		aiLaunchers = 1; // Allow/disallow AI to have rocket launchers
-		allowTWS = 0; // Enable/disable the usage of TWS scopes by AI
 		announce = 1; // Enable/disable mission notificatons
 		cal50s = 3; // Max amount of .50 caliber machineguns at mission | Needs to be lower than total unit count per mission
 		cal50sDelete = 1; // Enable/disable the removal of .50cal | 2 = destroy (not remove)
