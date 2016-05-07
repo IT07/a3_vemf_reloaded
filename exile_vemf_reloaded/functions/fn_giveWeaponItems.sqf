@@ -26,19 +26,23 @@ if (_this isEqualType []) then
       { // Select random scope
          private ["_scopes"];
          _scopes = getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "WeaponSlotsInfo" >> "CowsSlot" >> "compatibleItems");
-         if ([["DynamicLocationInvasion"],["allowTWS"]] call VEMFr_fnc_getSetting isEqualTo 0) then
+         if ("allowTWS" call VEMFr_fnc_getSetting isEqualTo 0) then
          {
             private["_indexes"];
             _indexes = [];
             {
-               if not(_x find "tws" isEqualTo -1) then
-               {
-                  _indexes pushBack _forEachIndex;
-               };
-               if not(_x find "TWS" isEqualTo -1) then
-               {
-                  _indexes pushBack _forEachIndex;
-               };
+               if (_x find "tws" > -1) then
+                  {
+                     //["fn_giveWeaponItems", 0, format["This scope is not allowed: %1", _x]] spawn VEMFr_fnc_log;
+                     _indexes pushBack _forEachIndex;
+                  } else
+                  {
+                     if (_x find "TWS" > -1) then
+                        {
+                           //["fn_giveWeaponItems", 0, format["This scope is not allowed: %1", _x]] spawn VEMFr_fnc_log;
+                           _indexes pushBack _forEachIndex;
+                        };
+                  };
             } forEach _scopes;
             {
                _scopes deleteAt _x;
@@ -65,11 +69,11 @@ if (_this isEqualType []) then
       _randomPattern = [1,0,1,0,0,1,0,0,0,0,1,1,1];
       if (selectRandom _randomPattern isEqualTo 1) then
       { // Select random scope
-         _unit addSecondaryWeaponItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _handgunWeapon >> "WeaponSlotsInfo" >> "CowsSlot" >> "compatibleItems")));
+         _unit addHandgunItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _handgunWeapon >> "WeaponSlotsInfo" >> "CowsSlot" >> "compatibleItems")));
       };
       if (selectRandom _randomPattern isEqualTo 1) then
       { // Select random muzzle
-         _unit addSecondaryWeaponItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _handgunWeapon >> "WeaponSlotsInfo" >> "MuzzleSlot" >> "compatibleItems")));
+         _unit addHandgunItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _handgunWeapon >> "WeaponSlotsInfo" >> "MuzzleSlot" >> "compatibleItems")));
       };
       _done = true;
    };
