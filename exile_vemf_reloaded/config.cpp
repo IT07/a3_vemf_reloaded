@@ -75,8 +75,10 @@ class CfgVemfReloaded
 
 	class BaseAttack // WORK IN PROGRESS!!
 	{ // BaseAttack (mission) settings
+		aiLaunchers = 1; // Allow/disallow AI to have rocket launchers
 		aiMode = 1; // 0 = "military" | 1 = Police | 2 = S.W.A.T.
 		aiSetup[] = {2,5}; // format: {amountOfGroups,unitsInEachGroup};
+		hasLauncherChance = 25; // In percentage. How big the chance that each AI gets a launcher
 		maxAttacks = 5; // Maximum amount of active attacks at the same time | can not be turned off
 		/*
 			NOTES:
