@@ -1,5 +1,14 @@
 ## VEMFr Changelog
 
+#### `v0742.6`
+*Server-side* <br />
+**[ADDED]** missing aiLauncher settings for BaseAttack missions <br />
+**[CHANGED]** VEMFr messages will not be sent to dead players <br />
+**[FIXED]** no punishment for killing parachuting from vehicle <br />
+**[FIXED]** BaseAttack mission count goes up without running successfully <br />
+**[NEW]** BaseAttack mission messages now show name of the base being attacked <br />
+<br /> 
+
 #### `v0742.5`
 *Server-side* <br />
 **[CHANGED]** the allowTWS option is now a global setting <br />
