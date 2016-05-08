@@ -32,7 +32,7 @@ if not(_msg isEqualTo "") then
 		_broadCast =
 		{
 			{
-				if (isPlayer _x) then
+				if (isPlayer _x AND alive _x) then
 				{
 					VEMFrClientMsg = [_msg, _mode];
 					(owner _x) publicVariableClient "VEMFrClientMsg";
