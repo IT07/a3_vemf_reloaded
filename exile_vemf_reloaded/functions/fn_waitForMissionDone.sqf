@@ -39,7 +39,7 @@ if (count _pos isEqualTo 3) then
 				if _playerNear then
 				{
 					{
-						if not(alive _x) then
+						if (damage _x isEqualTo 1) then
 						{
 							_killed pushBack _x;
 						};
