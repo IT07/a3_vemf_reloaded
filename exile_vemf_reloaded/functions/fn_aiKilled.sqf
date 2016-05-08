@@ -75,13 +75,22 @@ if (_this isEqualType []) then
 				};
 			} else // If kill from vehicle (NOT a roadkill)
 			{
-				_killer = effectiveCommander _killer;
-				[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\handleRespectGain.sqf";
-				_sayKilled = "sayKilled" call VEMFr_fnc_getSetting;
-				if (_sayKilled > 0) then // Send kill message if enabled
-				{
-					[_target, _killer, _sayKilled] ExecVM "exile_vemf_reloaded\sqf\sayKilledWeapon.sqf";
-				};
+				if (typeOf (vehicle _target) isEqualTo "Steerable_Parachute_F") then
+					{
+						if ("logCowardKills" call VEMFr_fnc_getSetting isEqualTo 1) then
+							{
+								["fn_aiKilled", 1, format["A coward (%1 @ %2) killed a parachuting AI", name _killer, mapGridPosition _killer]] spawn VEMFr_fnc_log;
+							};
+					} else
+					{
+						_killer = effectiveCommander _killer;
+						[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\handleRespectGain.sqf";
+						_sayKilled = "sayKilled" call VEMFr_fnc_getSetting;
+						if (_sayKilled > 0) then // Send kill message if enabled
+							{
+								[_target, _killer, _sayKilled] ExecVM "exile_vemf_reloaded\sqf\sayKilledWeapon.sqf";
+							};
+					};
 			};
 		};
 
