@@ -4,11 +4,11 @@
 
 VEMFrMissionCount = VEMFrMissionCount + 1;
 if isNil"VEMFrInvasionCount" then { VEMFrInvasionCount = 0; };
+VEMFrInvasionCount = VEMFrInvasionCount + 1;
 _missionName = param [0, "", [""]];
-if (VEMFrInvasionCount < (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getSetting) select 0)) then
+if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getSetting) select 0)) then
 {
 	scopeName "outer";
-	VEMFrInvasionCount = VEMFrInvasionCount + 1;
 	private ["_settings","_grpCount","_groupUnits","_skipDistance","_loc","_hasPlayers","_spawned","_grpArr","_unitArr","_done","_boxes","_box","_chute","_colors","_lightType","_light","_smoke"];
 	// Define _settings
 	_settings = [[_missionName],["groupCount","groupUnits","maxDistance","maxDistancePrefered","skipDistance","marker","parachuteCrate","markCrateVisual","markCrateOnMap","announce","streetLights","streetLightsRestore","streetLightsRange","allowCrateLift"]] call VEMFr_fnc_getSetting;
