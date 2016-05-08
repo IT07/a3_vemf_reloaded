@@ -14,6 +14,7 @@
 _maxGlobalMissions = "maxGlobalMissions" call VEMFr_fnc_getSetting;
 if (_maxGlobalMissions > 0) then
    {
+      scopeName "outer";
       _minNew = "minNew" call VEMFr_fnc_getSetting;
       if (_minNew > -1) then
          {
@@ -59,7 +60,7 @@ if (_maxGlobalMissions > 0) then
                                        if ([_minPlayers] call VEMFr_fnc_playerCount) then
                                           {
                                              scopeName "pick";
-                                             if (VEMFrMissionCount <= _maxGlobalMissions OR _ignoreLimit) then
+                                             if (VEMFrMissionCount <= _maxGlobalMissions AND VEMFrMissionCount >= 0 OR _ignoreLimit) then
                                                 {
                                                    _missionName = selectRandom _missionList;
                                                    _mission = [_missionName] execVM format["exile_vemf_reloaded\missions\%1.sqf", _missionName];
@@ -73,6 +74,13 @@ if (_maxGlobalMissions > 0) then
                                                             // Mission sqf file did not finish within 5 seconds. Assume it is running successfully.
                                                             call _sleep;
                                                          };
+                                                } else
+                                                {
+                                                   if (VEMFrMissionCount < 0) then
+                                                      {
+                                                         ["missionTimer", 0, format["VEMFrMissionCount (%1) is BELOW 0! Stopping missionTimer...", VEMFrMissionCount]] spawn VEMFr_fnc_log;
+                                                         breakOut "outer";
+                                                      };
                                                 };
                                           } else
                                              {
