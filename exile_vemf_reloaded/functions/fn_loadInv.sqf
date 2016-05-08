@@ -45,7 +45,7 @@ if (_this isEqualType []) then
 				if (_aiLaunchers isEqualTo 1) then
 				{
 					_launchers = _aiGear select 4;
-					_launcherChance = ([["DynamicLocationInvasion"],["hasLauncherChance"]] call VEMFr_fnc_getSetting) select 0;
+					_launcherChance = ([[_missionName],["hasLauncherChance"]] call VEMFr_fnc_getSetting) select 0;
 				};
 				{
 					private ["_unit","_gear","_ammo"];
@@ -78,8 +78,14 @@ if (_this isEqualType []) then
 					{
 						if (_launcherChance isEqualTo 100 OR (ceil random (100 / _launcherChance) isEqualTo (ceil random (100 / _launcherChance)))) then
 						{
-							_gear = selectRandom _backpacks;
-							_unit addBackpack _gear;
+							if not(_missionName isEqualTo "BaseAttack") then
+								{
+									_gear = selectRandom _backpacks;
+									_unit addBackpack _gear;
+								} else
+								{
+									_unit addBackpack "B_Parachute";
+								};
 							private ["_ammo"];
 							_gear = selectRandom _launchers;
 							_unit addWeapon _gear;
@@ -157,8 +163,15 @@ if (_this isEqualType []) then
 						_unit selectWeapon _rifle;
 					_pistol = selectRandom _pistols;
 						_unit addWeapon _pistol;
-					_backpack = selectRandom _backpacks;
-					_unit addBackPack _backpack;
+
+					if not(_missionName isEqualTo "BaseAttack") then
+						{
+							_backpack = selectRandom _backpacks;
+							_unit addBackPack _backpack;
+						} else
+						{
+							_unit addBackpack "B_Parachute";
+						};
 
 					// Give this guy some ammo
 					_givenAmmo = [_unit] call VEMFr_fnc_giveAmmo;
@@ -206,6 +219,11 @@ if (_this isEqualType []) then
 					_unit selectWeapon _rifle;
 					_pistol = selectRandom _pistols;
 					_unit addWeapon _pistol;
+
+					if (_missionName isEqualTo "BaseAttack") then
+						{
+							_unit addBackpack "B_Parachute";
+						};
 
 					// Give this guy some ammo
 					_givenAmmo = [_unit] call VEMFr_fnc_giveAmmo;
