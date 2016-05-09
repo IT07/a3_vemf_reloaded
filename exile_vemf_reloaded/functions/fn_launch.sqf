@@ -47,8 +47,7 @@ uiNamespace setVariable ["VEMFrHcLoad", []];
 
 	_scripts = ["checkLoot","missionTimer","REMOTEguard","spawnStaticAI"];
 	{
-		private ["_script"];
-		_script = [] ExecVM format["exile_vemf_reloaded\sqf\%1.sqf", _x];
+		ExecVM format["exile_vemf_reloaded\sqf\%1.sqf", _x];
 	} forEach _scripts;
 
 	west setFriend [independent, 0];
