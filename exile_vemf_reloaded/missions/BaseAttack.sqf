@@ -78,7 +78,7 @@ if (VEMFrAttackCount <= ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSetti
                         scopeName "loop";
                         _deadCount = 0;
                         {
-                           if (damage _x isEqualTo 1) then
+                           if (damage _x isEqualTo 1 OR isNull _x) then
                            {
                               _deadCount = _deadCount + 1;
                            };
