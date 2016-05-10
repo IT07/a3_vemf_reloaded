@@ -6,8 +6,6 @@ class CfgFunctions
 		class serverFunctions
 		{
 			file = "exile_vemf_reloaded\functions";
-			class aiKilled {};
-			class broadCast {};
 			class checkPlayerPresence {};
 			class checkSide {};
 			class findPos {};
@@ -18,7 +16,6 @@ class CfgFunctions
 			class launch { postInit = 1; };
 			class loadInv {};
 			class loadLoot {};
-			class log {};
 			class placeMines {};
 			class playerCount {};
 			class signAI {};
