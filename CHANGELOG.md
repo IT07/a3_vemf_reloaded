@@ -1,5 +1,11 @@
 ## VEMFr Changelog
 
+#### `v0743.0`
+*Server-side* <br />
+**[REMOVED]** a few functions. They are now single SQF files <br />
+**[FIXED]** missions do not end if aiDeathRemovalEffect is enabled <br />
+<br />
+
 #### `v0742.7`
 *Server-side* <br />
 **[FIXED]** VEMFr continues to spawn missions even if max global limit has been reached <br />
