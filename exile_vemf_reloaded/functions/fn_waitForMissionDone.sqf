@@ -39,7 +39,7 @@ if (count _pos isEqualTo 3) then
 				if _playerNear then
 				{
 					{
-						if (damage _x isEqualTo 1) then
+						if (damage _x isEqualTo 1 OR isNull _x) then
 						{
 							_killed pushBack _x;
 						};
@@ -57,7 +57,7 @@ if (count _pos isEqualTo 3) then
 				if (((count _killed) isEqualTo _killToComplete) OR ((count _killed) > _killToComplete)) then { _complete = true };
 				if not _complete then { uiSleep 1 };
 			};
-			["fn_waitForMissionDone", 1, format["mission in %1 completed!", _this select 0]] spawn VEMFr_fnc_log;
+			["fn_waitForMissionDone", 1, format["mission in %1 completed!", _this select 0]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 		};
 	};
 };
