@@ -113,13 +113,13 @@ if (_this isEqualType []) then
 					_givenAmmo = [_unit] call VEMFr_fnc_giveAmmo;
 					if not _givenAmmo then
 					{
-						["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] spawn VEMFr_fnc_log;
+						["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 					};
 					// Give this guy some weaponItems
 					_giveAttachments = [_unit] call VEMFr_fnc_giveWeaponItems;
 					if not _giveAttachments then
 					{
-						["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _unit]] spawn VEMFr_fnc_log;
+						["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 					};
 
 				} forEach _units;
@@ -177,13 +177,13 @@ if (_this isEqualType []) then
 					_givenAmmo = [_unit] call VEMFr_fnc_giveAmmo;
 					if not _givenAmmo then
 					{
-						["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] spawn VEMFr_fnc_log;
+						["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 					};
 					// Give this guy some weaponItems
 					_giveAttachments = [_unit] call VEMFr_fnc_giveWeaponItems;
 					if not _giveAttachments then
 					{
-						["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _unit]] spawn VEMFr_fnc_log;
+						["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 					};
 				} forEach _units;
 				_ok = true;
@@ -229,13 +229,13 @@ if (_this isEqualType []) then
 					_givenAmmo = [_unit] call VEMFr_fnc_giveAmmo;
 					if not _givenAmmo then
 					{
-						["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] spawn VEMFr_fnc_log;
+						["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 					};
 					// Give this guy some weaponItems
 					_giveAttachments = [_unit] call VEMFr_fnc_giveWeaponItems;
 					if not _giveAttachments then
 					{
-						["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _unit]] spawn VEMFr_fnc_log;
+						["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 					};
 				} forEach _units;
 				_ok = true;

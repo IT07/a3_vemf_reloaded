@@ -61,14 +61,14 @@ if (_this isEqualType []) then
                   _done = true;
                } else // If unit is not local
                {
-                  ["fn_giveAmmo", 0, format["%1 is not local. Can not execute!", _unit]] spawn VEMfr_fnc_log;
+                  ["fn_giveAmmo", 0, format["%1 is not local. Can not execute!", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                };
          } else // If unit isNull
          {
-            ["fn_giveAmmo", 0, "_unit isNull. Can not execute!"] spawn VEMFr_fnc_log;
+            ["fn_giveAmmo", 0, "_unit isNull. Can not execute!"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
          };
    } else
    {
-      ["fn_giveAmmo", 0, "_this is not an ARRAY"] spawn VEMFr_fnc_log;
+      ["fn_giveAmmo", 0, "_this is not an ARRAY"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
    };
 _done

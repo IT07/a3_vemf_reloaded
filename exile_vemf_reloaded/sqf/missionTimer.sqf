@@ -28,11 +28,11 @@ if (_minNew > -1) then
                   waitUntil { if ([_minPlayers] call VEMFr_fnc_playerCount AND diag_fps > _minFps OR VEMFrForceStart) then { true } else { uiSleep 5; false } };
                   if VEMFrForceStart then
                      {
-                        ["missionTimer", 1, format["VEMFr has been forced to start. Server FPS: %1", diag_fps]] spawn VEMFr_fnc_log;
+                        ["missionTimer", 1, format["VEMFr has been forced to start. Server FPS: %1", diag_fps]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                      } else
                      {
-                        ["missionTimer", 1, format["Enough players online (%1) and server FPS (%2) is above %3. Starting missionTimer...", count allPlayers, diag_fps, _minFps]] spawn VEMFr_fnc_log;
-                        ["missionTimer", 1, format["Global mission limit is set on: %1", _maxGlobalMissions]] spawn VEMFr_fnc_log;
+                        ["missionTimer", 1, format["Enough players online (%1) and server FPS (%2) is above %3. Starting missionTimer...", count allPlayers, diag_fps, _minFps]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+                        ["missionTimer", 1, format["Global mission limit is set on: %1", _maxGlobalMissions]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                      };
                      VEMFrMissionCount = 0;
                      private ["_ignoreLimit"];
@@ -71,7 +71,7 @@ if (_minNew > -1) then
                                     {
                                        if (VEMFrMissionCount < 0) then
                                           {
-                                             ["missionTimer", 0, format["VEMFrMissionCount (%1) is BELOW 0! Stopping missionTimer...", VEMFrMissionCount]] spawn VEMFr_fnc_log;
+                                             ["missionTimer", 0, format["VEMFrMissionCount (%1) is BELOW 0! Stopping missionTimer...", VEMFrMissionCount]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                                              breakOut "outer";
                                           };
 

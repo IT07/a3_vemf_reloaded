@@ -26,7 +26,7 @@ if not(isNull _target AND isNull _killer) then
       if (_sayKilled isEqualTo 1) then
       {
          _kMsg = format["(VEMFr) %1 [%2, %3m] AI", name _killer, getText(configFile >> "CfgWeapons" >> _curWeapon >> "displayName"), round _dist];
-         [_kMsg, "sys"] spawn VEMFr_fnc_broadCast;
+         [_kMsg, "sys"] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
          breakOut "outer";
       };
       if (_sayKilled isEqualTo 2) then
@@ -39,5 +39,5 @@ if not(isNull _target AND isNull _killer) then
    };
 } else
 {
-   ["sayKilledWeapon.sqf", 0, "_killer isNull!"] spawn VEMFr_fnc_log;
+   ["sayKilledWeapon.sqf", 0, "_killer isNull!"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 };

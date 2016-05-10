@@ -34,7 +34,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 		_locName = text _loc;
 		_locPos = position _loc;
 		if (_locName isEqualTo "") then { _locName = "Area"; };
-		[_missionName, 1, format["Invading %1...", _locName]] spawn VEMFr_fnc_log;
+		[_missionName, 1, format["Invading %1...", _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 		// Send message to all players
 		private ["_mode"];
 		_mode = "aiMode" call VEMFr_fnc_getSetting;
@@ -47,15 +47,15 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 		{
 			if (_mode isEqualTo 0) then
 			{
-				[[format["Plundering groups have invaded %1 @ %2", _locName, mapGridPosition _locPos], "NEW INVASION"]] spawn VEMFr_fnc_broadCast;
+				[[format["Plundering groups have invaded %1 @ %2", _locName, mapGridPosition _locPos], "NEW INVASION"]] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
 			};
 			if (_mode isEqualTo 1) then
 			{
-				[[format["%1 Police forces are now controlling %2 @ %3", worldName, _locName, mapGridPosition _locPos], "NEW MISSION"]] spawn VEMFr_fnc_broadCast;
+				[[format["%1 Police forces are now controlling %2 @ %3", worldName, _locName, mapGridPosition _locPos], "NEW MISSION"]] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
 			};
 			if (_mode isEqualTo 2) then
 			{
-				[[format["%1 S.W.A.T. teams are now raiding %2 @ %3", worldName, _locName, mapGridPosition _locPos], "NEW RAID"]] spawn VEMFr_fnc_broadCast;
+				[[format["%1 S.W.A.T. teams are now raiding %2 @ %3", worldName, _locName, mapGridPosition _locPos], "NEW RAID"]] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
 			};
 		};
 		private["_marker"];
@@ -66,7 +66,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 			_marker setMarkerType "o_unknown";
 			if (_mode < 0 OR _mode > 2) then
 			{
-				["DynamicLocationInvasion", 0, format["Invalid aiMode (%1) detected, failed to setMarkerColor!", _aiMode]] spawn VEMFr_fnc_log;
+				["DynamicLocationInvasion", 0, format["Invalid aiMode (%1) detected, failed to setMarkerColor!", _aiMode]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 				breakOut "outer";
 			};
 			if (_mode isEqualTo 0) then
@@ -121,7 +121,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 					_heliPatrolSettings = ([[_missionName],["heliPatrol"]] call VEMFr_fnc_getSetting) select 0;
 					if (_heliPatrolSettings select 0 isEqualTo 1) then
 					{ // If heliPatrol setting is enabled
-						[_missionName, 1, format["Adding a heli patrol to the invasion of %1 at %2", _locName, mapGridPosition _locPos]] spawn VEMFr_fnc_log;
+						[_missionName, 1, format["Adding a heli patrol to the invasion of %1 at %2", _locName, mapGridPosition _locPos]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 						_classToSpawn = selectRandom (_heliPatrolSettings select 1);
 						if (_classToSpawn isKindOf "Air") then
 						{
@@ -183,7 +183,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 								[_heliGroup] spawn VEMFr_fnc_signAI;
 							};
 						} else { // If the select classname is not an air vehicle
-							[_missionName, 0, format["%1 IS NOT AN AIR VEHICLE", _classToSpawn]] spawn VEMFr_fnc_log;
+							[_missionName, 0, format["%1 IS NOT AN AIR VEHICLE", _classToSpawn]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 						};
 					};
 
@@ -195,11 +195,11 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 						_minesPlaced = [_locPos, 5, 100, _missionName] call VEMFr_fnc_placeMines param [0, [], [[]]];
 						if (count _minesPlaced > 0) then
 						{
-							[_missionName, 1, format["Successfully placed mines at %1", _locName]] spawn VEMFr_fnc_log;
+							[_missionName, 1, format["Successfully placed mines at %1", _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 						};
 						if (count _minesPlaced isEqualto 0) then
 						{
-							[_missionName, 0, format["Failed to place mines at %1", _locName]] spawn VEMFr_fnc_log;
+							[_missionName, 0, format["Failed to place mines at %1", _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 							_minesPlaced = nil;
 						};
 					};
@@ -219,15 +219,15 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 						{
 							if (_mode isEqualTo 0) then
 							{
-								[[format["%1 @ %2 has been cleared of %3 bad guys", _locName, mapGridPosition (_locPos), worldName], "COMPLETED"]] spawn VEMFr_fnc_broadCast;
+								[[format["%1 @ %2 has been cleared of %3 bad guys", _locName, mapGridPosition (_locPos), worldName], "COMPLETED"]] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
 							};
 							if (_mode isEqualTo 1) then
 							{
-								[[format["%1 @ %2 has been cleared of %3 Police forces", _locName, mapGridPosition (_locPos), worldName], "CLEARED"]] spawn VEMFr_fnc_broadCast;
+								[[format["%1 @ %2 has been cleared of %3 Police forces", _locName, mapGridPosition (_locPos), worldName], "CLEARED"]] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
 							};
 							if (_mode isEqualTo 2) then
 							{
-								[[format["S.W.A.T. raid on %1 @ %2 has been eliminated", _locName, mapGridPosition (_locPos)], "DEFEATED"]] spawn VEMFr_fnc_broadCast;
+								[[format["S.W.A.T. raid on %1 @ %2 has been eliminated", _locName, mapGridPosition (_locPos)], "DEFEATED"]] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
 							};
 						};
 						// Deal with the 50s
@@ -270,9 +270,9 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 								{
 									_crate enableRopeAttach false;
 								};
-								[_missionName, 1, format ["Crate parachuted at: %1 / Grid: %2", (getPosATL _crate), mapGridPosition (getPosATL _crate)]] spawn VEMFr_fnc_log;
+								[_missionName, 1, format ["Crate parachuted at: %1 / Grid: %2", (getPosATL _crate), mapGridPosition (getPosATL _crate)]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 								_lootLoaded = [_crate] call VEMFr_fnc_loadLoot;
-								if _lootLoaded then { [_missionName, 1, "Loot loaded successfully into parachuting crate"] spawn VEMFr_fnc_log };
+								if _lootLoaded then { [_missionName, 1, "Loot loaded successfully into parachuting crate"] ExecVM "exile_vemf_reloaded\sqf\log.sqf" };
 							};
 						};
 						if (_useChute isEqualTo 0) then
@@ -284,7 +284,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 								_crate enableRopeAttach false;
 							};
 							_lootLoaded = [_crate] call VEMFr_fnc_loadLoot;
-							if _lootLoaded then { [_missionName, 1, format["Loot loaded successfully into crate at %1", _locName]] spawn VEMFr_fnc_log };
+							if _lootLoaded then { [_missionName, 1, format["Loot loaded successfully into crate at %1", _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf" };
 						};
 						if (_markCrateVisual isEqualTo 1) then
 						{
@@ -349,7 +349,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 
 						if isNil "_crate" then
 						{
-							[_missionName, 0, "ERROR! _crate not found"] spawn VEMFr_fnc_log;
+							[_missionName, 0, "ERROR! _crate not found"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 						};
 
 						// Explode or remove the mines
@@ -366,7 +366,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 										uiSleep (2 + round random 2);
 									};
 								} forEach _minesPlaced;
-								[_missionName, 1, format["Successfully exploded all %1 mines at %2", count _minesPlaced, _locName]] spawn VEMFr_fnc_log;
+								[_missionName, 1, format["Successfully exploded all %1 mines at %2", count _minesPlaced, _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 								_minesPlaced = nil;
 							};
 							if (_cleanMines isEqualTo 1) then
@@ -377,7 +377,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 										deleteVehicle _x;
 									};
 								} forEach _minesPlaced;
-								[_missionName, 1, format["Successfully deleted all %1 mines at %2", count _minesPlaced, _locName]] spawn VEMFr_fnc_log;
+								[_missionName, 1, format["Successfully deleted all %1 mines at %2", count _minesPlaced, _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 								_minesPlaced = nil;
 							};
 						};
@@ -399,12 +399,12 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 				};
 			} else
 			{
-				[[format["Failed to spawn AI in %1 @ %2", _locName, mapGridPosition (_locPos)], "ERROR!"]] spawn VEMFr_fnc_broadCast;
+				[[format["Failed to spawn AI in %1 @ %2", _locName, mapGridPosition (_locPos)], "ERROR!"]] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
 				breakOut "outer";
 			};
 		} else
 		{ // If done waiting, and no players were detected
-			[_missionName, 1, format["Invasion of %1 @ %2 timed out.", _locName, mapGridPosition _locPos]] spawn VEMFr_fnc_log;
+			[_missionName, 1, format["Invasion of %1 @ %2 timed out.", _locName, mapGridPosition _locPos]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 			if not isNil"_marker" then { deleteMarker _marker };
 			_usedLocs = uiNamespace getVariable "VEMFrUsedLocs";
 			_index = _usedLocs find _loc;

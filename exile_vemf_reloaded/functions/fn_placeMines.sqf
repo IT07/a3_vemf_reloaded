@@ -46,12 +46,12 @@ if (_missionName in ("missionList" call VEMFr_fnc_getSetting)) then
                   if (_mineSetting isEqualTo 3) then { _mineTypes = ["ATMine","APERSMine"] };
                   if (_mineSetting < 1 OR _mineSetting > 3) then
                   {
-                     ["fn_placeMines", 0, "Invalid mines mode!"] spawn VEMFr_fnc_log;
+                     ["fn_placeMines", 0, "Invalid mines mode!"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                      breakOut "main"
                   };
 
                   _mines = [];
-                  ["fn_placeMines", 1, format["Placing %1 mines at %2", _amount, _pos]] spawn VEMFr_fnc_log;
+                  ["fn_placeMines", 1, format["Placing %1 mines at %2", _amount, _pos]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                   for "_m" from 1 to _amount do
                   {
                      private ["_mine"];

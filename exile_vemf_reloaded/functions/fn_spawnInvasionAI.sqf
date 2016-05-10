@@ -158,7 +158,7 @@ if (count _pos isEqualTo 3) then
 								_housePositions deleteAt _houseIndex;
 							};
 
-							_unit addMPEventHandler ["mpkilled","if (isDedicated) then { [_this select 0, _this select 1] spawn VEMFr_fnc_aiKilled }"];
+							_unit addMPEventHandler ["mpkilled","if (isDedicated) then { [_this select 0, _this select 1] ExecVM 'exile_vemf_reloaded\sqf\aiKilled.sqf' }"];
 							// Set skills
 							_unit setSkill ["aimingAccuracy", _accuracy];
 							_unit setSkill ["aimingShake", _aimShake];
@@ -180,7 +180,7 @@ if (count _pos isEqualTo 3) then
 						_invLoaded = [units _grp, _missionName, _mode] call VEMFr_fnc_loadInv; // Load the AI's inventory
 						if not _invLoaded then
 						{
-							["fn_spawnInvasionAI", 0, "failed to load AI's inventory..."] spawn VEMFr_fnc_log;
+							["fn_spawnInvasionAI", 0, "failed to load AI's inventory..."] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 						};
 						_groups pushBack _grp; // Push it into the _groups array
 					};

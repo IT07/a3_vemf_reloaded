@@ -43,7 +43,7 @@ if (_this isEqualType "") then
       };
    } else
    {
-      ["fn_checkSide", 0, format["Failed to find faction of %1", _this]] spawn VEMFr_fnc_log;
+      ["fn_checkSide", 0, format["Failed to find faction of %1", _this]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
    };
    if not isNil"_return" then
    {

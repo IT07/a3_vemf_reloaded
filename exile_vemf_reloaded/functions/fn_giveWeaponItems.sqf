@@ -33,13 +33,13 @@ if (_this isEqualType []) then
             {
                if (_x find "tws" > -1) then
                   {
-                     //["fn_giveWeaponItems", 0, format["This scope is not allowed: %1", _x]] spawn VEMFr_fnc_log;
+                     //["fn_giveWeaponItems", 0, format["This scope is not allowed: %1", _x]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                      _indexes pushBack _forEachIndex;
                   } else
                   {
                      if (_x find "TWS" > -1) then
                         {
-                           //["fn_giveWeaponItems", 0, format["This scope is not allowed: %1", _x]] spawn VEMFr_fnc_log;
+                           //["fn_giveWeaponItems", 0, format["This scope is not allowed: %1", _x]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                            _indexes pushBack _forEachIndex;
                         };
                   };

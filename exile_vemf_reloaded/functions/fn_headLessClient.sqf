@@ -53,7 +53,7 @@ if (("headLessClientSupport" call VEMFr_fnc_getSetting) isEqualTo 1) then
    };
 } else
 {
-   ["fn_headLessClient", 0, "Can not run. headLessClientSupport is not enabled"] spawn VEMFr_fnc_log;
+   ["fn_headLessClient", 0, "Can not run. headLessClientSupport is not enabled"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 };
 // Lowest load found, send it
 _hasLowest

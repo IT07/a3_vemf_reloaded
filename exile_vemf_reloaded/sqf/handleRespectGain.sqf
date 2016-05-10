@@ -96,11 +96,11 @@ if not(isNull _target AND isNull _killer) then
             format["setAccountMoneyAndRespect:%1:%2:%3", _killer getVariable ["ExileMoney", 0], _newRespect, (getPlayerUID _killer)] call ExileServer_system_database_query_fireAndForget;
          } else
          {
-            ["fn_aiKilled", 0, format["Failed to get respect from %1 (%2)", name _killer, _killer]] spawn VEMFr_fnc_log;
+            ["fn_aiKilled", 0, format["Failed to get respect from %1 (%2)", name _killer, _killer]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
          };
       } else
       {
-         ["handleKillMessage", 0, format["There is something wrong with the kill distance (%1)", _dist]] spawn VEMFr_fnc_log;
+         ["handleKillMessage", 0, format["There is something wrong with the kill distance (%1)", _dist]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
          breakOut "outer"; // Stop doing anything after this line
       };
    };

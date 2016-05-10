@@ -62,7 +62,7 @@ if (_this isEqualType []) then
 	{
 		private ["_path","_build"];
 		_path = _this select 0;
-		//["fn_getSetting", 1, format["_path = %1", _path]] spawn VEMFr_fnc_log;
+		//["fn_getSetting", 1, format["_path = %1", _path]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 		_build =
 		{
 			{
@@ -74,16 +74,16 @@ if (_this isEqualType []) then
 			_cfg = configFile >> "CfgVemfReloadedOverrides";
 			call _build;
 			_cfg = _cfg >> _x;
-			//["fn_getSetting", 1, format["_cfg after first build = %1", _cfg]] spawn VEMFr_fnc_log;
+			//["fn_getSetting", 1, format["_cfg after first build = %1", _cfg]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 			if (isNull _cfg) then
 			{
-				//["fn_getSetting", 1, format["_cfg isNull. Resetting _cfg...."]] spawn VEMFr_fnc_log;
+				//["fn_getSetting", 1, format["_cfg isNull. Resetting _cfg...."]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 				_cfg = configFile >> "CfgVemfReloaded";
 				call _build;
 				_cfg = _cfg >> _x;
-				//["fn_getSetting", 1, format["_cfg after second build = %1", _cfg]] spawn VEMFr_fnc_log;
+				//["fn_getSetting", 1, format["_cfg after second build = %1", _cfg]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 			};
-			//["fn_getSetting", 1, format["_cfg after appending _x = %1", _cfg]] spawn VEMFr_fnc_log;
+			//["fn_getSetting", 1, format["_cfg after appending _x = %1", _cfg]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 			call _check;
 			if not isNil"_v" then
 			{

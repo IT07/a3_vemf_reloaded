@@ -5,7 +5,7 @@
 	launches VEMFr (You don't say?)
 */
 
-["Launcher", 2, format["/// STARTING v%1 \\\", getText (configFile >> "CfgPatches" >> "exile_vemf_reloaded" >> "version")]] spawn VEMFr_fnc_log;
+["Launcher", 2, format["/// STARTING v%1 \\\", getText (configFile >> "CfgPatches" >> "exile_vemf_reloaded" >> "version")]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 uiNamespace setVariable ["VEMFrUsedLocs", []];
 uiNamespace setVariable ["VEMFrAttackedFlags", []];
 uiNamespace setVariable ["VEMFrHcLoad", []];
@@ -28,19 +28,19 @@ uiNamespace setVariable ["VEMFrHcLoad", []];
 						{
 							if not(isClass _x) then
 							{
-								["overridesToRPT", 1, format["Overriding 'CfgVemfReloaded >> %1 >> %2 >> %3'", _classLv1Name, _classLv2Name, configName _x]] spawn VEMFr_fnc_log;
+								["overridesToRPT", 1, format["Overriding 'CfgVemfReloaded >> %1 >> %2 >> %3'", _classLv1Name, _classLv2Name, configName _x]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 							};
 						} forEach _levelTwo;
 					};
 					if not(isClass _x) then
 					{
-						["overridesToRPT", 1, format["Overriding 'CfgVemfReloaded >> %1 >> %2", _classLv1Name, configName _x]] spawn VEMFr_fnc_log;
+						["overridesToRPT", 1, format["Overriding 'CfgVemfReloaded >> %1 >> %2", _classLv1Name, configName _x]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 					};
 				} forEach _levelOne;
 			};
 			if not(isClass _x) then
 			{
-				["overridesToRPT", 1, format["Overriding 'CfgVemfReloaded >> %1'", configName _x]] spawn VEMFr_fnc_log;
+				["overridesToRPT", 1, format["Overriding 'CfgVemfReloaded >> %1'", configName _x]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 			};
 		} forEach _root;
 	};

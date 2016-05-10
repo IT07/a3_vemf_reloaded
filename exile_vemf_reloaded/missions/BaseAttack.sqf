@@ -70,8 +70,8 @@ if (VEMFrAttackCount <= ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSetti
                         _signed = [_x] call VEMFr_fnc_signAI;
                      } forEach _paraGroups;
                      _players = nearestObjects [_flagPos, ["Exile_Unit_Player"], 275];
-                     [[format["A para team is on the way to %1 @ %2's location!", _flagName, name _nearestPlayer],"BaseAttack", _players]] spawn VEMFr_fnc_broadCast;
-                     ["BaseAttack", 1, format["A para team is on the way to %1 @ %2's location!", _flagName, name _nearestPlayer]] spawn VEMFr_fnc_log;
+                     [[format["A para team is on the way to %1 @ %2's location!", _flagName, name _nearestPlayer],"BaseAttack", _players]] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
+                     ["BaseAttack", 1, format["A para team is on the way to %1 @ %2's location!", _flagName, name _nearestPlayer]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 
                      while {true} do
                      {
@@ -92,7 +92,7 @@ if (VEMFrAttackCount <= ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSetti
                         };
                      };
                      _players = nearestObjects [_flagPos, ["Exile_Unit_Player"], 275];
-                     [[format["Attack on %1 has been defeated", _flagname],"SUCCESS", _players]] spawn VEMFr_fnc_broadCast;
+                     [[format["Attack on %1 has been defeated", _flagname],"SUCCESS", _players]] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
                      breakOut "outer";
                   } else
                   {
@@ -101,12 +101,12 @@ if (VEMFrAttackCount <= ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSetti
                            deleteVehicle _x;
                         } forEach (units _x);
                      } forEach _paraGroups;
-                     ["BaseAttack", 0, format["Incorrect amount of total units (%1). Should be %2", _unitCount, (_aiSetup select 0) * (_aiSetup select 1)]] spawn VEMFr_fnc_log;
+                     ["BaseAttack", 0, format["Incorrect amount of total units (%1). Should be %2", _unitCount, (_aiSetup select 0) * (_aiSetup select 1)]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                      breakOut "outer";
                   };
                } else
                {
-                  ["BaseAttack", 0, format["Incorrect spawned group count (%1). Should be %2", count _paraGroups, _aiSetup select 0]] spawn VEMFr_fnc_log;
+                  ["BaseAttack", 0, format["Incorrect spawned group count (%1). Should be %2", count _paraGroups, _aiSetup select 0]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                   breakOut "outer";
                };
             } else
@@ -115,12 +115,12 @@ if (VEMFrAttackCount <= ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSetti
                if (_index > -1) then
                {
                   _attackedFlags deleteAt _index;
-                  ["BaseAttack", 1, "Flag deleted from attackedFlag array"] spawn VEMFr_fnc_log;
+                  ["BaseAttack", 1, "Flag deleted from attackedFlag array"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                } else
                {
-                  ["BaseAttack", 0, "Unable to locate and remove attacked flag!"] spawn VEMFr_fnc_log;
+                  ["BaseAttack", 0, "Unable to locate and remove attacked flag!"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                };
-               ["BaseAttack", 0, "Can not find player near flag!"] spawn VEMFr_fnc_log;
+               ["BaseAttack", 0, "Can not find player near flag!"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                breakOut "outer";
             };
          } else
@@ -129,12 +129,12 @@ if (VEMFrAttackCount <= ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSetti
          };
       } else
       {
-         ["BaseAttack", 0, format["invalid aiSetup setting! (%1)", _aiSetup]] spawn VEMFr_fnc_log;
+         ["BaseAttack", 0, format["invalid aiSetup setting! (%1)", _aiSetup]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
          breakOut "outer";
       };
    } else
    {
-      ["BaseAttack", 0, format["Failed to start mission. Given _missionName (%1) is not in active missionList", _missionName]] spawn VEMFr_fnc_log;
+      ["BaseAttack", 0, format["Failed to start mission. Given _missionName (%1) is not in active missionList", _missionName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
       breakOut "outer";
    };
 };

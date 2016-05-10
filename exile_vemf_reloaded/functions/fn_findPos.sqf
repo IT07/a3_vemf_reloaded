@@ -120,7 +120,7 @@ if not(_mode isEqualTo "") then
 											};
 											if not(count _x isEqualTo 2) then
 											{
-												["fn_findPos", 0, format["found invalid entry in mission blacklist: %1", _x]] spawn VEMFr_fnc_log;
+												["fn_findPos", 0, format["found invalid entry in mission blacklist: %1", _x]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 											};
 										} forEach _blackPos;
 									};

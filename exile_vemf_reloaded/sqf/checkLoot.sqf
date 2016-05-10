@@ -15,10 +15,10 @@ if ("validateLoot" call VEMFr_fnc_getSetting isEqualTo 1) then
 { // _validateLoot is enabled, go ahead...
     if ("debugMode" call VEMFr_fnc_getSetting < 1) then
     {
-      ["CheckLoot", 0, "Failed to validate loot: no output allowed in RPT"] spawn VEMFr_fnc_log;
+      ["CheckLoot", 0, "Failed to validate loot: no output allowed in RPT"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
     } else
     {
-      ["CheckLoot", 1, "Validating loot tables..."] spawn VEMFr_fnc_log;
+      ["CheckLoot", 1, "Validating loot tables..."] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
       _invalidClasses = [];
 
       _mags = [];
@@ -56,10 +56,10 @@ if ("validateLoot" call VEMFr_fnc_getSetting isEqualTo 1) then
 
       if (count _invalidClasses isEqualTo 0) then
       {
-         ["CheckLoot", 1, "Loot tables are all valid :)"] spawn VEMFr_fnc_log;
+         ["CheckLoot", 1, "Loot tables are all valid :)"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
       } else
       {
-         ["CheckLoot", 0, format["Invalid classes found in loot! | %1", _invalidClasses]] spawn VEMFr_fnc_log;
+         ["CheckLoot", 0, format["Invalid classes found in loot! | %1", _invalidClasses]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
       };
     };
 };

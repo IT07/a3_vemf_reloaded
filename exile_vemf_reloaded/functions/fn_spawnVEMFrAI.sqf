@@ -78,7 +78,7 @@ if (_pos isEqualTypeArray [0,0,0]) then
 							private ["_unit"];
 							_unit = _grp createUnit [_sldrClass, _pos, [], _spawnRadius, "FORM"]; // Create Unit There
 							_allUnits pushBack _unit;
-							_unit addMPEventHandler ["mpkilled","if (isDedicated) then { [_this select 0, _this select 1] spawn VEMFr_fnc_aiKilled }"];
+							_unit addMPEventHandler ["mpkilled","if (isDedicated) then { [_this select 0, _this select 1] ExecVM 'exile_vemf_reloaded\sqf\aiKilled.sqf' }"];
 
 							// Set skills
 							_unit setSkill ["aimingAccuracy", _accuracy];
@@ -101,7 +101,7 @@ if (_pos isEqualTypeArray [0,0,0]) then
 						_spawned pushBack _grp;
 					} else
 					{
-						["fn_spawnVEMFrAI", 0, "failed to retrieve _groupSide"] spawn VEMFr_fnc_log;
+						["fn_spawnVEMFrAI", 0, "failed to retrieve _groupSide"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 						breakOut "outer";
 					};
 				};
@@ -111,12 +111,12 @@ if (_pos isEqualTypeArray [0,0,0]) then
 				if not _invLoaded then
 				{
 					_spawned = false;
-					["fn_spawnVEMFrAI", 0, "failed to load AI's inventory..."] spawn VEMFr_fnc_log;
+					["fn_spawnVEMFrAI", 0, "failed to load AI's inventory..."] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 					breakOut "outer";
 				};
 			} else
 			{
-				["fn_spawnVEMFrAI", 0, format["(%1) is not in missionList!"]] spawn VEMFr_fnc_log;
+				["fn_spawnVEMFrAI", 0, format["(%1) is not in missionList!"]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 				breakOut "outer";
 			};
 		};
