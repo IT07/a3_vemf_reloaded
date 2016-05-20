@@ -17,23 +17,20 @@ private ["_pos","_found"];
 _found = false;
 _pos = param [0, [], [[]]];
 if (count _pos isEqualTo 3) then
-{
-   private ["_rad"];
-   _rad = param [1, -1, [0]];
-   if (_rad > -1) then
-   { // Check all player distances from _loc
-      {
-         if (isPlayer _x) then
-         {
-            if (speed _x < 250) then // Ignore fast moving players
+   {
+      private ["_rad"];
+      _rad = param [1, -1, [0]];
+      if (_rad > -1) then
+         { // Check all player distances from _loc
             {
-               private ["_isClose"];
-               _isClose = if ((position _x distance _pos) < _rad) then { true } else { false };
-               if _isClose then { _found = true };
-            };
+               if (isPlayer _x AND speed _x < 250) then
+                  {
+                     private ["_isClose"];
+                     _isClose = if ((position _x distance _pos) < _rad) then { true } else { false };
+                     if _isClose then { _found = true };
+                  };
+            } forEach allPlayers;
          };
-      } forEach allPlayers;
    };
-};
 
 _found

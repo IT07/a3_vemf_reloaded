@@ -14,20 +14,20 @@
 private ["_ok"];
 _ok = false;
 if (_this isEqualType []) then
-{
-   private ["_minimum"];
-   _minimum = param [0, 1, [0]];
-   _players = 0;
    {
-      if (isPlayer _x) then
+      private ["_minimum"];
+      _minimum = param [0, 1, [0]];
+      _players = 0;
+      {
+         if (isPlayer _x) then
+            {
+               _players = _players + 1;
+            };
+      } forEach allPlayers;
+      if (_players >= _minimum) then
          {
-            _players = _players + 1;
+            _ok = true
          };
-   } forEach allPlayers;
-   if (_players >= _minimum) then
-   {
-      _ok = true
    };
-};
 
 _ok

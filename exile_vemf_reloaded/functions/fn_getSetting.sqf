@@ -20,90 +20,85 @@
 private["_r","_check","_v"];
 _r = [];
 _check =
-{
-	if (isNumber _cfg) then
 	{
-		_v = getNumber _cfg
-	} else
-	{
-		if (isText _cfg) then
-		{
-			_v = getText _cfg
-		} else
-		{
-			if (isArray _cfg) then
+		if (isNumber _cfg) then
 			{
-				_v = getArray _cfg
+				_v = getNumber _cfg
+			} else
+			{
+				if (isText _cfg) then
+					{
+						_v = getText _cfg
+					} else
+					{
+						if (isArray _cfg) then
+							{
+								_v = getArray _cfg
+							};
+					};
 			};
-		};
 	};
-};
 
 if (_this isEqualType "") then
-{
-	private ["_cfg"];
-	if (isNull (configFile >> "CfgVemfReloadedOverrides" >> _this)) then
 	{
-		_cfg = configFile >> "CfgVemfReloaded" >> _this;
-	} else
-	{
-		_cfg = configFile >> "CfgVemfReloadedOverrides" >> _this;
-	};
-	call _check;
-	if not isNil"_v" then
-	{
-		_r = _v;
-	};
-};
-
-if (_this isEqualType []) then
-{
-	if (_this isEqualTypeArray [[],[]]) then
-	{
-		private ["_path","_build"];
-		_path = _this select 0;
-		//["fn_getSetting", 1, format["_path = %1", _path]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-		_build =
-		{
+		private ["_cfg"];
+		if (isNull (configFile >> "CfgVemfReloadedOverrides" >> _this)) then
 			{
-				_cfg = _cfg >> _x;
-			} forEach _path;
-		};
-		{
-			private ["_cfg"];
-			_cfg = configFile >> "CfgVemfReloadedOverrides";
-			call _build;
-			_cfg = _cfg >> _x;
-			//["fn_getSetting", 1, format["_cfg after first build = %1", _cfg]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-			if (isNull _cfg) then
+				_cfg = configFile >> "CfgVemfReloaded" >> _this;
+			} else
 			{
-				//["fn_getSetting", 1, format["_cfg isNull. Resetting _cfg...."]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-				_cfg = configFile >> "CfgVemfReloaded";
-				call _build;
-				_cfg = _cfg >> _x;
-				//["fn_getSetting", 1, format["_cfg after second build = %1", _cfg]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+				_cfg = configFile >> "CfgVemfReloadedOverrides" >> _this;
 			};
-			//["fn_getSetting", 1, format["_cfg after appending _x = %1", _cfg]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 			call _check;
 			if not isNil"_v" then
-			{
-				_r pushBack _v
-			};
-		} forEach (_this select 1);
+				{
+					_r = _v;
+				};
 	};
-	if (_this isEqualTypeArray [[]]) then
+
+if (_this isEqualType []) then
 	{
-		{
-			private ["_cfg"];
-			_cfg = configFile >> "CfgVemfReloadedOverrides" >> _x;
-			if (isNull _cfg) then
+		if (_this isEqualTypeArray [[],[]]) then
 			{
-				_cfg = configFile >> "CfgVemfReloaded" >> _x;
+				private ["_path","_build"];
+				_path = _this select 0;
+				_build =
+					{
+						{
+							_cfg = _cfg >> _x;
+						} forEach _path;
+					};
+				private ["_cfg"];
+				{
+					_cfg = configFile >> "CfgVemfReloadedOverrides";
+					call _build;
+					_cfg = _cfg >> _x;
+					if (isNull _cfg) then
+						{
+							_cfg = configFile >> "CfgVemfReloaded";
+							call _build;
+							_cfg = _cfg >> _x;
+						};
+					call _check;
+					if not isNil"_v" then
+						{
+							_r pushBack _v
+						};
+				} forEach (_this select 1);
 			};
-			call _check;
-			_r pushBack _v;
-		} forEach (_this select 0);
+		if (_this isEqualTypeArray [[]]) then
+			{
+				private ["_cfg"];
+				{
+					_cfg = configFile >> "CfgVemfReloadedOverrides" >> _x;
+					if (isNull _cfg) then
+						{
+							_cfg = configFile >> "CfgVemfReloaded" >> _x;
+						};
+					call _check;
+					_r pushBack _v;
+				} forEach (_this select 0);
+			};
 	};
-};
 
 _r

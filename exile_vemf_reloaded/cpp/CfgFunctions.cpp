@@ -12,7 +12,7 @@ class CfgFunctions
 			class getSetting {};
 			class giveAmmo {};
 			class giveWeaponItems {};
-			class headLessClient {};
+			class headlessClient {};
 			class launch { postInit = 1; };
 			class loadInv {};
 			class loadLoot {};
