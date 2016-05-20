@@ -1,5 +1,11 @@
 ## VEMFr Changelog
 
+#### `v0743.1`
+*Server-side* <br />
+**[FIXED]** headless client code <br />
+**[REWORKED]** overall code indentation and code structure <br />
+<br />
+
 #### `v0743.0`
 *Server-side* <br />
 **[REMOVED]** a few functions. They are now single SQF files <br />
