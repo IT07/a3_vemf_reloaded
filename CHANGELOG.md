@@ -1,5 +1,10 @@
 ## VEMFr Changelog
 
+#### `v0743.2`
+*Server-side* <br />
+**[FIXED]** AI dropping out of the sky (BaseAttack mission) <br />
+<br />
+
 #### `v0743.1`
 *Server-side* <br />
 **[FIXED]** headless client code <br />
