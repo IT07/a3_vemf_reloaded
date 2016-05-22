@@ -67,6 +67,10 @@ if (_this isEqualType []) then
 											_gear = selectRandom _uniforms;
 											_unit forceAddUniform _gear; // Give the poor naked guy some clothing :)
 										};
+									if (_missionName isEqualTo "BaseAttack") then
+										{
+											_unit addBackpack "B_Parachute";
+										};
 									_gear = selectRandom _headGear;
 									_unit addHeadGear _gear;
 									_gear = selectRandom _vests;
@@ -79,9 +83,6 @@ if (_this isEqualType []) then
 														{
 															_gear = selectRandom _backpacks;
 															_unit addBackpack _gear;
-														} else
-														{
-															_unit addBackpack "B_Parachute";
 														};
 													_gear = selectRandom _launchers;
 													_unit addWeapon _gear;
