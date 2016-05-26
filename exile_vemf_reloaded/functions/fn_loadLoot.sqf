@@ -1,8 +1,12 @@
 /*
-	Author: VAMPIRE, rebooted by IT07
+	Author: IT07
 
 	Description:
 	loads loot crate inventory
+
+	Params:
+	_this: ARRAY
+	_this select 0: OBJECT - the crate
 
 	Returns:
 	BOOL - true if everything went ok
@@ -56,6 +60,7 @@ if not isNull _crate then
 		_backpacks = _settings select 22;
 		_headGear = _settings select 23;
 		_blackList = _settings select 24;
+
 		// Add primary weapons
 		for "_j" from 0 to (_maxPrim - _minPrim + floor random _minPrim) do
 			{
