@@ -4,6 +4,7 @@
 *Server-side* <br />
 **[ADJUSTED]** AI brain settings <br />
 **[CHANGED]** message broadcast code required to make new messages work <br />
+**[FIXED]** AI were given weapons before receiving ammo which results in the AI first required to reload before engaging targets <br />
 *Client-side* <br />
 **[CHANGED]** mission message design <br />
 
