@@ -1,5 +1,12 @@
 ## VEMFr Changelog
 
+#### `v0743.3`
+*Server-side* <br />
+**[ADJUSTED]** AI brain settings <br />
+**[CHANGED]** message broadcast code required to make new messages work <br />
+*Client-side* <br />
+**[CHANGED]** mission message design <br />
+
 #### `v0743.2`
 *Server-side* <br />
 **[FIXED]** AI dropping out of the sky (BaseAttack mission) <br />
