@@ -69,8 +69,6 @@ if (_pos isEqualTypeArray [0,0,0]) then
 											{
 												private["_grp"];
 												_grp = createGroup _groupSide;
-												_grp setBehaviour "AWARE";
-												_grp setCombatMode "RED";
 												_grp allowFleeing 0;
 												for "_u" from 1 to _unitsPerGrp do
 													{
@@ -89,13 +87,20 @@ if (_pos isEqualTypeArray [0,0,0]) then
 														_unit setSkill ["reloadSpeed", _reloadSpd];
 														_unit setSkill ["commanding", _commanding];
 														_unit setSkill ["general", _general];
-														_unit setRank "Private"; // Set rank
-														if (_u isEqualTo _unitsPerGrp) then
-															{
-																_grp selectLeader _unit; // Leader Assignment
-															};
+
+														_unit enableAI "TARGET";
+														_unit enableAI "AUTOTARGET";
+														_unit enableAI "MOVE";
+														_unit enableAI "ANIM";
+														_unit enableAI "TEAMSWITCH";
+														_unit enableAI "FSM";
+														_unit enableAI "AIMINGERROR";
+														_unit enableAI "SUPPRESSION";
+														_unit enableAI "CHECKVISIBLE";
+														_unit enableAI "COVER";
+														_unit enableAI "AUTOCOMBAT";
+														_unit enableAI "PATH";
 													};
-													_grp enableAttack true;
 													_spawned pushBack _grp;
 											} else
 											{
