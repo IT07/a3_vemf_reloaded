@@ -7,6 +7,9 @@
     Params:
     _this: ARRAY
     _this select 0: OBJECT - unit to give ammo to
+    _this select 1: STRING - primaryWeapon classname
+    _this select 2: STRING - secondaryWeapon classname
+    _this select 3: STRING - handGunWeapon classname
 
     Returns:
     BOOLEAN - true if successful
@@ -18,28 +21,29 @@ if (_this isEqualType []) then
    {
       private ["_unit"];
       _unit = param [0, objNull, [objNull]];
+      _classPrimary = param [1, "", [""]];
+      _classSecondary = param [2, "", [""]];
+      _classHandgun = param [3, "", [""]];
       if not isNull _unit then
          {
             if local _unit then
                {
-                  if not(primaryWeapon _unit isEqualTo "") then
+                  if not(_classPrimary isEqualTo "") then
                      {
-                        private ["_weapon","_mag","_magMass","_vestMass","_itemMass"];
-                        _weapon = primaryWeapon _unit;
-                        _mag = selectRandom (getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines"));
+                        private ["_mag"];
+                        _mag = selectRandom (getArray (configFile >> "CfgWeapons" >> _classPrimary >> "magazines"));
                         for "_m" from 1 to 5 do
                            {
                               if not(_unit canAdd _mag) exitWith {};
                               _unit addItem _mag;
                            };
                      };
-                  if not (secondaryWeapon _unit isEqualTo "") then
+                  if not (_classSecondary isEqualTo "") then
                      {
                         if not(backPack _unit isEqualTo "") then
                            {
-                              private ["_weapon","_mag","_magMass"];
-                              _weapon = secondaryWeapon _unit;
-                              _mag = selectRandom (getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines"));
+                              private ["_mag"];
+                              _mag = selectRandom (getArray (configFile >> "CfgWeapons" >> _classSecondary >> "magazines"));
                               for "_m" from 1 to 3 do
                                  {
                                     if not(_unit canAdd _mag) exitWith {};
@@ -47,11 +51,10 @@ if (_this isEqualType []) then
                                  };
                            };
                      };
-                  if not (handGunWeapon _unit isEqualTo "") then
+                  if not (_classHandgun isEqualTo "") then
                      {
-                        private ["_weapon","_mag","_magMass","_uniformMass"];
-                        _weapon = handGunWeapon _unit;
-                        _mag = selectRandom (getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines"));
+                        private ["_mag"];
+                        _mag = selectRandom (getArray (configFile >> "CfgWeapons" >> _classHandgun >> "magazines"));
                         for "_m" from 1 to 4 do
                            {
                               if not(_unit canAdd _mag) exitWith {};
