@@ -94,13 +94,10 @@ if (count _pos isEqualTo 3) then
 												private ["_grp"];
 												_grp = createGroup _groupSide;
 												(_spawned select 0) pushBack _grp;
-												_grp setBehaviour "AWARE";
-												_grp setCombatMode "RED";
 												_grp allowFleeing 0;
 												private ["_house","_housePositions"];
 												if not _noHouses then
 													{
-														_grp enableAttack false;
 														_house = selectRandom _goodHouses;
 														_houseID = _goodHouses find _house;
 														_goodHouses deleteAt _houseID;
@@ -122,7 +119,7 @@ if (count _pos isEqualTo 3) then
 																		_placed50 = true;
 																		if (_cal50s > 0) then
 																			{
-																				_hmg = createVehicle ["B_HMG_01_high_F", _spawnPos, [], 0, "CAN_COLLIDE"];
+																				_hmg = createVehicle ["O_HMG_01_high_F", _spawnPos, [], 0, "CAN_COLLIDE"];
 																				_hmg setVehicleLock "LOCKEDPLAYER";
 																				(_spawned select 1) pushBack _hmg;
 																			};
@@ -132,7 +129,7 @@ if (count _pos isEqualTo 3) then
 														_unit = _grp createUnit [_sldrClass, _spawnPos, [], 0, "CAN_COLLIDE"]; // Create Unit There
 														if not _noHouses then
 															{
-																doStop _unit;
+																//doStop _unit;
 																if (_cal50s > 0) then
 																	{
 																		if not isNil"_hmg" then
@@ -161,11 +158,19 @@ if (count _pos isEqualTo 3) then
 														_unit setSkill ["reloadSpeed", _reloadSpd];
 														_unit setSkill ["commanding", _commanding];
 														_unit setSkill ["general", _general];
-														_unit setRank "Private"; // Set rank
-														if (_u isEqualTo _unitsPerGrp) then
-															{
-																_grp selectLeader _unit; // Leader Assignment
-															};
+
+														_unit enableAI "TARGET";
+														_unit enableAI "AUTOTARGET";
+														_unit enableAI "MOVE";
+														_unit enableAI "ANIM";
+														_unit enableAI "TEAMSWITCH";
+														_unit enableAI "FSM";
+														_unit enableAI "AIMINGERROR";
+														_unit enableAI "SUPPRESSION";
+														_unit enableAI "CHECKVISIBLE";
+														_unit enableAI "COVER";
+														_unit enableAI "AUTOCOMBAT";
+														_unit enableAI "PATH";
 													};
 												private ["_invLoaded"];
 												_invLoaded = [units _grp, _missionName, _mode] call VEMFr_fnc_loadInv; // Load the AI's inventory
