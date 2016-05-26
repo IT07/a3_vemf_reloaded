@@ -1,5 +1,10 @@
 ## VEMFr Changelog
 
+#### `v0743.3 HOTFIX`
+*Client-side* <br />
+**[FIXED]** serialization error <br />
+<br />
+
 #### `v0743.3`
 *Server-side* <br />
 **[ADJUSTED]** AI brain settings <br />
