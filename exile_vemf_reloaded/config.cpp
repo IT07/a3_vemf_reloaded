@@ -142,19 +142,19 @@ class CfgVemfReloaded
 		difficulty = "Veteran"; // Options: "Easy" "Normal" "Veteran" "Hardcore" | Default: Veteran
 		class Easy // AI looks stupid with this setting xD
 		{
-			accuracy = 0.4; aimingShake = 0.20; aimingSpeed = 0.3; endurance = 0.25; spotDistance = 0.5; spotTime = 0.7; courage = 1; reloadSpeed = 0.3; commanding = 0.8; general = 0.3;
+			accuracy = 0.4; aimingShake = 0.20; aimingSpeed = 0.3; endurance = 0.25; spotDistance = 0.5; spotTime = 0.85; courage = 1; reloadSpeed = 0.3; commanding = 1; general = 0.3;
 		};
 		class Normal
 		{
-			accuracy = 0.4; aimingShake = 0.20; aimingSpeed = 0.3; endurance = 0.25; spotDistance = 0.5; spotTime = 0.7; courage = 1; reloadSpeed = 0.3; commanding = 0.8; general = 0.4;
+			accuracy = 0.4; aimingShake = 0.20; aimingSpeed = 0.3; endurance = 0.25; spotDistance = 0.5; spotTime = 0.85; courage = 1; reloadSpeed = 0.3; commanding = 1; general = 0.4;
 		};
 		class Veteran
 		{
-			accuracy = 0.4; aimingShake = 0.20; aimingSpeed = 0.3; endurance = 0.25; spotDistance = 0.5; spotTime = 0.7; courage = 1; reloadSpeed = 0.3; commanding = 0.8; general = 0.5;
+			accuracy = 0.4; aimingShake = 0.20; aimingSpeed = 0.3; endurance = 0.25; spotDistance = 0.5; spotTime = 0.85; courage = 1; reloadSpeed = 0.3; commanding = 1; general = 0.5;
 		};
 		class Hardcore // Also known as Aimbots
 		{
-			accuracy = 0.4; aimingShake = 0.20; aimingSpeed = 0.3; endurance = 0.25; spotDistance = 0.5; spotTime = 0.7; courage = 1; reloadSpeed = 0.3; commanding = 0.8; general = 0.7;
+			accuracy = 0.4; aimingShake = 0.20; aimingSpeed = 0.3; endurance = 0.25; spotDistance = 0.5; spotTime = 0.85; courage = 1; reloadSpeed = 0.3; commanding = 1; general = 0.7;
 		};
 	};
 
