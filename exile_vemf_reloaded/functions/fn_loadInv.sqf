@@ -85,32 +85,33 @@ if (_this isEqualType []) then
 															_unit addBackpack _gear;
 														};
 													_gear = selectRandom _launchers;
-													_unit addWeapon _gear;
 													private ["_ammo"];
 													_ammo = getArray (configFile >> "cfgWeapons" >> _gear >> "magazines");
 													if (count _ammo > 2) then
 														{
 															_ammo resize 2;
 														};
-													for "_i" from 0 to (2 + (round random 1)) do
-														{
-															_unit addMagazine (selectRandom _ammo);
-														};
+														for "_i" from 0 to (2 + (round random 1)) do
+															{
+																_unit addMagazine (selectRandom _ammo);
+															};
+													_unit addWeapon _gear;
 												};
 										};
 
-									// Add Weapons & Ammo
-									_gear = selectRandom _rifles;
-									_unit addWeapon _gear;
-									_unit selectWeapon _gear;
-									_gear = selectRandom _pistols;
-									_unit addWeapon _gear;
+									// Select a random weapon
+									private ["_primaryWeapon","_handgunWeapon"];
+									_primaryWeapon = selectRandom _rifles;
+									_handgunWeapon = selectRandom _pistols;
 									// Give this guy some ammo
-									_givenAmmo = [_unit] call VEMFr_fnc_giveAmmo;
+									_givenAmmo = [_unit, _primaryWeapon, "", _handgunWeapon] call VEMFr_fnc_giveAmmo;
 									if not _givenAmmo then
 										{
 											["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 										};
+									_unit addWeapon _primaryWeapon;
+									_unit selectWeapon _primaryWeapon;
+									_unit addWeapon _handgunWeapon;
 									// Give this guy some weaponItems
 									_giveAttachments = [_unit] call VEMFr_fnc_giveWeaponItems;
 									if not _giveAttachments then
@@ -154,9 +155,15 @@ if (_this isEqualType []) then
 									_uniform = selectRandom _uniforms;
 									_unit forceAddUniform _uniform;
 									_rifle = selectRandom _rifles;
+									_pistol = selectRandom _pistols;
+									// Give this guy some ammo
+									_givenAmmo = [_unit, _rifle, "", _pistol] call VEMFr_fnc_giveAmmo;
+									if not _givenAmmo then
+										{
+											["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+										};
 									_unit addWeapon _rifle;
 									_unit selectWeapon _rifle;
-									_pistol = selectRandom _pistols;
 									_unit addWeapon _pistol;
 									if not(_missionName isEqualTo "BaseAttack") then
 										{
@@ -165,12 +172,6 @@ if (_this isEqualType []) then
 										} else
 										{
 											_unit addBackpack "B_Parachute";
-										};
-									// Give this guy some ammo
-									_givenAmmo = [_unit] call VEMFr_fnc_giveAmmo;
-									if not _givenAmmo then
-										{
-											["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 										};
 									// Give this guy some weaponItems
 									_giveAttachments = [_unit] call VEMFr_fnc_giveWeaponItems;
@@ -208,20 +209,20 @@ if (_this isEqualType []) then
 									_unit addVest "V_PlateCarrier2_blk";
 									_unit forceAddUniform "Exile_Uniform_ExileCustoms";
 									_rifle = selectRandom _rifles;
+									_pistol = selectRandom _pistols;
+									// Give this guy some ammo
+									_givenAmmo = [_unit, _rifle, "", _pistol] call VEMFr_fnc_giveAmmo;
+									if not _givenAmmo then
+										{
+											["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+										};
 									_unit addWeapon _rifle;
 									_unit selectWeapon _rifle;
-									_pistol = selectRandom _pistols;
 									_unit addWeapon _pistol;
 
 									if (_missionName isEqualTo "BaseAttack") then
 										{
 											_unit addBackpack "B_Parachute";
-										};
-									// Give this guy some ammo
-									_givenAmmo = [_unit] call VEMFr_fnc_giveAmmo;
-									if not _givenAmmo then
-										{
-											["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 										};
 									// Give this guy some weaponItems
 									_giveAttachments = [_unit] call VEMFr_fnc_giveWeaponItems;
