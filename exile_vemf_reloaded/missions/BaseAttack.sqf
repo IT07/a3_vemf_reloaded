@@ -70,7 +70,7 @@ if (VEMFrAttackCount <= ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSetti
                         _signed = [_x] call VEMFr_fnc_signAI;
                      } forEach _paraGroups;
                      _players = nearestObjects [_flagPos, ["Exile_Unit_Player"], 275];
-                     [[format["A para team is on the way to %1 @ %2's location!", _flagName, name _nearestPlayer],"BaseAttack", _players]] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
+                     [[-1, "NEW BASE ATTACK", format["A para team is on the way to %1 @ %2's location!", _flagName, name _nearestPlayer]], _players] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
                      ["BaseAttack", 1, format["A para team is on the way to %1 @ %2's location!", _flagName, name _nearestPlayer]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 
                      while {true} do
@@ -92,7 +92,7 @@ if (VEMFrAttackCount <= ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSetti
                         };
                      };
                      _players = nearestObjects [_flagPos, ["Exile_Unit_Player"], 275];
-                     [[format["Attack on %1 has been defeated", _flagname],"SUCCESS", _players]] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
+                     [[-1, "BASE ATTACK COMPLETED", format["Base attack on %1 has been defeated!", _flagname]], _players] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
                      breakOut "outer";
                   } else
                   {
