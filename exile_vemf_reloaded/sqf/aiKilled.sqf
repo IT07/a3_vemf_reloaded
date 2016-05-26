@@ -69,7 +69,7 @@ if (_this isEqualType []) then
 						if (("sayKilled" call VEMFr_fnc_getSetting) isEqualTo 1) then
 						{
 							_kMsg = format["(VEMFr) %1 [Roadkill] AI", name _killer];
-							[_kMsg, "sys"] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
+							[_kMsg, [], "sys"] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
 						};
 					};
 				};
