@@ -26,7 +26,7 @@ if not(isNull _target AND isNull _killer) then
       if (_sayKilled isEqualTo 1) then
       {
          _kMsg = format["(VEMFr) %1 [%2, %3m] AI", name _killer, getText(configFile >> "CfgWeapons" >> _curWeapon >> "displayName"), round _dist];
-         [_kMsg, "sys"] ExecVM "exile_vemf_reloaded\sqf\broadCast.sqf";
+         [_kMsg, [], "sys"] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
          breakOut "outer";
       };
       if (_sayKilled isEqualTo 2) then
