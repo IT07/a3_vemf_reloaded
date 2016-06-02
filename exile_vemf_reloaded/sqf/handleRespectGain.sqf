@@ -84,7 +84,7 @@ if not(isNull _target AND isNull _killer) then
       if _distanceOk then
       {
          _curRespect = _killer getVariable ["ExileScore", nil];
-         if not(isNil"_curRespect") then
+         if not(isNil "_curRespect") then
          {
             _respectToGive = (((_message select 0) select 1) select 1);
             _newRespect = _curRespect + _respectToGive + _respectReward;

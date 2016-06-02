@@ -24,7 +24,7 @@ if (_minNew > -1) then
                {
                   _minFps = "minServerFPS" call VEMFr_fnc_getSetting;
                   _minPlayers = "minPlayers" call VEMFr_fnc_getSetting;
-                  if isNil"VEMFrForceStart" then { VEMFrForceStart = false };
+                  if isNil "VEMFrForceStart" then { VEMFrForceStart = false };
                   waitUntil { if ([_minPlayers] call VEMFr_fnc_playerCount AND diag_fps > _minFps OR VEMFrForceStart) then { true } else { uiSleep 5; false } };
                   if VEMFrForceStart then
                      {

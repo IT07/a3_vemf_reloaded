@@ -7,7 +7,7 @@
 
 VEMFrMissionCount = VEMFrMissionCount + 1;
 _missionName = param [0, "", [""]];
-if isNil"VEMFrAttackCount" then { VEMFrAttackCount = 0 };
+if isNil "VEMFrAttackCount" then { VEMFrAttackCount = 0 };
 VEMFrAttackCount = VEMFrAttackCount + 1;
 if (VEMFrAttackCount <= ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSetting select 0)) then
 {
@@ -37,7 +37,7 @@ if (VEMFrAttackCount <= ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSetti
             _attackedFlags pushBack _flagToAttack;
             _flagPos = position _flagToAttack;
             _nearestPlayer = selectRandom (nearestObjects [_flagPos, ["Exile_Unit_Player"], 150]);
-            if not isNil"_nearestPlayer" then
+            if not isNil "_nearestPlayer" then
             {
                _flagName = _flagToAttack getVariable ["exileterritoryname", "ERROR: UNKNOWN NAME"];
                _paraGroups = [_flagPos, _aiSetup select 0, _aiSetup select 1, ([[_missionName],["aiMode"]] call VEMFr_fnc_getSetting select 0), _missionName, 1000 + (random 1000), 150] call VEMFr_fnc_spawnVEMFrAI;
@@ -67,7 +67,7 @@ if (VEMFrAttackCount <= ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSetti
                         {
                            _units pushback _x;
                         } forEach (units _x);
-                        _signed = [_x] call VEMFr_fnc_signAI;
+                        [_x] ExecVM "exile_vemf_reloaded\sqf\signAI.sqf";
                      } forEach _paraGroups;
                      _players = nearestObjects [_flagPos, ["Exile_Unit_Player"], 275];
                      [[-1, "NEW BASE ATTACK", format["A para team is on the way to %1 @ %2's location!", _flagName, name _nearestPlayer]], _players] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
