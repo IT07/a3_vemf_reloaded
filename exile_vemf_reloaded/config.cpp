@@ -57,15 +57,15 @@ class CfgVemfReloaded
 	{ // NOTE: If the map you use is not listed below, simply add it by yourself or put the locations you want to blacklist into the locations array of the Other class
 		class Altis
 		{
-			locations[] = {"Kavala","Syrta","Zaros","Pyrgos","Selakano","Sofia","Sagonisi","Monisi","Fournos","Savri","Atsalis","Polemista","Cap Makrinos","Pyrgi","Makrynisi","Chelonisi","Almyra","Surf Club"};
+			locations[] = {"Almyra","Atsalis","Cap Makrinos","Chelonisi","Fournos","Kavala","Makrynisi","Monisi","Polemista","Pyrgos","Pyrgi","Sagonisi","Savri","Selakano","Sofia","Surf Club","Syrta","Zaros"};
 		};
 		class Stratis
 		{
-			locations[] = {"Marina Bay","Kamino Bay","Keiros Bay","Limeri Bay","Tsoukala Bay","Jay Cove","Strogos Bay","Kyfi Bay","Nisi Bay"};
+			locations[] = {"Jay Cove","Kamino Bay","Keiros Bay","Kyfi Bay","Limeri Bay","Marina Bay","Nisi Bay","Strogos Bay","Tsoukala Bay"};
 		};
 		class Namalsk
 		{
-			locations[] = {"Nemsk Bay","Brensk Bay","Seraja Bay","Lubjansk Bay","Tara Strait"};
+			locations[] = {"Brensk Bay","Lubjansk Bay","Nemsk Bay","Seraja Bay","Sebjan Mine","Tara Strait"};
 		};
 		class Other
 		{
@@ -116,6 +116,7 @@ class CfgVemfReloaded
 		randomModes = 1; // Enable/disable randomization of AI types (linked to aiMode setting)
 	   skipDistance = 800; // No missions at locations which have players within this range (in meters)
 	   smokeTypes[] = {"SmokeShell","SmokeShellBlue","SmokeShellGreen","SmokeShellOrange","SmokeShellRed","SmokeShellYellow"};
+		spawnCrateFirst = 0; // Enable/disable the spawning of loot crate before mission has been completed
 	   streetLights = 0; // Enable/disable street lights at mission location
 	   streetLightsRestore = 1; // Enable/disable restoration of street lights after mission completion
 	   streetLightsRange = 500; // Affects streetlights within this distance from mission's center
