@@ -3,13 +3,13 @@
 */
 
 VEMFrMissionCount = VEMFrMissionCount + 1;
-if isNil"VEMFrInvasionCount" then { VEMFrInvasionCount = 0; };
+if isNil "VEMFrInvasionCount" then { VEMFrInvasionCount = 0; };
 VEMFrInvasionCount = VEMFrInvasionCount + 1;
 _missionName = param [0, "", [""]];
 if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_getSetting) select 0)) then
 {
 	scopeName "outer";
-	private ["_settings","_grpCount","_groupUnits","_skipDistance","_loc","_hasPlayers","_spawned","_grpArr","_unitArr","_done","_boxes","_box","_chute","_colors","_lightType","_light","_smoke"];
+	private ["_hasPlayers","_spawned","_grpArr","_unitArr","_done","_boxes","_box","_chute","_colors","_lightType","_light","_smoke"];
 	// Define _settings
 	_settings = [[_missionName],["groupCount","groupUnits","maxDistance","maxDistancePrefered","skipDistance","marker","parachuteCrate","markCrateVisual","markCrateOnMap","announce","streetLights","streetLightsRestore","streetLightsRange","allowCrateLift"]] call VEMFr_fnc_getSetting;
 	_grpCount = _settings select 0;
@@ -58,7 +58,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 				[[_mode, "NEW S.W.A.T. RAID", format["%1 S.W.A.T. teams are now raiding %2 @ %3", worldName, _locName, mapGridPosition _locPos]]] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
 			};
 		};
-		private["_marker"];
+		private ["_marker"];
 		if (_useMissionMarker isEqualTo 1) then
 		{ // Create/place the marker if enabled
 			_marker = createMarker [format["VEMFr_DynaLocInva_ID%1", random 9000], _locPos];
@@ -97,6 +97,48 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 			} forEach _all;
 		};
 
+		private ["_crate"];
+		_doSpawnCrate = {
+			// Choose a box
+			_boxes = [[_missionName],["crateTypes"]] call VEMFr_fnc_getSetting;
+			_box = selectRandom (_boxes select 0);
+			_pos = [_locPos, 0, 200, 0, 0, 300, 0] call bis_fnc_findSafePos;
+			if (_useChute isEqualTo 1) then
+			{
+				_chute = createVehicle ["I_Parachute_02_F", _pos, [], 0, "FLY"];
+				_chute setPos [getPos _chute select 0, getPos _chute select 1, _crateAltitude];
+				_chute enableSimulationGlobal true;
+
+				if not isNull _chute then
+				{
+					_crate = createVehicle [_box, getPos _chute, [], 0, "NONE"];
+					_crate allowDamage false;
+					_crate enableSimulationGlobal true;
+					_crate attachTo [_chute, [0,0,0]];
+					[_missionName, 1, format ["Crate parachuted at: %1 / Grid: %2", (getPosATL _crate), mapGridPosition (getPosATL _crate)]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+					[_crate, _locName, _locPos] ExecVM "exile_vemf_reloaded\sqf\loadLoot.sqf";
+					waitUntil { if (((getPos _crate) select 2) < 7) then {true} else {uiSleep 1; false} };
+					detach _crate;
+				} else
+				{
+					[_missionName, 0, "Where is the chute??"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+				};
+			};
+			if (_useChute isEqualTo 0) then
+			{
+				_crate = createVehicle [_box, _pos, [], 0, "NONE"];
+				_crate allowDamage false;
+				[_crate, _locName, _locPos] ExecVM "exile_vemf_reloaded\sqf\loadLoot.sqf";
+			};
+			if (_allowCrateLift isEqualTo 0) then
+				{
+					_crate enableRopeAttach false;
+				} else
+				{
+					_crate enableRopeAttach true;
+				};
+		};
+
 		// Usage: POSITION, Radius
 		_playerNear = [_locPos, 800] call VEMFr_fnc_waitForPlayers;
 		if _playerNear then
@@ -110,7 +152,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 					_units = [];
 					_groups = _spawned select 0;
 					{
-						[_x] spawn VEMFr_fnc_signAI;
+						[_x] ExecVM "exile_vemf_reloaded\sqf\signAI.sqf";
 						{
 							_units pushBack _x;
 						} forEach (units _x);
@@ -152,7 +194,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 												_path = _x;
 											};
 										} forEach _turrets;
-										if not isNil"_path" then
+										if not isNil "_path" then
 										{
 											_x moveInTurret [_heli, _path];
 										} else
@@ -180,12 +222,18 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 								_wpLoiter setWaypointLoiterRadius 200;
 								_heliGroup setCurrentWaypoint _wpLoiter;
 
-								[_heliGroup] spawn VEMFr_fnc_signAI;
+								[_heliGroup] ExecVM "exile_vemf_reloaded\sqf\signAI.sqf";
 							};
 						} else { // If the select classname is not an air vehicle
 							[_missionName, 0, format["%1 IS NOT AN AIR VEHICLE", _classToSpawn]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 						};
 					};
+
+					// Place the crate if enabled
+					if ((([["DynamicLocationInvasion"],["spawnCrateFirst"]] call VEMFr_fnc_getSetting) select 0) isEqualTo 1) then
+						{
+							call _doSpawnCrate;
+						};
 
 					// Place mines if enabled
 					private ["_minesPlaced","_mines"];
@@ -195,11 +243,11 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 						_minesPlaced = [_locPos, 5, 100, _missionName] call VEMFr_fnc_placeMines param [0, [], [[]]];
 						if (count _minesPlaced > 0) then
 						{
-							[_missionName, 1, format["Successfully placed mines at %1", _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+							[_missionName, 1, format["%1 mines placed at %2", count _minesPlaced, _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 						};
 						if (count _minesPlaced isEqualto 0) then
 						{
-							[_missionName, 0, format["Failed to place mines at %1", _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+							[_missionName, 0, format["Failed to place %1 mines at %2", count _minesPlaced, _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 							_minesPlaced = nil;
 						};
 					};
@@ -231,7 +279,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 							};
 						};
 						// Deal with the 50s
-						if not isNil"_cal50s" then
+						if not isNil "_cal50s" then
 						{
 							private["_cal50sDelete"];
 							_cal50sDelete = ([[_missionName],["cal50sDelete"]] call VEMFr_fnc_getSetting) select 0;
@@ -249,83 +297,51 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 								} forEach _cal50s;
 							};
 						};
-						// Choose a box
-						_boxes = [[_missionName],["crateTypes"]] call VEMFr_fnc_getSetting;
-						_box = selectRandom (_boxes select 0);
-						_pos = [_locPos, 0, 200, 0, 0, 300, 0] call bis_fnc_findSafePos;
-						private ["_crate"];
-						if (_useChute isEqualTo 1) then
-						{
-							_chute = createVehicle ["I_Parachute_02_F", _pos, [], 0, "FLY"];
-							_chute setPos [getPos _chute select 0, getPos _chute select 1, _crateAltitude];
-							_chute enableSimulationGlobal true;
 
-							if not isNull _chute then
-							{
-								_crate = createVehicle [_box, getPos _chute, [], 0, "NONE"];
-								_crate allowDamage false;
-								_crate enableSimulationGlobal true;
-								_crate attachTo [_chute, [0,0,0]];
-								if (_allowCrateLift isEqualTo 0) then
-								{
-									_crate enableRopeAttach false;
-								};
-								[_missionName, 1, format ["Crate parachuted at: %1 / Grid: %2", (getPosATL _crate), mapGridPosition (getPosATL _crate)]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-								_lootLoaded = [_crate] call VEMFr_fnc_loadLoot;
-								if _lootLoaded then { [_missionName, 1, "Loot loaded successfully into parachuting crate at %1", _locname] ExecVM "exile_vemf_reloaded\sqf\log.sqf" };
-							};
-						};
-						if (_useChute isEqualTo 0) then
-						{
-							_crate = createVehicle [_box, _pos, [], 0, "NONE"];
-							_crate allowDamage false;
-							if (_allowCrateLift isEqualTo 0) then
-							{
-								_crate enableRopeAttach false;
-							};
-							_lootLoaded = [_crate] call VEMFr_fnc_loadLoot;
-							if _lootLoaded then { [_missionName, 1, format["Loot loaded successfully into crate at %1", _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf" };
-						};
-						if (_markCrateVisual isEqualTo 1) then
-						{
-							uiSleep 0.5;
-							// If night, attach a chemlight
-							if (dayTime < 5 OR dayTime > 19) then
-							{
-								_colors = [[_missionName],["flairTypes"]] call VEMFr_fnc_getSetting param [0, [], [[]]];
-								if (count _colors > 0) then
-								{
-									_lightType = selectRandom _colors;
-									_light = _lightType createVehicle (position _crate);
-									_light attachTo [_crate,[0,0,0]];
-								};
-							};
-							// Attach smoke
-							_colors = [[_missionName],["smokeTypes"]] call VEMFr_fnc_getSetting param [0, [], [[]]];
-							if (count _colors > 0) then
-							{
-								_rndmColor = selectRandom _colors;
-								_smoke = createVehicle [_rndmColor, getPos _crate, [], 0, "CAN_COLLIDE"];
-								_smoke attachTo [_crate,[0,0,0]];
-							};
-						};
-						if (_useChute isEqualTo 1) then
-						{
-							waitUntil { uiSleep 1; (((getPos _crate) select 2) < 7) };
-							detach _crate;
-						};
-						if not isNil"_marker" then
+						if not isNil "_marker" then
 						{
 							deleteMarker _marker
 						};
+
+						if ((([["DynamicLocationInvasion"],["spawnCrateFirst"]] call VEMFr_fnc_getSetting) select 0) isEqualTo 0) then
+							{
+								call _doSpawnCrate;
+							};
 
 						// Put a marker on the crate if enabled
 						if not isNil "_crate" then
 						{
 							if not isNull _crate then
 							{
-								if not ([getPos _crate, 2] call VEMFr_fnc_checkPlayerPresence) then
+								if not ([getPos _crate, 3] call VEMFr_fnc_checkPlayerPresence) then
 								{
+									if (_markCrateVisual isEqualTo 1) then
+									{
+										// If night, attach a chemlight
+										if (sunOrMoon <= 0.35) then
+										{
+											[_missionName, 1, "attaching a chemlight to the _crate"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+											_colors = [[_missionName],["flairTypes"]] call VEMFr_fnc_getSetting param [0, [], [[]]];
+											if (count _colors > 0) then
+											{
+												_lightType = selectRandom _colors;
+												_light = _lightType createVehicle (position _crate);
+												_light attachTo [_crate,[0,0,0]];
+											};
+										} else
+										{
+											[_missionName, 1, "attaching smoke to the _crate"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+											// Attach smoke
+											_colors = [[_missionName],["smokeTypes"]] call VEMFr_fnc_getSetting param [0, [], [[]]];
+											if (count _colors > 0) then
+												{
+													_rndmColor = selectRandom _colors;
+													_smoke = createVehicle [_rndmColor, getPos _crate, [], 0, "CAN_COLLIDE"];
+													_smoke attachTo [_crate,[0,0,0]];
+												};
+										};
+									};
+
 									_addMarker = [[_missionName],["markCrateOnMap"]] call VEMFr_fnc_getSetting param [0, 1, [0]];
 									if (_addMarker isEqualTo 1) then
 									{
@@ -339,21 +355,23 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 										{
 											_crate = _this select 0;
 											_crateMarker = _this select 1;
-											waitUntil { uiSleep 4; [getPos _crate, 3] call VEMFr_fnc_checkPlayerPresence };
+											waitUntil { if ([getPos _crate, 3] call VEMFr_fnc_checkPlayerPresence) then {true} else {uiSleep 4; false} };
 											deleteMarker _crateMarker;
 										};
 									};
 								};
+							} else
+							{
+								[_missionName, 0, "isNull _crate!"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 							};
+						} else
+						{
+							[_missionName, 0, "isNil _crate!"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 						};
 
-						if isNil "_crate" then
-						{
-							[_missionName, 0, "ERROR! _crate not found"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-						};
 
 						// Explode or remove the mines
-						if not isNil"_minesPlaced" then
+						if not isNil "_minesPlaced" then
 						{
 							private ["_cleanMines"];
 							_cleanMines = [[_missionName],["minesCleanup"]] call VEMFr_fnc_getSetting param [0, 1, [0]];
@@ -405,7 +423,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 		} else
 		{ // If done waiting, and no players were detected
 			[_missionName, 1, format["Invasion of %1 @ %2 timed out.", _locName, mapGridPosition _locPos]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-			if not isNil"_marker" then { deleteMarker _marker };
+			if not isNil "_marker" then { deleteMarker _marker };
 			_usedLocs = uiNamespace getVariable "VEMFrUsedLocs";
 			_index = _usedLocs find _loc;
 			if (_index > -1) then
