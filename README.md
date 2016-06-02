@@ -16,4 +16,4 @@ Exile.MapName\description.ext (contents) >> MPmissions\Exile.*nameOfMap*\descrip
 .7z >> exile_vemf_reloaded_config.pbo >> @ExileServer\addons\
 ```
 ######CONFIGURATION GUIDE
-To customize VEMFr to your needs/liking, edit the *config_override.cpp* located inside the *exile_vemf_reloaded_config.pbo* <br />
+To customize VEMFr to your needs/liking, edit the *config.cpp* located inside the *exile_vemf_reloaded_config.pbo* <br />
