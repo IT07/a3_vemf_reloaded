@@ -1,5 +1,18 @@
 ## VEMFr Changelog
 
+#### `v0743.4`
+*Client-side* <br />
+**[TWEAKED]** duration of mission notification <br />
+<br />
+*Server-side* <br />
+**[ADDED]** option to enable/disable spawning of loot crate before mission completion <br />
+**[ADDED]** "Sebjan Mine" to blacklisted locations of Namalsk <br />
+**[REMOVED]** a few functions. They are now standalone SQF files <br />
+**[TWEAKED]** functions folder is now the fn folder <br />
+**[TWEAKED]** order of blacklisted locations <br />
+**[TWEAKED]** config overrides. Use config.cpp in exile_vemf_reloaded_config to override VEMFr default settings <br />
+<br />
+
 #### `v0743.3 HOTFIX`
 *Client-side* <br />
 **[FIXED]** serialization error <br />
