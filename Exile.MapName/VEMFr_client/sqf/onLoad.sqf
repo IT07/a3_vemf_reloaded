@@ -79,7 +79,7 @@ if not isNull _dsp then
                      _ctrlMsg ctrlCommit 0.5;
                      _ctrlMsg setVariable ["expanded", true];
 
-                     uiSleep (count (_x select 2) / 10);
+                     uiSleep (count (_x select 2) / 5);
                   } else
                   {
                      _ctrlTitle ctrlSetText toUpper (_x select 1);
@@ -96,7 +96,7 @@ if not isNull _dsp then
                      _ctrlMsg ctrlCommit 0.5;
                      _ctrlMsg setVariable ["expanded", true];
 
-                     uiSleep (count (_x select 2) / 10);
+                     uiSleep (count (_x select 2) / 5);
                   };
             } forEach (uiNamespace getVariable ["VEMFrMsgQueue",[]]);
             uiNamespace setVariable ["VEMFrMsgQueue", []];
