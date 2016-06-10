@@ -43,8 +43,7 @@ if (_this isEqualType []) then
 				} forEach _arr;
 			};
 		_targets = param [1, [], [[]]];
-		_mode = param [2, "", [""]];
-		if (_this select 0 isEqualType []) then
+		if (_this select 0 isEqualType []) then // mission notification
 			{
 				_mode = (_this select 0) param [0, -1, [0]];
 				_title = (_this select 0) param [1, "DEFAULT TITLE", [""]];
@@ -52,8 +51,9 @@ if (_this isEqualType []) then
 				_msg = [_mode, _title, _msgLine];
 				_targets call _broadCast;
 			};
-		if (_this select 0 isEqualType "") then
+		if (_this select 0 isEqualType "") then // systemchat broadcast
 			{
+				_mode = param [2, "", [""]];
 				_msg = param [0, "", [""]];
 				_targets call _broadCast;
 			};
