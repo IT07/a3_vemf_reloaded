@@ -9,7 +9,7 @@ if hasInterface then
 					{
 						_data = _this;
 						_msg = param [0, "", [[],format[""]]];
-						_mode = param [1, "", [""]];
+						_mode = param [1, "", ["", -1]];
 						if (_mode isEqualTo "sys") then
 							{
 								systemChat _msg;
