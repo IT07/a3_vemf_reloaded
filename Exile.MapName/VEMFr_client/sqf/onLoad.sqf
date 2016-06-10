@@ -2,13 +2,13 @@ disableSerialization;
 _dsp = uiNamespace getVariable ["RscDisplayVEMFrClient", displayNull];
 if not isNull _dsp then
    {
-      playSound "HintExpand";
       if (count (uiNamespace getVariable ["VEMFrMsgQueue", []]) isEqualTo 0) then
          {
             (["RscDisplayVEMFrClient"] call BIS_fnc_rscLayer) cutFadeOut 0;
             systemChat "[VEMFrClient] No messages to display";
          } else
          {
+            playSound "HintExpand";
             // do stuff
             _ctrlPic = _dsp displayCtrl 10;
             _ctrlTitle = _dsp displayCtrl 11;
