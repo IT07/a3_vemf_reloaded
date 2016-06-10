@@ -88,7 +88,7 @@ class RscDisplayVEMFrClient
 			x = 0.25 * safezoneW + safezoneX;
 			y = 0.825 * safezoneH + safezoneY;
 			w = 0.025 * safezoneW;
-			h = 0.0525 * safezoneH;
+			h = 0.05 * safezoneH;
 
 			fade = 1;
 			idc = 10;
@@ -101,8 +101,8 @@ class RscDisplayVEMFrClient
 			w = 0 * safezoneW;
 			h = 0.02 * safezoneH;
 
-			colorBackground[] = {1,1,1,0.1};
-			colorText[] = {1,1,1,0.95};
+			colorBackground[] = {1,1,1,0.7};
+			colorText[] = {0,0,0,1};
 			fade = 1;
 			idc = 11;
 			shadow = 0;
@@ -116,8 +116,8 @@ class RscDisplayVEMFrClient
 			w = 0 * safezoneW;
 			h = 0.03 * safezoneH;
 
-			colorBackground[] = {1,1,1,0.1};
-			colorText[] = {1,1,1,0.95};
+			colorBackground[] = {1,1,1,0.7};
+			colorText[] = {0,0,0,1};
 			fade = 1;
 			idc = 12;
 			shadow = 0;
