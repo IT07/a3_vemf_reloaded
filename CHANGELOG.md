@@ -1,5 +1,12 @@
 ## VEMFr Changelog
 
+#### `v0743.5`
+*Server-side* <br />
+**[TWEAKED]** broadcast params <br />
+*Client-side* <br />
+**[FIXED]** error type number, expected string <br />
+<br /> 
+
 #### `v0743.4`
 *Client-side* <br />
 **[TWEAKED]** duration of mission notification <br />
