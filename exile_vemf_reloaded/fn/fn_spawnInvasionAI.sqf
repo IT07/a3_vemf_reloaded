@@ -146,7 +146,9 @@ if (count _pos isEqualTo 3) then
 																_houseIndex = _housePositions find _spawnPos;
 																_housePositions deleteAt _houseIndex;
 															};
+
 														_unit addMPEventHandler ["mpkilled","if (isDedicated) then { [_this select 0, _this select 1] ExecVM 'exile_vemf_reloaded\sqf\aiKilled.sqf' }"];
+
 														// Set skills
 														_unit setSkill ["aimingAccuracy", _accuracy];
 														_unit setSkill ["aimingShake", _aimShake];
