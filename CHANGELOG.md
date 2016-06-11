@@ -1,11 +1,18 @@
 ## VEMFr Changelog
 
+#### `v0743.6`
+*Server-side* <br />
+**[NEW]** separate file for broadcasting notifications <br />
+**[NEW]** separate file for broadcasting systemChat messages <br />
+**[TWEAKED]** code speed <br />
+<br />
+
 #### `v0743.5`
 *Server-side* <br />
 **[TWEAKED]** broadcast params <br />
 *Client-side* <br />
 **[FIXED]** error type number, expected string <br />
-<br /> 
+<br />
 
 #### `v0743.4`
 *Client-side* <br />
