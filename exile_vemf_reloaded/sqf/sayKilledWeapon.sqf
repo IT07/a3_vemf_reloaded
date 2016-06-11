@@ -7,37 +7,23 @@
 
 _target = param [0, objNull, [objNull]];
 _killer = param [1, objNull, [objNull]];
-if not(isNull _target AND isNull _killer) then
-{
-   scopeName "outer";
-   _dist = _target distance _killer;
-   if (_dist > 1) then
+_curWeapon = "Weapon";
+if (vehicle _killer isEqualTo _killer) then // If on foot
    {
-      private ["_curWeapon"];
-      if (vehicle _killer isEqualTo _killer) then // If on foot
-      {
-         _curWeapon = currentWeapon _killer;
-      };
-      if not(vehicle _killer isEqualTo _killer) then // If in vehicle
-      {
-         _curWeapon = currentWeapon (vehicle _killer);
-      };
-      _sayKilled = param [2, 1, [1]];
-      if (_sayKilled isEqualTo 1) then
-      {
-         _kMsg = format["(VEMFr) %1 [%2, %3m] AI", name _killer, getText(configFile >> "CfgWeapons" >> _curWeapon >> "displayName"), round _dist];
-         [_kMsg, [], "sys"] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
-         breakOut "outer";
-      };
-      if (_sayKilled isEqualTo 2) then
-      {
-         VEMFrClientMsg = [format["(VEMFr) You [%1, %2m] AI", getText(configFile >> "CfgWeapons" >> _curWeapon >> "displayName"), round _dist], "sys"];
-         (owner _killer) publicVariableClient "VEMFrClientMsg";
-         VEMFrClientMsg = nil;
-         breakOut "outer";
-      };
+      _curWeapon = currentWeapon _killer;
    };
-} else
-{
-   ["sayKilledWeapon.sqf", 0, "_killer isNull!"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-};
+if not(vehicle _killer isEqualTo _killer) then // If in vehicle
+   {
+      _curWeapon = currentWeapon (vehicle _killer);
+   };
+
+_dist = _target distance _killer;
+_sayKilled = "sayKilled" call VEMFr_fnc_getSetting;
+if (_sayKilled isEqualTo 1) then
+   {
+      [format["(VEMFr) %1 [%2, %3m] AI", name _killer, getText(configFile >> "CfgWeapons" >> _curWeapon >> "displayName"), round _dist]] ExecVM "exile_vemf_reloaded\sqf\systemChatToClient.sqf";
+   };
+if (_sayKilled isEqualTo 2) then
+   {
+      [format["(VEMFr) You [%1, %2m] AI", getText(configFile >> "CfgWeapons" >> _curWeapon >> "displayName"), round _dist]] ExecVM "exile_vemf_reloaded\sqf\systemChatToClient.sqf";
+   };
