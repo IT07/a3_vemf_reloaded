@@ -47,15 +47,15 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 		{
 			if (_mode isEqualTo 0) then
 			{
-				[[_mode, "NEW INVASION", format["Raiders have invaded %1 @ %2", _locName, mapGridPosition _locPos]]] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
+				[_mode, "NEW INVASION", format["Raiders have invaded %1 @ %2", _locName, mapGridPosition _locPos]] ExecVM "exile_vemf_reloaded\sqf\notificationToClient.sqf";
 			};
 			if (_mode isEqualTo 1) then
 			{
-				[[_mode, "NEW POLICE RAID", format["%1 Police forces are now controlling %2 @ %3", worldName, _locName, mapGridPosition _locPos]]] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
+				[_mode, "NEW POLICE RAID", format["%1 Police forces are now controlling %2 @ %3", worldName, _locName, mapGridPosition _locPos]] ExecVM "exile_vemf_reloaded\sqf\notificationToClient.sqf";
 			};
 			if (_mode isEqualTo 2) then
 			{
-				[[_mode, "NEW S.W.A.T. RAID", format["%1 S.W.A.T. teams are now raiding %2 @ %3", worldName, _locName, mapGridPosition _locPos]]] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
+				[_mode, "NEW S.W.A.T. RAID", format["%1 S.W.A.T. teams are now raiding %2 @ %3", worldName, _locName, mapGridPosition _locPos]] ExecVM "exile_vemf_reloaded\sqf\notificationToClient.sqf";
 			};
 		};
 		private ["_marker"];
@@ -267,15 +267,15 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 						{
 							if (_mode isEqualTo 0) then
 							{
-								[[_mode ,"RAIDERS KILLED", format["%1 @ %2 is now clear of %3 raiders", _locName, mapGridPosition (_locPos), worldName]]] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
+								[_mode ,"RAIDERS KILLED", format["%1 @ %2 is now clear of %3 raiders", _locName, mapGridPosition (_locPos), worldName]] ExecVM "exile_vemf_reloaded\sqf\notificationToClient.sqf";
 							};
 							if (_mode isEqualTo 1) then
 							{
-								[[_mode, "RAID ENDED", format["%1 @ %2 is now clear of %3 Police", _locName, mapGridPosition (_locPos), worldName]]] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
+								[_mode, "RAID ENDED", format["%1 @ %2 is now clear of %3 Police", _locName, mapGridPosition (_locPos), worldName]] ExecVM "exile_vemf_reloaded\sqf\notificationToClient.sqf";
 							};
 							if (_mode isEqualTo 2) then
 							{
-								[[_mode, "S.W.A.T. RAID ENDED", format["%1 @ %2 is now clear of %3 S.W.A.T. teams", _locName, mapGridPosition (_locPos)]]] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
+								[_mode, "S.W.A.T. RAID ENDED", format["%1 @ %2 is now clear of %3 S.W.A.T. teams", _locName, mapGridPosition (_locPos)]] ExecVM "exile_vemf_reloaded\sqf\notificationToClient.sqf";
 							};
 						};
 						// Deal with the 50s
@@ -417,7 +417,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 				};
 			} else
 			{
-				[[-1, "CRITICAL ERROR", format["Failed to spawn AI in %1 @ %2", _locName, mapGridPosition (_locPos)]]] ExecVM "exile_vemf_reloaded\sqf\broadcast.sqf";
+				[-1, "CRITICAL ERROR", format["Failed to spawn AI in %1 @ %2", _locName, mapGridPosition (_locPos)]] ExecVM "exile_vemf_reloaded\sqf\notificationToClient.sqf";
 				breakOut "outer";
 			};
 		} else
