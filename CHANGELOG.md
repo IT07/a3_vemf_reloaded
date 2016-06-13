@@ -1,5 +1,10 @@
 ## VEMFr Changelog
 
+#### `v0743.7`
+*Server-side* <br />
+**[FIXED]** error related to notificationToClient.sqf's params <br />
+<br />
+
 #### `v0743.6`
 *Server-side* <br />
 **[NEW]** separate file for broadcasting notifications <br />
