@@ -1,5 +1,11 @@
 ## VEMFr Changelog
 
+#### `v0743.8`
+*Server-side* <br />
+**[TWEAKED]** code performance of functions with params <br />
+**[FIXED]** kill messages from AI getting killed by something else other than a player <br />
+<br />
+
 #### `v0743.7`
 *Server-side* <br />
 **[FIXED]** error related to notificationToClient.sqf's params <br />
