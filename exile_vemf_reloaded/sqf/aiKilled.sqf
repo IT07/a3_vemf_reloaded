@@ -13,9 +13,8 @@
 	nothing
 */
 
-_target = param [0, objNull, [objNull]];
-_killer = param [1, objNull, [objNull]];
-if (_killer isKindOf "Man") then // Roadkill or regular kill
+params [["_target",objNull,[objNull]], ["_killer",objNull,[objNull]]];
+if ((_killer isKindOf "Man") AND (isPlayer _killer)) then // Roadkill or regular kill
 	{
 		if (vehicle _killer isEqualTo _killer) then // If on foot
 			{

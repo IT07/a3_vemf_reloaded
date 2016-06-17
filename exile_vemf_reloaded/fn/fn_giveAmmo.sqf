@@ -20,10 +20,7 @@ _done = false;
 if (_this isEqualType []) then
    {
       private ["_unit"];
-      _unit = param [0, objNull, [objNull]];
-      _classPrimary = param [1, "", [""]];
-      _classSecondary = param [2, "", [""]];
-      _classHandgun = param [3, "", [""]];
+      params [["_unit", objNull, [objNull]],["_classPrimary", "", [""]],["_classSecondary", "", [""]],["_classHandgun", "", [""]]];
       if not isNull _unit then
          {
             if local _unit then

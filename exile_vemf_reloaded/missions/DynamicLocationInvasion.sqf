@@ -12,21 +12,8 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 	private ["_hasPlayers","_spawned","_grpArr","_unitArr","_done","_boxes","_box","_chute","_colors","_lightType","_light","_smoke"];
 	// Define _settings
 	_settings = [[_missionName],["groupCount","groupUnits","maxDistance","maxDistancePrefered","skipDistance","marker","parachuteCrate","markCrateVisual","markCrateOnMap","announce","streetLights","streetLightsRestore","streetLightsRange","allowCrateLift"]] call VEMFr_fnc_getSetting;
-	_grpCount = _settings select 0;
-	_groupUnits = _settings select 1;
-	_range = _settings select 2;
-	_maxPref = _settings select 3;
-	_skipDistance = _settings select 4;
-	_useMissionMarker = _settings select 5;
-	_useChute = (_settings select 6) select 0;
-	_crateAltitude = (_settings select 6) select 1;
-	_markCrateVisual = _settings select 7;
-	_markCrateOnMap = _settings select 8;
-	_announce = _settings select 9;
-	_streetLights = _settings select 10;
-	_streetLightsRestore = _settings select 11;
-	_streetLightsRange = _settings select 12;
-	_allowCrateLift = _settings select 13;
+	_settings params ["_grpCount","_groupUnits","_range","_maxPref","_skipDistance","_useMissionMarker","","_markCrateVisual","_markCrateOnMap","_announce","_streetLights","_streetLightsRestore","_streetLightsRange","_allowCrateLift"];
+	(_settings select 6) params ["_useChute","_crateAltitude"];
 
 	_loc = ["loc", false, position (selectRandom allPlayers), _skipDistance, _maxPref, _skipDistance, _missionName] call VEMFr_fnc_findPos;
 	if (_loc isEqualType locationNull) then

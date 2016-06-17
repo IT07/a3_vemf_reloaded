@@ -19,17 +19,13 @@ _ok = false;
 _params = _this;
 if (_this isEqualType []) then
 	{
-		private ["_units"];
-		_units = param [0, [], [[]]];
+		private ["_units","_missionName","_aiMode"];
+		params [["_units", [], [[]]],["_missionName", "", [""]],["_aiMode", 0, [0]]];
 		if (count _units > 0) then
 			{
-				private ["_missionName"];
-				_missionName = param [1, "", [""]];
 				if (_missionName in ("missionList" call VEMFr_fnc_getSetting) OR _missionName isEqualTo "Static") then
 					{
 						scopeName "this";
-						private ["_aiMode"];
-						_aiMode = param [2, 0, [0]];
 						if (_aiMode isEqualTo 0) then // "Militia"
 							{
 								private ["_aiGear","_uniforms","_headGear","_vests","_backpacks","_rifles","_pistols","_aiLaunchers","_launchers","_launcherChance"];

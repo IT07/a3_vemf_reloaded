@@ -16,7 +16,7 @@
 
 private ["_ok","_mineSetting","_missionName"];
 _ok = false;
-_missionName = param [3, "", [""]];
+params [["_missionName", "", [""]]];
 if (_missionName in ("missionList" call VEMFr_fnc_getSetting)) then
    {
       scopeName "main";

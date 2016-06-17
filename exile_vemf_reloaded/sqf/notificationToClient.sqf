@@ -14,10 +14,7 @@
 	nothing
 */
 
-_missionType = param [0, -1, [-1]];
-_title = param [1, "", [""]];
-_msgLine = param [2, "", [""]];
-_sendTo = param [3, [], [[]]];
+params [["_missionType",-1,[-1]], ["_title","",[""]], ["_msgLine","",[""]], ["_sendTo",[],[[]]]];
 if (count _sendTo isEqualTo 0) then { _sendTo = allPlayers };
 {
 	VEMFrMsgToClient = [[_missionType, _title, _msgLine], ""];

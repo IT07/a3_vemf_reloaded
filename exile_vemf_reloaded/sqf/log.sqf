@@ -18,9 +18,7 @@ if ("debugMode" call VEMFr_fnc_getSetting > 0) then
 {
    scopeName "outer";
    private ["_prefix","_type","_line","_doLog"];
-   _prefix = param [0, "", [""]];
-   _type = param [1, 3, [0]];
-   _line = param [2, "", [""]];
+   params [["_prefix","",[""]], ["_type",3,[0]], ["_line","",[""]]];
 
    _doLog = { diag_log text format["IT07: [exile_vemf_reloaded] %1 -- %2: %3", _prefix, _this, _line] };
    _debugMode = "debugMode" call VEMFr_fnc_getSetting;

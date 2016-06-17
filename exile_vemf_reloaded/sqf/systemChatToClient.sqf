@@ -9,8 +9,7 @@
    nothing
 */
 
-_line = param [0, "", [""]];
-_sendTo = param [1, [], [[]]];
+params [["_line","",[""]], ["_sendTo",[],[[]]]];
 if (_sendTo isEqualTo []) then { _sendTo = allPlayers };
 {
    VEMFrMsgToClient = [_line, "sys"];

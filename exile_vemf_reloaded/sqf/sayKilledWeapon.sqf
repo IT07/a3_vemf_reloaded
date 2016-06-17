@@ -5,8 +5,7 @@
    handles the broadcast of a systemChat kill message
 */
 
-_target = param [0, objNull, [objNull]];
-_killer = param [1, objNull, [objNull]];
+params [["_target",objNull,[objNull]], ["_killer",objNull,[objNull]]];
 _curWeapon = "Weapon";
 if (vehicle _killer isEqualTo _killer) then // If on foot
    {

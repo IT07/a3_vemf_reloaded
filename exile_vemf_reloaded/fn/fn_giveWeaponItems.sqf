@@ -15,7 +15,7 @@ private ["_done"];
 _done = false;
 if (_this isEqualType []) then
    {
-      _unit = param [0, objNull, [objNull]];
+      _unit = param [0,objNull,[objNull]];
       if not (isNull _unit) then
          {
             // primaryWeapon items
