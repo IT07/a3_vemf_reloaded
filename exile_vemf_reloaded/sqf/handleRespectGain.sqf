@@ -7,8 +7,7 @@
    _this select 1: OBJECT - the killer (must be a player)
 */
 
-_target = param [0, objNull, [objNull]];
-_killer = param [1, objNull, [objNull]];
+params [["_target",objNull,[objNull]], ["_killer",objNull,[objNull]]];
 _respectReward = "respectReward" call VEMFr_fnc_getSetting;
 if (_respectReward > 0) then
 {
