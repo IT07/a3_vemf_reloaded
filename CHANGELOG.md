@@ -1,5 +1,10 @@
 ## VEMFr Changelog
 
+#### `v0743.9`
+*Server-side* <br />
+**[FIXED]** params error in fn_placeMines.sqf <br />
+**[FIXED]** kill messages from AI getting killed by something else other than a player <br />
+
 #### `v0743.8`
 *Server-side* <br />
 **[TWEAKED]** code performance of functions with params <br />
