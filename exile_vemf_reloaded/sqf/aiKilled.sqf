@@ -14,71 +14,74 @@
 */
 
 params [["_target",objNull,[objNull]], ["_killer",objNull,[objNull]]];
-if ((_killer isKindOf "Man") AND (isPlayer _killer)) then // Roadkill or regular kill
+if (isPlayer _killer) then
 	{
-		if (vehicle _killer isEqualTo _killer) then // If on foot
+		if (_killer isKindOf "Man") then // Roadkill or regular kill
 			{
-				if (vehicle _target isEqualTo _target) then
+				if (vehicle _killer isEqualTo _killer) then // If on foot
 					{
-						if (("respectReward" call VEMFr_fnc_getSetting) > 0) then
-						   {
-								[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\handleRespectGain.sqf";
-							};
-						[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\sayKilledWeapon.sqf";
-					} else
-					{
-						if (typeOf (vehicle _target) isEqualTo "Steerable_Parachute_F") then
-							{
-								if ("logCowardKills" call VEMFr_fnc_getSetting isEqualTo 1) then
-									{
-										["fn_aiKilled", 1, format["A coward (%1 @ %2) killed a parachuting AI", name _killer, mapGridPosition _killer]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-									};
-							} else
+						if (vehicle _target isEqualTo _target) then
 							{
 								if (("respectReward" call VEMFr_fnc_getSetting) > 0) then
 								   {
 										[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\handleRespectGain.sqf";
 									};
 								[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\sayKilledWeapon.sqf";
-							};
-					};
-			} else // If in vehicle (a.k.a. roadkill)
-			{
-				if (("punishRoadKills" call VEMFr_fnc_getSetting) isEqualTo 1) then
-					{
-						_respectDeduct = "respectRoadKillDeduct" call VEMFr_fnc_getSetting;
-						_curRespect = _killer getVariable ["ExileScore", 0];
-						//diag_log text format["_curRespect of _killer (%1) is %2", _killer, _curRespect];
-						_newRespect = _curRespect - _respectDeduct;
-						_killer setVariable ["ExileScore", _newRespect];
-						ExileClientPlayerScore = _newRespect;
-						(owner _killer) publicVariableClient "ExileClientPlayerScore";
-						ExileClientPlayerScore = nil;
-						[_killer, "showFragRequest", [[["ROADKILL..."],["Respect Penalty:", -_respectDeduct]]]] call ExileServer_system_network_send_to;
-						format["setAccountMoneyAndRespect:%1:%2:%3", _killer getVariable ["ExileMoney", 0], _newRespect, (getPlayerUID _killer)] call ExileServer_system_database_query_fireAndForget;
-
-						if (("sayKilled" call VEMFr_fnc_getSetting) isEqualTo 1) then
+							} else
 							{
-								[format["(VEMFr) %1 [Roadkill] AI", name _killer]] ExecVM "exile_vemf_reloaded\sqf\systemChatToClient.sqf";
+								if (typeOf (vehicle _target) isEqualTo "Steerable_Parachute_F") then
+									{
+										if ("logCowardKills" call VEMFr_fnc_getSetting isEqualTo 1) then
+											{
+												["fn_aiKilled", 1, format["A coward (%1 @ %2) killed a parachuting AI", name _killer, mapGridPosition _killer]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+											};
+									} else
+									{
+										if (("respectReward" call VEMFr_fnc_getSetting) > 0) then
+										   {
+												[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\handleRespectGain.sqf";
+											};
+										[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\sayKilledWeapon.sqf";
+									};
+							};
+					} else // If in vehicle (a.k.a. roadkill)
+					{
+						if (("punishRoadKills" call VEMFr_fnc_getSetting) isEqualTo 1) then
+							{
+								_respectDeduct = "respectRoadKillDeduct" call VEMFr_fnc_getSetting;
+								_curRespect = _killer getVariable ["ExileScore", 0];
+								//diag_log text format["_curRespect of _killer (%1) is %2", _killer, _curRespect];
+								_newRespect = _curRespect - _respectDeduct;
+								_killer setVariable ["ExileScore", _newRespect];
+								ExileClientPlayerScore = _newRespect;
+								(owner _killer) publicVariableClient "ExileClientPlayerScore";
+								ExileClientPlayerScore = nil;
+								[_killer, "showFragRequest", [[["ROADKILL..."],["Respect Penalty:", -_respectDeduct]]]] call ExileServer_system_network_send_to;
+								format["setAccountMoneyAndRespect:%1:%2:%3", _killer getVariable ["ExileMoney", 0], _newRespect, (getPlayerUID _killer)] call ExileServer_system_database_query_fireAndForget;
+
+								if (("sayKilled" call VEMFr_fnc_getSetting) isEqualTo 1) then
+									{
+										[format["(VEMFr) %1 [Roadkill] AI", name _killer]] ExecVM "exile_vemf_reloaded\sqf\systemChatToClient.sqf";
+									};
 							};
 					};
-			};
-	} else // If kill from vehicle (NOT a roadkill)
-	{
-		if (typeOf (vehicle _target) isEqualTo "Steerable_Parachute_F") then
+			} else // If kill from vehicle (NOT a roadkill)
 			{
-				if ("logCowardKills" call VEMFr_fnc_getSetting isEqualTo 1) then
+				if (typeOf (vehicle _target) isEqualTo "Steerable_Parachute_F") then
 					{
-						["fn_aiKilled", 1, format["A coward (%1 @ %2) killed a parachuting AI", name _killer, mapGridPosition _killer]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-					};
-			} else
-			{
-				_killer = effectiveCommander _killer;
-				if (("respectReward" call VEMFr_fnc_getSetting) > 0) then
+						if ("logCowardKills" call VEMFr_fnc_getSetting isEqualTo 1) then
+							{
+								["fn_aiKilled", 1, format["A coward (%1 @ %2) killed a parachuting AI", name _killer, mapGridPosition _killer]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+							};
+					} else
 					{
-						[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\handleRespectGain.sqf";
+						_killer = effectiveCommander _killer;
+						if (("respectReward" call VEMFr_fnc_getSetting) > 0) then
+							{
+								[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\handleRespectGain.sqf";
+							};
+						[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\sayKilledWeapon.sqf";
 					};
-				[_target, _killer] ExecVM "exile_vemf_reloaded\sqf\sayKilledWeapon.sqf";
 			};
 	};
 
