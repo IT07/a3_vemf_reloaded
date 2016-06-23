@@ -26,27 +26,22 @@ if (_this isEqualType []) then
                { // Select random scope
                   private ["_scopes"];
                   _scopes = getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "WeaponSlotsInfo" >> "CowsSlot" >> "compatibleItems");
-                  if ("allowTWS" call VEMFr_fnc_getSetting isEqualTo 0) then
+                  if (("allowTWS" call VEMFr_fnc_getSetting) isEqualTo 0) then
                      {
-                        private["_indexes"];
-                        _indexes = [];
+                        private["_forbiddenScopes"];
+                        _forbiddenScopes = [];
                         {
-                           if (_x find "tws" > -1) then
+                           if (((toLower _x) find "tws") > -1) then
                               {
-                                 _indexes pushBack _forEachIndex;
-                              } else
-                              {
-                                 if (_x find "TWS" > -1) then
-                                    {
-                                       _indexes pushBack _forEachIndex;
-                                    };
+                                 _forbiddenScopes pushBack _x;
                               };
                         } forEach _scopes;
                         {
-                           _scopes deleteAt _x;
-                        } forEach _indexes;
+                           _index = _scopes find _x;
+                           _scopes deleteAt _index;
+                        } forEach _forbiddenScopes;
                      };
-                     _unit addPrimaryWeaponItem (selectRandom _scopes);
+                  _unit addPrimaryWeaponItem (selectRandom _scopes);
                };
             if (selectRandom _randomPattern isEqualTo 1) then
                { // Select random muzzle
