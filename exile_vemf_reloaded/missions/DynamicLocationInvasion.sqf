@@ -200,13 +200,13 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 									_units pushBack _x;
 								} forEach _heliUnits;
 
-								_wpLoiter = _heliGroup addWaypoint [_locPos, 2];
-								_wpLoiter setWaypointType "LOITER";
-								_wpLoiter setWaypointSpeed "LIMITED";
+								_wpLoiter = _heliGroup addWaypoint [_locPos, 2, 1, "LOITER"];
+								_wpLoiter setWaypointType "SAD";
+								_wpLoiter setWaypointSpeed "NORMAL";
 								_wpLoiter setWaypointBehaviour "AWARE";
 								_wpLoiter setWaypointCombatMode "RED";
-								_wpLoiter setWaypointLoiterType "CIRCLE";
-								_wpLoiter setWaypointLoiterRadius 200;
+								//_wpLoiter setWaypointLoiterType "CIRCLE";
+								//_wpLoiter setWaypointLoiterRadius 200;
 								_heliGroup setCurrentWaypoint _wpLoiter;
 
 								[_heliGroup] ExecVM "exile_vemf_reloaded\sqf\signAI.sqf";
@@ -364,24 +364,33 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 							_cleanMines = [[_missionName],["minesCleanup"]] call VEMFr_fnc_getSetting param [0, 1, [0]];
 							if (_cleanMines isEqualTo 2) then
 							{
+								[_minesPlaced] spawn
 								{
-									if not isNull _x then
+									_minesPlaced = _this select 0;
+									uiSleep (5 + (random 2));
 									{
-										_x setDamage 1;
-										uiSleep (2 + round random 2);
-									};
-								} forEach _minesPlaced;
+										if not isNull _x then
+											{
+												_x setDamage 1;
+												uiSleep (1.25 + (random 3.5));
+											};
+									} forEach _minesPlaced;
+								};
 								[_missionName, 1, format["Successfully exploded all %1 mines at %2", count _minesPlaced, _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 								_minesPlaced = nil;
 							};
 							if (_cleanMines isEqualTo 1) then
 							{
+								[_minesPlaced] spawn
 								{
-									if not isNull _x then
+									_minesPlaced = _this select 0;
 									{
-										deleteVehicle _x;
-									};
-								} forEach _minesPlaced;
+										if not isNull _x then
+											{
+												deleteVehicle _x;
+											};
+									} forEach _minesPlaced;
+								};
 								[_missionName, 1, format["Successfully deleted all %1 mines at %2", count _minesPlaced, _locName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 								_minesPlaced = nil;
 							};
@@ -396,7 +405,7 @@ if (VEMFrInvasionCount <= (([[_missionName],["maxInvasions"]] call VEMFr_fnc_get
 								if (damage _x > 0.94) then
 								{
 									_x setDamage 0;
-									uiSleep 0.2;
+									uiSleep (1 + (random 2));
 								};
 							} forEach _all;
 						};
