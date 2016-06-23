@@ -6,7 +6,7 @@ class CfgPatches
 		requiredAddons[] = {"exile_server","exile_vemf_reloaded_config"};
 		fileName = "exile_vemf_reloaded.pbo";
 		requiredVersion = 1.56; // VEMFr does not work on older versions due to use of the latest scripting commands
-		version = "0743.9"; // Do NOT change
+		version = "0744.0"; // Do NOT change
 		author = "IT07";
 	};
 };
