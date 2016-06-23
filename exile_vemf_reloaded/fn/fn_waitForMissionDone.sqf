@@ -39,7 +39,7 @@ if (count _pos isEqualTo 3) then
 								if (_kiaCount >= _killToComplete) exitWith { _complete = true };
 								uiSleep 4;
 							};
-						["fn_waitForMissionDone", 1, format["mission in %1 has been completed!", _missionName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+						["waitForMissionDone", 1, format["mission in %1 has been completed!", _missionName]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
 					};
 			};
 	};
