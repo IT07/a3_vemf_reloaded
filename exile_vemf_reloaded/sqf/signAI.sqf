@@ -12,14 +12,4 @@
     nothing
 */
 
-_group = param [0, grpNull, [grpNull]];
-if not isNull _group then
-{
-    (uiNamespace getVariable ["VEMFrAIgroups",[]]) pushBack _group;
-    {
-      _x setVariable ["VEMFrAIunit", 1, true];
-    } forEach (units _group);
-} else
-{
-   ["signAI", 0, "_group isNull"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-};
+(param [0, grpNull, [grpNull]]) setVariable ["isVEMFrGroup",true,false];
