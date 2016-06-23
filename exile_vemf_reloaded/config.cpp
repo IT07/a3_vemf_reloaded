@@ -80,6 +80,7 @@ class CfgVemfReloaded
 		aiSetup[] = {2,5}; // format: {amountOfGroups,unitsInEachGroup};
 		hasLauncherChance = 25; // In percentage. How big the chance that each AI gets a launcher
 		maxAttacks = 5; // Maximum amount of active attacks at the same time | can not be turned off
+		minimumLevel = 2; // Minimum required level of base before it can get attacked
 		/*
 			NOTES:
 			1) every territory flag can only be attacked once every restart
@@ -185,8 +186,8 @@ class CfgVemfReloaded
 
 	class crateLoot
 	{ // Loot crate configuration
-		primarySlotsMax = 10; // Maximum primary weapons in each loot crate
-		primarySlotsMin = 4; // Minimum primary weapons in each loot crate
+		primarySlotsMax = 7; // Maximum primary weapons in each loot crate
+		primarySlotsMin = 2; // Minimum primary weapons in each loot crate
 		primaryWeaponLoot[] =
 		{ // The number after each classname means how much of that type will be put in crate. WARNING: DO NOT USE NUMBERS WITH DECIMALS.
 			{"srifle_DMR_01_F",2},{"srifle_EBR_F",3},{"srifle_GM6_F",1},{"LMG_Mk200_F",3},{"LMG_Zafir_F",3},{"arifle_Katiba_F",3},{"arifle_Katiba_GL_F",2},{"arifle_Mk20_F",2},
@@ -198,15 +199,15 @@ class CfgVemfReloaded
 			{"MMG_02_black_F",2},{"MMG_02_sand_F",2}
 		};
 
-		secondarySlotsMax = 4; // Maximum number of secondary weapons to be in each loot crate
-		secondarySlotsMin = 2; // Minimum number of secondary weapons to be in each loot crate
+		secondarySlotsMax = 3; // Maximum number of secondary weapons to be in each loot crate
+		secondarySlotsMin = 1; // Minimum number of secondary weapons to be in each loot crate
 		secondaryWeaponLoot[] =
 		{ // The number after each classname means how much of that type will be put in crate. WARNING: DO NOT USE NUMBERS WITH DECIMALS.
 			{"hgun_ACPC2_F",3},{"hgun_P07_F",3},{"hgun_Pistol_heavy_01_F",3},{"hgun_Pistol_heavy_02_F",3},{"hgun_Rook40_F",3}
 		};
 
-		magSlotsMax = 6; // Maximum number of magazine slots in each loot crate
-		magSlotsMin = 4; // Minimum number of magazine slots in each loot crate
+		magSlotsMax = 8; // Maximum number of magazine slots in each loot crate
+		magSlotsMin = 6; // Minimum number of magazine slots in each loot crate
 		magLoot[] =
 		{ // The number after each classname means how much of that type will be put in crate. WARNING: DO NOT USE NUMBERS WITH DECIMALS.
 			{"30Rnd_556x45_Stanag",20},{"30Rnd_556x45_Stanag_Tracer_Red",20},{"30Rnd_556x45_Stanag_Tracer_Green",20},
@@ -239,8 +240,8 @@ class CfgVemfReloaded
 			{"Exile_Item_Flag",3},{"Exile_Item_FuelCanisterFull",2},{"Exile_Item_FuelCanisterEmpty",1},{"Exile_Item_InstaDoc",4},{"Exile_Item_Matches",3},{"Exile_Item_PlasticBottleFreshWater",5}
 		};
 
-		vestSlotsMax = 4; // Maximum number of vest slots in each loot crate
-		vestSlotsMin = 2; // Minimum number of vest slots in each loot crate
+		vestSlotsMax = 3; // Maximum number of vest slots in each loot crate
+		vestSlotsMin = 1; // Minimum number of vest slots in each loot crate
 		vestLoot[] = // NOTE ABOUT VESTS: it is recommended to keep amount for each vest at 1 because vests do not stack unlike weapons, items and magazines
 		{ // The number after each classname means how much of that type will be put in crate. WARNING: DO NOT USE NUMBERS WITH DECIMALS.
 			{"V_PlateCarrier1_rgr",1},{"V_PlateCarrier2_rgr",1},{"V_PlateCarrier3_rgr",1},{"V_PlateCarrierGL_rgr",1},{"V_PlateCarrier1_blk",1},
@@ -251,8 +252,8 @@ class CfgVemfReloaded
 			{"V_PlateCarrier_Kerry",1},{"V_PlateCarrierL_CTRG",1},{"V_PlateCarrierH_CTRG",1},{"V_I_G_resistanceLeader_F",1},{"V_Press_F",1}
 		};
 
-		headGearSlotsMax = 4; // Maximum number of headGear slots in each loot crate
-		headGearSlotsMin = 2; // Minimum number of headGear slots in each loot crate
+		headGearSlotsMax = 3; // Maximum number of headGear slots in each loot crate
+		headGearSlotsMin = 1; // Minimum number of headGear slots in each loot crate
 		headGearLoot[] = // NOTE ABOUT HEADGEAR: it is recommended to keep amount for each headGear item at 1 because headGear items do not stack unlike weapons, items and magazines
 		{ // The number after each classname means how much of that type will be put in crate. WARNING: DO NOT USE NUMBERS WITH DECIMALS.
 			{"H_HelmetB",1},{"H_HelmetB_camo",1},{"H_HelmetB_paint",1},{"H_HelmetB_light",1},{"H_Booniehat_khk",1},{"H_Booniehat_oli",1},{"H_Booniehat_indp",1},
@@ -273,8 +274,8 @@ class CfgVemfReloaded
 			{"H_TurbanO_blk",1},{"H_Cap_marshal",1}
 		};
 
-		bagSlotsMax = 4;
-		bagSlotsMin = 2;
+		bagSlotsMax = 2;
+		bagSlotsMin = 1;
 		backpackLoot[] = // NOTE ABOUT BACKPACKS: it is recommended to keep amount for each bag at 1 because bags do not stack unlike weapons, items and magazines
 		{ // The number after each classname means how much of that type will be put in crate. WARNING: DO NOT USE NUMBERS WITH DECIMALS.
 			{"B_AssaultPack_khk",1},{"B_AssaultPack_dgtl",1},{"B_AssaultPack_rgr",1},{"B_AssaultPack_sgg",1},{"B_AssaultPack_cbr",1},
