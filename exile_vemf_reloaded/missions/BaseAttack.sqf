@@ -9,28 +9,27 @@ VEMFrMissionCount = VEMFrMissionCount + 1;
 _missionName = param [0, "", [""]];
 if isNil "VEMFrAttackCount" then { VEMFrAttackCount = 0 };
 VEMFrAttackCount = VEMFrAttackCount + 1;
-if (VEMFrAttackCount <= ([[_missionName],["maxAttacks"]] call VEMFr_fnc_getSetting select 0)) then
+_settings = [[_missionName],["maxAttacks","aiSetup","minimumLevel"]] call VEMFr_fnc_getSetting;
+_settings params ["_maxAttacks","_aiSetup","_minimumLevel"];
+if (VEMFrAttackCount <= _maxAttacks) then
 {
    scopeName "outer";
    if (_missionName in ("missionList" call VEMFr_fnc_getSetting)) then
    {
-      _aiSetup = ([[_missionName],["aiSetup"]] call VEMFr_fnc_getSetting) select 0;
-      if (_aiSetup select 0 > 0 AND _aiSetup select 1 > 0) then
+      if (((_aiSetup select 0) > 0) AND ((_aiSetup select 1) > 0)) then
       {
          _attackedFlags = uiNamespace getVariable ["VEMFrAttackedFlags",[]];
          _flags = [];
          {
-            if (speed _x < 25 AND (vehicle _x isEqualTo _x)) then
+            if (((speed _x) < 25) AND ((vehicle _x) isEqualTo _x)) then
             {
                _flagsObjs = nearestObjects [position _x, ["Exile_Construction_Flag_Static"], 150];
                {
-                  if not(_x in _attackedFlags) then
-                     {
-                        _flags pushBack _x;
-                     };
+                  if (not(_x in _attackedFlags) AND ((_x getVariable ["ExileTerritoryLevel",0]) > _minimumLevel)) then { _flags pushBack _x };
                } forEach _flagsObjs;
             };
          } forEach allPlayers;
+
          if (count _flags > 0) then
          {
             _flagToAttack = selectRandom _flags;
