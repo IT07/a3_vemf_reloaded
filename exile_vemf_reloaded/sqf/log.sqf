@@ -14,13 +14,13 @@
     nothing (use spawn, not call)
 */
 
-if ("debugMode" call VEMFr_fnc_getSetting > 0) then
+if (("debugMode" call VEMFr_fnc_getSetting) > 0) then
 {
    scopeName "outer";
    private ["_prefix","_type","_line","_doLog"];
    params [["_prefix","",[""]], ["_type",3,[0]], ["_line","",[""]]];
 
-   _doLog = { diag_log text format["IT07: [exile_vemf_reloaded] %1 -- %2: %3", _prefix, _this, _line] };
+   _doLog = { diag_log text format["IT07: [VEMFr] %1 -- %2: %3", _prefix, _this, _line] };
    _debugMode = "debugMode" call VEMFr_fnc_getSetting;
    if (_type isEqualTo 0) then
    {
