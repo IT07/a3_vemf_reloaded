@@ -16,7 +16,6 @@ class CfgFunctions
 			class launch { postInit = 1; };
 			class loadInv {};
 			class placeMines {};
-			class playerCount {};
 			class spawnInvasionAI {};
 			class spawnVEMFrAI {};
 			class waitForPlayers {};
