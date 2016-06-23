@@ -1,5 +1,29 @@
 ## VEMFr Changelog
 
+#### `v0744.0`
+*Server-side* <br />
+**[ADDED]** config option: minimum territory level for BaseAttack mission <br />
+**[CHANGED]** primarySlotsMax from 10 to 7 <br />
+**[CHANGED]** primarySlotsMin from 4 to 2 <br />
+**[CHANGED]** secondarySlotsMax from 4 to 3 <br />
+**[CHANGED]** secondarySlotsMin from 2 to 1 <br />
+**[CHANGED]** magSlotsMax from 6 to 8 <br />
+**[CHANGED]** magSlotsMin from 4 to 6 <br />
+**[CHANGED]** vestSlotsMax from 4 to 3 <br />
+**[CHANGED]** vestSlotsMin from 2 to 1 <br />
+**[CHANGED]** headGearSlotsMax from 4 to 3 <br />
+**[CHANGED]** headGearSlotsMin from 2 to 1 <br />
+**[CHANGED]** bagSlotsMax from 4 to 2 <br />
+**[CHANGED]** bagSlotsMin from 2 to 1 <br />
+**[CHANGED]** helicopter at DynamicLocationInvasion mission now searches and destroys instead of loitering <br />
+**[FIXED]** high server thread count (thanks to @ServerAtze for reporting the issue) <br />
+**[FIXED]** REMOTEguard.sqf was running much too fast under certain conditions, causing thread count spikes <br />
+**[TRASHED]** fn_playerCount.sqf <br />
+**[TWEAKED]** fn_giveWeaponItems.sqf <br />
+**[TWEAKED]** delays before and between exploding mines at DynamicLocationInvasion missions <br />
+**[TWEAKED]** fn_missionTimer <br />
+<br />
+
 #### `v0743.9`
 *Server-side* <br />
 **[FIXED]** params error in fn_placeMines.sqf <br />
