@@ -25,14 +25,14 @@ if (_minNew > -1) then
                   _minFps = "minServerFPS" call VEMFr_fnc_getSetting;
                   _minPlayers = "minPlayers" call VEMFr_fnc_getSetting;
                   if isNil "VEMFrForceStart" then { VEMFrForceStart = false };
-                  waitUntil { if ([_minPlayers] call VEMFr_fnc_playerCount AND diag_fps > _minFps OR VEMFrForceStart) then { true } else { uiSleep 5; false } };
+                  waitUntil { if ((((count allPlayers) >= _minPlayers) AND (diag_fps > _minFps)) OR VEMFrForceStart) then { true } else { uiSleep 5; false } };
                   if VEMFrForceStart then
                      {
                         ["missionTimer", 1, format["VEMFr has been forced to start. Server FPS: %1", diag_fps]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                      } else
                      {
                         ["missionTimer", 1, format["Enough players online (%1) and server FPS (%2) is above %3. Starting missionTimer...", count allPlayers, diag_fps, _minFps]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-                        ["missionTimer", 1, format["Global mission limit is set on: %1", _maxGlobalMissions]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+                        ["missionTimer", 1, format["Global mission limit is set at: %1", _maxGlobalMissions]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                      };
                      VEMFrMissionCount = 0;
                      private ["_ignoreLimit"];
@@ -50,10 +50,10 @@ if (_minNew > -1) then
                      while {true} do
                         {
                            // Pick A Mission if enough players online
-                           if ([_minPlayers] call VEMFr_fnc_playerCount) then
+                           if ((count allPlayers) >= _minPlayers) then
                               {
                                  scopeName "pick";
-                                 if (VEMFrMissionCount < _maxGlobalMissions AND VEMFrMissionCount >= 0 OR _ignoreLimit) then
+                                 if ((VEMFrMissionCount < _maxGlobalMissions) AND (VEMFrMissionCount >= 0) OR _ignoreLimit) then
                                     {
                                        _missionName = selectRandom _missionList;
                                        _mission = [_missionName] execVM format["exile_vemf_reloaded\missions\%1.sqf", _missionName];
