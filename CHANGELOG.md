@@ -1,5 +1,21 @@
 ## VEMFr Changelog
 
+#### `v0745.0`
+*Server-side* <br />
+**[ADDED]** option to enable/disable AI names for kill messages <br />
+**[CHANGED]** setting "aiLaunchers" is now called "allowLaunchers" <br />
+**[ADDED]** option "allowRepeat" to allow/disallow re-spawning of missions in locations that have been invaded since last restart <br />
+**[CHANGED]** loot-crate parachute settings have their own class now <br />
+**[CHANGED]** heliPatrol settings have their own class now <br />
+**[CHANGED]** setting "marker" is now called "useMarker" <br />
+**[CHANGED]** function "checkPlayerPresence" is now called "playerNear" <br />
+**[CHANGED]** function "getSetting" is now called "config" <br />
+**[CHANGED]** function "headlessClient" is now called "hc" <br />
+**[CHANGED]** function "placeMines" is now called "mines" <br />
+**[CHANGED]** function "waitForMissionDone" is now a separate sqf file <br />
+**[TWEAKED]** overall code execution-speed <br />
+<br />
+
 #### `v0744.0`
 *Server-side* <br />
 **[ADDED]** config option: minimum territory level for BaseAttack mission <br />
