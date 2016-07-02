@@ -6,20 +6,19 @@ class CfgFunctions
 		class serverFunctions
 		{
 			file = "exile_vemf_reloaded\fn";
-			class checkPlayerPresence {};
+			class playerNear {};
 			class checkSide {};
 			class findPos {};
-			class getSetting {};
+			class config {};
 			class giveAmmo {};
 			class giveWeaponItems {};
-			class headlessClient {};
+			class hc {};
 			class launch { postInit = 1; };
 			class loadInv {};
-			class placeMines {};
+			class mines {};
 			class spawnInvasionAI {};
 			class spawnVEMFrAI {};
 			class waitForPlayers {};
-			class waitForMissionDone {};
 		};
 	};
 };
