@@ -41,6 +41,7 @@ class CfgVemfReloaded
 	punishRoadKills = 1; // Enable/disable respect deduction if player roadkills AI
 	removeAllAssignedItems = 0; // Enable/disable removal of Map, Compass, Watch and Radio from all AI
 	sayKilled = 1; // Enable/disable AI kill messages
+	sayKilledName = 0; // Enable/disable the usage of AI's names instead of just "AI"
  	timeOutTime = 25; // Enable/disable mission timeOutTime (in minutes)
 	validateLoot = 1; // Enable/disable validation of all defined loot classnames. Checks if classnames exist in server's game configFile
 
@@ -75,9 +76,9 @@ class CfgVemfReloaded
 
 	class BaseAttack // WORK IN PROGRESS!!
 	{ // BaseAttack (mission) settings
-		aiLaunchers = 1; // Allow/disallow AI to have rocket launchers
 		aiMode = 1; // 0 = "military" | 1 = Police | 2 = S.W.A.T.
 		aiSetup[] = {2,5}; // format: {amountOfGroups,unitsInEachGroup};
+		allowLaunchers = 1; // Allow/disallow AI to have rocket launchers
 		hasLauncherChance = 25; // In percentage. How big the chance that each AI gets a launcher
 		maxAttacks = 5; // Maximum amount of active attacks at the same time | can not be turned off
 		minimumLevel = 2; // Minimum required level of base before it can get attacked
@@ -92,28 +93,37 @@ class CfgVemfReloaded
 	class DynamicLocationInvasion
 	{ // DynamicLocationInvasion (mission) settings
 		allowCrateLift = 0; // Allow/disallow the loot crate to be lifted with helicopter
-		aiLaunchers = 1; // Allow/disallow AI to have rocket launchers
+		allowLaunchers = 1; // Allow/disallow AI to have rocket launchers
+		allowRepeat = 0; // Allow/disallow re-invading of a previously invaded city/town/location
 		announce = 1; // Enable/disable mission notificatons
 		cal50s = 3; // Max amount of .50 caliber machineguns at mission | Needs to be lower than total unit count per mission
 		cal50sDelete = 1; // Enable/disable the removal of .50cal | 2 = destroy (not remove)
+		class crateParachute
+		{
+			enabled = 0; // Enable/disable parachute of the loot crate
+			altitude = 250; // loot crate spawn-altitude in meters
+		};
 		crateTypes[] = {"I_CargoNet_01_ammo_F","O_CargoNet_01_ammo_F","B_CargoNet_01_ammo_F","I_supplyCrate_F","Box_East_AmmoVeh_F","Box_NATO_AmmoVeh_F"};
 		flairTypes[] = {"Chemlight_green","Chemlight_red","Chemlight_yellow","Chemlight_blue"};
 		groupCount[] = {2,4}; // In format: {minimum, maximum}; VEMF will pick a random number between min and max. If you want the same amount always, use same numbers for minimum and maximum.
 		groupUnits[] = {4,6}; // How much units in each group. Works the same like groupCount
 		hasLauncherChance = 25; // In percentage. How big the chance that each AI gets a launcher
-		heliPatrol[] = {1, {"B_Heli_Light_01_armed_F","B_Heli_Attack_01_F","B_Heli_Transport_03_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F"}}; // Enable/disable heli patrol at mission location and set the types of heli(s)
-		heliLocked = 0; // Enable/disable heli lock to prevent/allow players from flying it
-		marker = 1; // Enable/disable mission markers
+		class heliPatrol
+		{
+			enabled = 1;
+			classes[] = {"B_Heli_Light_01_armed_F","B_Heli_Attack_01_F","B_Heli_Transport_03_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F"}; // the types of heli(s)
+			locked = 0; // Enable/disable heli lock to prevent/allow players from flying it
+		};
+		useMarker = 1; // Enable/disable mission markers
 		markCrateOnMap = 1; // Enable/disable loot crate marker on map called "Loot"
 		markCrateVisual = 1; // Enable/disable loot crate VISUAL marker (smoke and/or chem)
 		/* maxDistance NOTE: make sure to keep this number very high. 15000 is for Altis */
 		maxDistancePrefered = 7000; // Prefered maximum mission distance from player
 		maxInvasions = 7; // Max amount of active uncompleted invasions allowed at the same time
 		mines = 0; // Enable/disable mines at mission | 1 = anti-Armor mines | 2 = anti-Personell mines | 3 = both anti-Armor and anti-Personell mines
-		minesAmount = 20; // Ignore if placeMines = 0;
+		minesAmount = 20; // Ignore if mines = 0;
 		minesCleanup = 1; // Enable/disable the removal of mines once mission has been completed | 2 = explode mines
 		nonPopulated = -1; // Allow/disallow this mission type being placed at locations without buildings | using -1 will ignore this setting and use the global settting
-		parachuteCrate[] = {0, 250}; // default: {disabled, 250 meters} | use 1 as first number to enable crate parachute spawn
 		randomModes = 1; // Enable/disable randomization of AI types (linked to aiMode setting)
 	   skipDistance = 800; // No missions at locations which have players within this range (in meters)
 	   smokeTypes[] = {"SmokeShell","SmokeShellBlue","SmokeShellGreen","SmokeShellOrange","SmokeShellRed","SmokeShellYellow"};
