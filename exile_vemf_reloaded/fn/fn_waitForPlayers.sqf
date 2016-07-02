@@ -12,31 +12,25 @@
 	BOOL - true if there is a player present
 */
 
-private ["_playerNear","_pos","_rad"];
-_playerNear = false;
-params [["_pos",[],[[]]], ["_rad",-1,[0]]];
-if (((count _pos) isEqualTo 3) AND (_rad > -1)) then
+private ["_r","_this0","_this1"];
+params [
+	["_this0", [], [[]]],
+	["_this1", -1, [0]]
+];
+
+_r = false;
+if ([_this0, _this1] call VEMFr_fnc_playerNear) then
 	{
-		private ["_time","_timeOutTime","_pp"];
-		_time = round time;
-		// Define _settings
-		_timeOutTime = ("timeOutTime" call VEMFr_fnc_getSetting)*60;
-		// _pp = playerPresence
-		_pp = [_pos, _rad] call VEMFr_fnc_checkPlayerPresence;
-		if _pp then
-			{
-				_playerNear = true;
-			} else
-			{
-				waitUntil { if (([_pos, _rad] call VEMFr_fnc_checkPlayerPresence) OR (round time - _time > _timeOutTime)) then {true} else {uiSleep 4; false} };
-				if ([_pos, _rad] call VEMFr_fnc_checkPlayerPresence) then
-					{
-						_playerNear = true;
-					};
-			};
+		_r = true;
 	} else
 	{
-		["waitForPlayers",0,format["params are invalid! [%1,%2]", ((count _pos) isEqualTo 3), (_rad > -1)]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+		private ["_t","_tot"];
+		_t = round time;
+		_tot = ("timeOutTime" call VEMFr_fnc_config)*60;
+		waitUntil { if (([_this0, _this1] call VEMFr_fnc_playerNear) OR (round time - _t > _tot)) then {true} else {uiSleep 4; false} };
+		if ([_this0, _this1] call VEMFr_fnc_playerNear) then
+			{
+				_r = true;
+			};
 	};
-
-_playerNear
+_r

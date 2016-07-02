@@ -11,15 +11,15 @@
     nothing
 */
 
-if ("validateLoot" call VEMFr_fnc_getSetting isEqualTo 1) then
+if ("validateLoot" call VEMFr_fnc_config isEqualTo 1) then
 { // _validateLoot is enabled, go ahead...
-    if ("debugMode" call VEMFr_fnc_getSetting < 1) then
+    if ("debugMode" call VEMFr_fnc_config < 1) then
     {
       ["CheckLoot", 0, "Failed to validate loot: no output allowed in RPT"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
     } else
     {
       ["CheckLoot", 1, "Validating loot tables..."] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-      _invalidClasses = [];
+      _bin = [];
 
       _mags = [];
       _cfgMags = "_mags pushBack (configName _x); true" configClasses (configFile >> "cfgMagazines");
@@ -33,33 +33,33 @@ if ("validateLoot" call VEMFr_fnc_getSetting isEqualTo 1) then
           _bags pushBack (configName _x);
       } forEach _cfgBags;
 
-      _aiGear = [["aiGear"],["aiUniforms","aiVests","aiRifles","aiBackpacks","aiLaunchers","aiPistols"]] call VEMFr_fnc_getSetting;
+      _aiGear = [["aiGear"],["aiUniforms","aiVests","aiRifles","aiBackpacks","aiLaunchers","aiPistols"]] call VEMFr_fnc_config;
       {
           {
               if not((_x in _mags) OR (_x in _weapons) OR (_x in _bags)) then
               {
-                  _invalidClasses pushBack _x;
+                  _bin pushBack _x;
               };
           } forEach _x;
       } forEach _aiGear;
 
-      _loot = [["crateLoot"],["primaryWeaponLoot","secondaryWeaponLoot","magazinesLoot","attachmentsLoot","itemsLoot","vestsLoot","headGearLoot","backpacksLoot"]] call VEMFr_fnc_getSetting;
+      _loot = [["crateLoot"],["primaryWeaponLoot","secondaryWeaponLoot","magazinesLoot","attachmentsLoot","itemsLoot","vestsLoot","headGearLoot","backpacksLoot"]] call VEMFr_fnc_config;
       {
           {
               _class = _x select 0;
               if not((_class in _mags) OR (_class in _weapons) OR (_class in _bags)) then
               {
-                  _invalidClasses pushBack _x;
+                  _bin pushBack _x;
               };
           } forEach _x;
       } forEach _loot;
 
-      if (count _invalidClasses isEqualTo 0) then
+      if (count _bin isEqualTo 0) then
       {
          ["CheckLoot", 1, "Loot tables are all valid :)"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
       } else
       {
-         ["CheckLoot", 0, format["Invalid classes found in loot! | %1", _invalidClasses]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+         ["CheckLoot", 0, format["Invalid classes found in loot! | %1", _bin]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
       };
     };
 };

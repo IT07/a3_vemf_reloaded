@@ -12,4 +12,4 @@
     nothing
 */
 
-(param [0, grpNull, [grpNull]]) setVariable ["isVEMFrGroup",true,false];
+(param [0, grpNull, [grpNull]]) setVariable ["isVEMFrGroup",true,true];

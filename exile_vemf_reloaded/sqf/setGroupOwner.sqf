@@ -12,50 +12,33 @@
     nothing
 */
 
-_toTransfer = param [0, grpNull, [grpNull]];
-if not(isNull _toTransfer) then
+_grp = param [0, grpNull, [grpNull]];
+if not(isNull _grp) then
    {
       // Check if HC is enabled
-      _hcEnabled = "headLessClientSupport" call VEMFr_fnc_getSetting;
-      _forceClients = uiNamespace getVariable ["VEMFr_forceAItoClients", nil];
-      if not(isNil "_forceClients") then
-         {
-            if (_forceClients isEqualType true) then
-               {
-                  if _forceClients then
-                     {
-                        _hcEnabled = -1;
-                     };
-               };
-         };
+      _hcNbld = "headLessClientSupport" call VEMFr_fnc_config;
+      _force = uiNamespace getVariable ["VEMFr_forceAItoClients", nil];
+      if not(isNil "_force") then { if (_force isEqualType true) then { if _force then { _hcNbld = -1 } } };
 
       private ["_to"];
-      if (_hcEnabled isEqualTo 1) then
-         { // Gather the Headless Client(s)
-            _hcClients = [];
+      if (_hcNbld isEqualTo 1) then
+         {
+            _arr = [];
             {
-               if (typeOf _x isEqualTo "HeadlessClient_F") then // it is an HC
-        	         {
-                     _hcClients pushBack [_x, owner _x];
-                  };
+               if (typeOf _x isEqualTo "HeadlessClient_F") then { _arr pushBack [_x, owner _x] };
             } forEach allPlayers;
-            if (count _hcClients > 0) then
-               {
-                  _to = call VEMFr_fnc_headlessClient; // Select a random hc
-               } else
-               {
-                  uiNamespace setVariable ["VEMFr_forceAItoClients", true];
-               };
+
+            if (count _arr > 0) then { _to = call VEMFr_fnc_hc } else { uiNamespace setVariable ["VEMFr_forceAItoClients", true] };
          } else // If Headlessclient setting is not enabled
          {
             if ((count allPlayers) > 0) then
                {
-                  _distanceToX = worldSize;
+                  _distToX = worldSize;
                   {
-                     _dist = _x distance (leader _toTransfer);
-                     if (_dist <= _distanceToX) then
+                     _dist = _x distance (leader _grp);
+                     if (_dist <= _distToX) then
                         {
-                           _distanceToX = _dist;
+                           _distToX = _dist;
                            _to = _x;
                         };
                   } forEach allPlayers;
@@ -64,26 +47,7 @@ if not(isNull _toTransfer) then
 
          if not(isNil "_to") then
             {
-               (uiNamespace getVariable ["VEMFrHcLoad", nil]) pushBack _to;
-               _transfer = _toTransfer setGroupOwner (owner _to);
-               waitUntil { if not(local _toTransfer) then {true} else {uiSleep 0.1; false} };
-               /*_load = uiNamespace getVariable ["VEMFrHcLoad", nil];
-               if not(isNil "_load") then
-                  {
-                     _index = _load find _to;
-                     if (_index > -1) then
-                        {
-                           _load set [_index, ((_load select _index) select 1) + 1];
-                        } else
-                        {
-                           _load pushBack [_to, 1];
-                        };
-                  };*/
-            } else
-            {
-               ["setGroupOwner",0,format["Unable to find a %1 to transfer to!", if (_hcEnabled isEqualTo 1) then {"HC"} else {"client"}]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+               _grp setGroupOwner (owner _to);
+               waitUntil { if not(local _grp) then {true} else {uiSleep 0.1; false} };
             };
-   } else
-   {
-      ["setGroupOwner",0,"Can not transfer a non-existent group!"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
    };

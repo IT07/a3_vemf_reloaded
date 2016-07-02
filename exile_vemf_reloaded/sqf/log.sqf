@@ -14,33 +14,36 @@
     nothing (use spawn, not call)
 */
 
-if (("debugMode" call VEMFr_fnc_getSetting) > 0) then
+if (("debugMode" call VEMFr_fnc_config) > 0) then
 {
-   scopeName "outer";
-   private ["_prefix","_type","_line","_doLog"];
-   params [["_prefix","",[""]], ["_type",3,[0]], ["_line","",[""]]];
+   scopeName "_top";
+   params [
+      ["_p", "", [""]],
+      ["_t", 3, [0]],
+      ["_l", "", [""]]
+   ];
 
-   _doLog = { diag_log text format["IT07: [VEMFr] %1 -- %2: %3", _prefix, _this, _line] };
-   _debugMode = "debugMode" call VEMFr_fnc_getSetting;
-   if (_type isEqualTo 0) then
+   _do = { diag_log text format["IT07: [VEMFr] %1 -- %2: %3", _p, _this, _l] };
+   _m = "debugMode" call VEMFr_fnc_config;
+   if (_t isEqualTo 0) then
    {
-      if (_debugMode isEqualTo 1 OR _debugMode isEqualTo 3) then
+      if (_m isEqualTo 1 OR _m isEqualTo 3) then
       {
-         "ERROR" call _doLog;
-         breakOut "outer";
+         "ERROR" call _do;
+         breakOut "_top";
       };
    };
-   if (_type isEqualTo 1) then
+   if (_t isEqualTo 1) then
    {
-      if (_debugMode isEqualTo 2 OR _debugMode isEqualTo 3) then
+      if (_m isEqualTo 2 OR _m isEqualTo 3) then
       {
-         "INFO" call _doLog;
-         breakOut "outer";
+         "INFO" call _do;
+         breakOut "_top";
       };
    };
-   if (_type isEqualTo 2) then // This bypasses _debugMode setting. Always logs given params even if debugMode is set to 0
+   if (_t isEqualTo 2) then // This bypasses _m setting. Always logs given params even if debugMode is set to 0
    {
-      "SYSTEM" call _doLog;
-      breakOut "outer";
+      "SYSTEM" call _do;
+      breakOut "_top";
    };
 };

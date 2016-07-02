@@ -14,9 +14,15 @@
 	nothing
 */
 
-params [["_missionType",-1,[-1]], ["_title","",[""]], ["_msgLine","",[""]], ["_sendTo",[],[[]]]];
-if (count _sendTo isEqualTo 0) then { _sendTo = allPlayers };
+params [
+	["_mt", -1, [-1]],
+	["_title", "", [""]],
+	["_line", "", [""]],
+	["_to", [], [[]]]
+];
+
+if ((count _to) isEqualTo 0) then { _to = allPlayers };
 {
-	VEMFrMsgToClient = [[_missionType, _title, _msgLine], ""];
+	VEMFrMsgToClient = [[_mt, _title, _line], ""];
 	(owner _x) publicVariableClient "VEMFrMsgToClient";
-} forEach _sendTo;
+} forEach _to;

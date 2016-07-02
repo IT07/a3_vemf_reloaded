@@ -12,7 +12,6 @@
     nothing
 */
 
-uiNamespace setVariable ["VEMFrHcLoad", []];
 while {true} do
    {
       if ((count playableUnits) > 0) then
@@ -23,11 +22,11 @@ while {true} do
                   {
                      if ((count (units _x)) > 0) then
                         {
-                           ["REMOTEguard",1,format["Attempting to transfer group: %1", _x]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+                           //["REMOTEguard",1,format["Attempting to transfer group: %1", _x]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                            // Group still has units, check if there is anyone that can be the owner
-                           _handle = [_x] ExecVM "exile_vemf_reloaded\sqf\setGroupOwner.sqf";
-                           waitUntil { if (scriptDone _handle) then {true} else {uiSleep 0.1; false} };
-                           ["REMOTEguard",1,format["Transfer attempted. Group (%1) is %2", _x, if (local _x) then {"still local!"} else {"now REMOTE"}]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+                           _h = [_x] ExecVM "exile_vemf_reloaded\sqf\setGroupOwner.sqf";
+                           waitUntil { if (scriptDone _h) then {true} else {uiSleep 0.1; false} };
+                           //["REMOTEguard",1,format["Transfer attempted. Group (%1) is %2", _x, if (local _x) then {"still local!"} else {"now REMOTE"}]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
                         } else
                         {
                            deleteGroup _x;

@@ -15,60 +15,53 @@
     BOOLEAN - true if successful
 */
 
-private ["_done"];
-_done = false;
-if (_this isEqualType []) then
+private ["_r","_this0"];
+params [
+   ["_this0", objNull, [objNull]],
+   ["_this1", "", [""]],
+   ["_this2", "", [""]],
+   ["_this3", "", [""]]
+];
+
+_r = [];
+if not(_this1 isEqualTo "") then
    {
-      private ["_unit"];
-      params [["_unit", objNull, [objNull]],["_classPrimary", "", [""]],["_classSecondary", "", [""]],["_classHandgun", "", [""]]];
-      if not isNull _unit then
+      private ["_m"];
+      _m = selectRandom (getArray (configFile >> "CfgWeapons" >> _this1 >> "magazines"));
+      for "_l" from 1 to 5 do
          {
-            if local _unit then
-               {
-                  if not(_classPrimary isEqualTo "") then
-                     {
-                        private ["_mag"];
-                        _mag = selectRandom (getArray (configFile >> "CfgWeapons" >> _classPrimary >> "magazines"));
-                        for "_m" from 1 to 5 do
-                           {
-                              if not(_unit canAdd _mag) exitWith {};
-                              _unit addItem _mag;
-                           };
-                     };
-                  if not (_classSecondary isEqualTo "") then
-                     {
-                        if not(backPack _unit isEqualTo "") then
-                           {
-                              private ["_mag"];
-                              _mag = selectRandom (getArray (configFile >> "CfgWeapons" >> _classSecondary >> "magazines"));
-                              for "_m" from 1 to 3 do
-                                 {
-                                    if not(_unit canAdd _mag) exitWith {};
-                                    _unit addItem _mag;
-                                 };
-                           };
-                     };
-                  if not (_classHandgun isEqualTo "") then
-                     {
-                        private ["_mag"];
-                        _mag = selectRandom (getArray (configFile >> "CfgWeapons" >> _classHandgun >> "magazines"));
-                        for "_m" from 1 to 4 do
-                           {
-                              if not(_unit canAdd _mag) exitWith {};
-                              _unit addItem _mag;
-                           };
-                     };
-                  _done = true;
-               } else // If unit is not local
-               {
-                  ["fn_giveAmmo", 0, format["%1 is not local. Can not execute!", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-               };
-         } else // If unit isNull
-         {
-            ["fn_giveAmmo", 0, "_unit isNull. Can not execute!"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+            if not(_this0 canAdd _m) exitWith {};
+            _this0 addItem _m;
          };
-   } else
-   {
-      ["fn_giveAmmo", 0, "_this is not an ARRAY"] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+      _r pushBack true;
    };
-_done
+
+if not(_this2 isEqualTo "") then
+   {
+      if not((backPack _this0) isEqualTo "") then
+         {
+            private ["_m"];
+            _m = selectRandom (getArray (configFile >> "CfgWeapons" >> _this2 >> "magazines"));
+            for "_l" from 1 to 3 do
+               {
+                  if not(_this0 canAdd _m) exitWith {};
+                  _this0 addItem _m;
+               };
+            _r pushBack true;
+         };
+   };
+
+if not(_this3 isEqualTo "") then
+   {
+      private ["_m"];
+      _m = selectRandom (getArray (configFile >> "CfgWeapons" >> _this3 >> "magazines"));
+      for "_l" from 1 to 4 do
+         {
+            if not(_this0 canAdd _m) exitWith {};
+            _this0 addItem _m;
+         };
+      _r pushBack true;
+   };
+
+if ((count _r) > 0) then { _r = true } else { _r = nil };
+_r

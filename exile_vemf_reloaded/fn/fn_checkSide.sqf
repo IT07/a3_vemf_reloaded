@@ -9,44 +9,44 @@
    Returns: SIDE - unit's side
 */
 
-private ["_return"];
+private ["_r"];
 if (_this isEqualType "") then
    {
-      private ["_faction"];
-      _faction = getText (configFile >> "CfgVehicles" >> _this >> "faction");
-      if not(_faction isEqualTo "") then
+      private ["_f"];
+      _f = getText (configFile >> "CfgVehicles" >> _this >> "faction");
+      if not(_f isEqualTo "") then
          {
             scopeName "isNull";
-            if (_faction isEqualTo "BLU_G_F") then
+            if (_f isEqualTo "BLU_G_F") then
                {
-                  _return = WEST;
+                  _r = WEST;
                   breakOut "isNull";
                };
-            if (_faction isEqualTo "CIV_F") then
+            if (_f isEqualTo "CIV_F") then
                {
-                  _return = civilian;
+                  _r = civilian;
                   breakOut "isNull";
                };
-            if (_faction isEqualTo "IND_F") then
+            if (_f isEqualTo "IND_F") then
                {
-                  _return = independent;
+                  _r = independent;
                   breakOut "isNull";
                };
-            if (_faction isEqualTo "IND_G_F") then
+            if (_f isEqualTo "IND_G_F") then
                {
-                  _return = resistance;
+                  _r = resistance;
                   breakOut "isNull";
                };
-            if (_faction isEqualTo "OPF_G_F") then
+            if (_f isEqualTo "OPF_G_F") then
                {
-                  _return = EAST;
+                  _r = EAST;
                };
          } else
          {
             ["fn_checkSide", 0, format["Failed to find faction of %1", _this]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
          };
-         if not isNil "_return" then
+         if not(isNil "_r") then
             {
-               _return
+               _r
             };
    };

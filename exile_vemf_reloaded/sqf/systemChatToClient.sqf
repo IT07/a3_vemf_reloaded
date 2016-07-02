@@ -9,9 +9,13 @@
    nothing
 */
 
-params [["_line","",[""]], ["_sendTo",[],[[]]]];
-if (_sendTo isEqualTo []) then { _sendTo = allPlayers };
+params [
+   ["_line", "", [""]],
+   ["_to", [], [[]]]
+];
+
+if (_to isEqualTo []) then { _to = allPlayers };
 {
    VEMFrMsgToClient = [_line, "sys"];
 	(owner _x) publicVariableClient "VEMFrMsgToClient";
-} forEach _sendTo;
+} forEach _to;

@@ -1,8 +1,8 @@
 /*
-	Author: VAMPIRE, rebooted by IT07
+	Author: IT07
 
 	Description:
-	loads AI inventory
+	gives inventory to given units
 
 	Param:
 	_this: ARRAY
@@ -14,223 +14,200 @@
 	BOOLEAN - true if nothing failed
 */
 
-private ["_ok","_params"];
-_ok = false;
-_params = _this;
-if (_this isEqualType []) then
+private ["_r","_this0","_this1","_this2"];
+params [
+	["_this0", [], [[]]],
+	["_this1", "", [""]],
+	["_this2", 0, [0]]
+];
+
+if ((_this1 in ("missionList" call VEMFr_fnc_config)) OR (_this1 isEqualTo "Static")) then
 	{
-		private ["_units","_missionName","_aiMode"];
-		params [["_units", [], [[]]],["_missionName", "", [""]],["_aiMode", 0, [0]]];
-		if (count _units > 0) then
+		scopeName "this";
+		if (_this2 isEqualTo 0) then // "Militia"
 			{
-				if (_missionName in ("missionList" call VEMFr_fnc_getSetting) OR _missionName isEqualTo "Static") then
-					{
-						scopeName "this";
-						if (_aiMode isEqualTo 0) then // "Militia"
-							{
-								private ["_aiGear","_uniforms","_headGear","_vests","_backpacks","_rifles","_pistols","_aiLaunchers","_launchers","_launcherChance"];
-								// Define settings
-								_aiGear = [["aiGear"],["aiUniforms","aiHeadGear","aiVests","aiBackpacks","aiLaunchers","aiRifles","aiPistols"]] call VEMFr_fnc_getSetting;
-								_uniforms = _aiGear select 0;
-								_headGear = _aiGear select 1;
-								_vests = _aiGear select 2;
-								_backpacks = _aiGear select 3;
-								_rifles = _aiGear select 5;
-								_pistols = _aiGear select 6;
-								_aiLaunchers = ([[_missionName],["aiLaunchers"]] call VEMFr_fnc_getSetting) select 0;
-								if (_aiLaunchers isEqualTo 1) then
-									{
-										_launchers = _aiGear select 4;
-										_launcherChance = ([[_missionName],["hasLauncherChance"]] call VEMFr_fnc_getSetting) select 0;
-									};
+				private ["_s","_unifs","_headG","_vests","_packs","_lnchers","_rfles","_pstls","_ls"];
+				// Define settings
+				_s = [["aiGear"],["aiUniforms","aiHeadGear","aiVests","aiBackpacks","aiLaunchers","aiRifles","aiPistols"]] call VEMFr_fnc_config;
+				_s params ["_unifs","_headG","_vests","_packs","_lnchers","_rfles","_pstls"];
+				{
+					private ["_xx","_g","_a","_pw","_hw"];
+					_xx = _x;
+					// Strip it
+					removeAllWeapons _xx;
+					removeAllItems _xx;
+					if ("removeAllAssignedItems" call VEMFr_fnc_config isEqualTo 1) then
+						{
+							removeAllAssignedItems _xx;
+						};
+					removeVest _xx;
+					removeBackpack _xx;
+					removeGoggles _xx;
+					removeHeadGear _xx;
+					if (count _unifs > 0) then
+						{
+							removeUniform _xx;
+							_g = selectRandom _unifs;
+							_xx forceAddUniform _g; // Give the poor naked guy some clothing :)
+						};
+					if (_this1 isEqualTo "BaseAttack") then
+						{
+							_xx addBackpack "B_Parachute";
+						};
+					_g = selectRandom _headG;
+					_xx addHeadGear _g;
+					_g = selectRandom _vests;
+					_xx addVest _g;
+					_ls = [[_this1],["allowLaunchers","hasLauncherChance"]] call VEMFr_fnc_config;
+					if ((_ls select 0) isEqualTo 1) then
+						{
+							private ["_lc"];
+							_lc = _ls select 1;
+							if ((_lc isEqualTo 100) OR ((ceil random (100 / _lc) isEqualTo (ceil random (100 / _lc))))) then
 								{
-									private ["_unit","_gear","_ammo"];
-									_unit = _x;
-									// Strip it
-									removeAllWeapons _unit;
-									removeAllItems _unit;
-									if ("removeAllAssignedItems" call VEMFr_fnc_getSetting isEqualTo 1) then
+									if not(_this1 isEqualTo "BaseAttack") then
 										{
-											removeAllAssignedItems _unit;
+											_g = selectRandom _packs;
+											_xx addBackpack _g;
 										};
-									removeVest _unit;
-									removeBackpack _unit;
-									removeGoggles _unit;
-									removeHeadGear _unit;
-									if (count _uniforms > 0) then
+									_g = selectRandom _lnchers;
+									private ["_a"];
+									_a = getArray (configFile >> "cfgWeapons" >> _g >> "magazines");
+									if (count _a > 2) then
 										{
-											removeUniform _unit;
-											_gear = selectRandom _uniforms;
-											_unit forceAddUniform _gear; // Give the poor naked guy some clothing :)
+											_a resize 2;
 										};
-									if (_missionName isEqualTo "BaseAttack") then
-										{
-											_unit addBackpack "B_Parachute";
-										};
-									_gear = selectRandom _headGear;
-									_unit addHeadGear _gear;
-									_gear = selectRandom _vests;
-									_unit addVest _gear;
-									if (_aiLaunchers isEqualTo 1) then
-										{
-											if (_launcherChance isEqualTo 100 OR (ceil random (100 / _launcherChance) isEqualTo (ceil random (100 / _launcherChance)))) then
-												{
-													if not(_missionName isEqualTo "BaseAttack") then
-														{
-															_gear = selectRandom _backpacks;
-															_unit addBackpack _gear;
-														};
-													_gear = selectRandom _launchers;
-													private ["_ammo"];
-													_ammo = getArray (configFile >> "cfgWeapons" >> _gear >> "magazines");
-													if (count _ammo > 2) then
-														{
-															_ammo resize 2;
-														};
-														for "_i" from 0 to (2 + (round random 1)) do
-															{
-																_unit addMagazine (selectRandom _ammo);
-															};
-													_unit addWeapon _gear;
-												};
-										};
+										for "_i" from 0 to (2 + (round random 1)) do
+											{
+												_xx addMagazine (selectRandom _a);
+											};
+									_xx addWeapon _g;
+								};
+						};
 
-									// Select a random weapon
-									private ["_primaryWeapon","_handgunWeapon"];
-									_primaryWeapon = selectRandom _rifles;
-									_handgunWeapon = selectRandom _pistols;
-									// Give this guy some ammo
-									_givenAmmo = [_unit, _primaryWeapon, "", _handgunWeapon] call VEMFr_fnc_giveAmmo;
-									if not _givenAmmo then
-										{
-											["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-										};
-									_unit addWeapon _primaryWeapon;
-									_unit selectWeapon _primaryWeapon;
-									_unit addWeapon _handgunWeapon;
-									// Give this guy some weaponItems
-									_giveAttachments = [_unit] call VEMFr_fnc_giveWeaponItems;
-									if not _giveAttachments then
-										{
-											["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-										};
-								} forEach _units;
-								_ok = true;
-								breakOut "this";
-							};
-						if (_aiMode isEqualTo 1) then // Regular police
-							{
-								private ["_policeGear","_headGear","_vests","_uniforms","_rifles","_pistols","_backpacks"];
-								_policeGear = [["policeConfig"],["headGear","vests","uniforms","rifles","pistols","backpacks"]] call VEMFr_fnc_getSetting;
-								_headGear = _policeGear select 0;
-								_vests = _policeGear select 1;
-								_uniforms = _policeGear select 2;
-								_rifles = _policeGear select 3;
-								_pistols = _policeGear select 4;
-								_backpacks = _policeGear select 5;
-								{
-									private ["_unit","_hat","_vest","_uniform","_rifle","_pistol","_backpack","_givenAmmo","_giveAttachments"];
-									_unit = _x;
-									// Strip it
-									removeAllWeapons _unit;
-									removeAllItems _unit;
-									if ("removeAllAssignedItems" call VEMFr_fnc_getSetting isEqualTo 1) then
-										{
-											removeAllAssignedItems _unit;
-										};
-									removeUniform _unit;
-									removeVest _unit;
-									removeBackpack _unit;
-									removeGoggles _unit;
-									removeHeadGear _unit;
+					// Select a random weapon
+					_pw = selectRandom _rfles;
+					_hw = selectRandom _pstls;
+					// Give this guy some ammo
+					_g = [_xx, _pw, "", _hw] call VEMFr_fnc_giveAmmo;
+					if (isNil "_g") then
+						{
+							["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _xx]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+						};
+					_xx addWeapon _pw;
+					_xx selectWeapon _pw;
+					_xx addWeapon _hw;
+					// Give this guy some weaponItems
+					_g = [_xx] call VEMFr_fnc_giveWeaponItems;
+					if not _g then
+						{
+							["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _xx]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+						};
+				} forEach _this0;
+				_r = true;
+				breakOut "this";
+			};
 
-									_hat = selectRandom _headGear;
-									_unit addHeadGear _hat;
-									_vest = selectRandom _vests;
-									_unit addVest _vest;
-									_uniform = selectRandom _uniforms;
-									_unit forceAddUniform _uniform;
-									_rifle = selectRandom _rifles;
-									_pistol = selectRandom _pistols;
-									// Give this guy some ammo
-									_givenAmmo = [_unit, _rifle, "", _pistol] call VEMFr_fnc_giveAmmo;
-									if not _givenAmmo then
-										{
-											["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-										};
-									_unit addWeapon _rifle;
-									_unit selectWeapon _rifle;
-									_unit addWeapon _pistol;
-									if not(_missionName isEqualTo "BaseAttack") then
-										{
-											_backpack = selectRandom _backpacks;
-											_unit addBackPack _backpack;
-										} else
-										{
-											_unit addBackpack "B_Parachute";
-										};
-									// Give this guy some weaponItems
-									_giveAttachments = [_unit] call VEMFr_fnc_giveWeaponItems;
-									if not _giveAttachments then
-										{
-											["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-										};
-								} forEach _units;
-								_ok = true;
-								breakOut "this";
-							};
-						if (_aiMode isEqualTo 2) then // S.W.A.T.
-							{
-								private ["_policeGear","_rifles","_pistols"];
-								_policeGear = [["policeConfig"],["rifles","pistols"]] call VEMFr_fnc_getSetting;
-								_rifles = _policeGear select 0;
-								_pistols = _policeGear select 1;
-								{
-									private ["_unit","_rifle","_pistol","_givenAmmo","_giveAttachments"];
-									_unit = _x;
-									// Strip it
-									if ("removeAllAssignedItems" call VEMFr_fnc_getSetting isEqualTo 1) then
-										{
-											removeAllAssignedItems _unit;
-										};
-									removeAllItems _unit;
-									removeAllWeapons _unit;
-									removeBackpack _unit;
-									removeGoggles _unit;
-									removeHeadGear _unit;
-									removeUniform _unit;
-									removeVest _unit;
-									_unit addHeadGear "H_HelmetB_light_black";
-									_unit addGoggles "G_Balaclava_blk";
-									_unit addVest "V_PlateCarrier2_blk";
-									_unit forceAddUniform "Exile_Uniform_ExileCustoms";
-									_rifle = selectRandom _rifles;
-									_pistol = selectRandom _pistols;
-									// Give this guy some ammo
-									_givenAmmo = [_unit, _rifle, "", _pistol] call VEMFr_fnc_giveAmmo;
-									if not _givenAmmo then
-										{
-											["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-										};
-									_unit addWeapon _rifle;
-									_unit selectWeapon _rifle;
-									_unit addWeapon _pistol;
+		if (_this2 isEqualTo 1) then // Regular police
+			{
+				private ["_s","_headG","_vests","_unifs","_rfles","_pstls","_packs"];
+				_s = [["policeConfig"],["headGear","vests","uniforms","rifles","pistols","backpacks"]] call VEMFr_fnc_config;
+				_s params ["_headG","_vests","_unifs","_rfles","_pstls","_packs"];
+				{
+					private ["_xx","_g","_pw","_hw"];
+					_xx = _x;
+					// Strip it
+					removeAllWeapons _xx;
+					removeAllItems _xx;
+					if ("removeAllAssignedItems" call VEMFr_fnc_config isEqualTo 1) then
+						{
+							removeAllAssignedItems _xx;
+						};
+					removeUniform _xx;
+					removeVest _xx;
+					removeBackpack _xx;
+					removeGoggles _xx;
+					removeHeadGear _xx;
+					_g = selectRandom _headG;
+					_xx addHeadGear _g;
+					_g = selectRandom _vests;
+					_xx addVest _g;
+					_g = selectRandom _unifs;
+					_xx forceAddUniform _g;
 
-									if (_missionName isEqualTo "BaseAttack") then
-										{
-											_unit addBackpack "B_Parachute";
-										};
-									// Give this guy some weaponItems
-									_giveAttachments = [_unit] call VEMFr_fnc_giveWeaponItems;
-									if not _giveAttachments then
-										{
-											["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _unit]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-										};
-								} forEach _units;
-								_ok = true;
-							};
-					};
+					_pw = selectRandom _rfles;
+					_hw = selectRandom _pstls;
+					// Give this guy some ammo
+					_g = [_xx, _pw, "", _hw] call VEMFr_fnc_giveAmmo;
+					if (isNil "_g") then
+						{
+							["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _xx]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+						};
+					_xx addWeapon _pw;
+					_xx selectWeapon _pw;
+					_xx addWeapon _hw;
+					if not(_this1 isEqualTo "BaseAttack") then
+						{
+							_xx addBackPack (selectRandom _packs);
+						} else
+						{
+							_xx addBackpack "B_Parachute";
+						};
+					// Give this guy some weaponItems
+					_g = [_xx] call VEMFr_fnc_giveWeaponItems;
+					if (isNil "_g") then
+						{
+							["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _xx]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+						};
+				} forEach _this0;
+				_r = true;
+				breakOut "this";
+			};
+
+		if (_this2 isEqualTo 2) then // S.W.A.T.
+			{
+				private ["_s","_rfles","_pstls"];
+				_s = [["policeConfig"],["rifles","pistols"]] call VEMFr_fnc_config;
+				_s params ["_rfles","_pstls"];
+				{
+					private ["_xx","_g","_pw","_hw"];
+					_xx = _x;
+					// Strip it
+					if ("removeAllAssignedItems" call VEMFr_fnc_config isEqualTo 1) then { removeAllAssignedItems _xx };
+					removeAllItems _xx;
+					removeAllWeapons _xx;
+					removeBackpack _xx;
+					removeGoggles _xx;
+					removeHeadGear _xx;
+					removeUniform _xx;
+					removeVest _xx;
+					_xx addHeadGear "H_HelmetB_light_black";
+					_xx addGoggles "G_Balaclava_blk";
+					_xx addVest "V_PlateCarrier2_blk";
+					_xx forceAddUniform "Exile_Uniform_ExileCustoms";
+
+					_pw = selectRandom _rfles;
+					_hw = selectRandom _pstls;
+					// Give this guy some ammo
+					_g = [_xx, _pw, "", _hw] call VEMFr_fnc_giveAmmo;
+					if (isNil "_g") then
+						{
+							["fn_loadInv", 0, format["FAILED to give ammo to AI: %1", _xx]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+						};
+					_xx addWeapon _pw;
+					_xx selectWeapon _pw;
+					_xx addWeapon _hw;
+
+					if (_this1 isEqualTo "BaseAttack") then { _xx addBackpack "B_Parachute" };
+
+					// Give this guy some weaponItems
+					_g = [_xx] call VEMFr_fnc_giveWeaponItems;
+					if (isNil "_g") then
+						{
+							["fn_loadInv", 0, format["FAILED to giveWeaponItems to %1", _xx]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+						};
+				} forEach _this0;
+				_r = true;
 			};
 	};
-
-_ok
+_r

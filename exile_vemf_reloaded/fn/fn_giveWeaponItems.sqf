@@ -11,64 +11,54 @@
     Returns: BOOLEAN - true if no errors occured
 */
 
-private ["_done"];
-_done = false;
-if (_this isEqualType []) then
+private ["_r","_p","_w","_a","_bin"];
+_u = param [0,objNull,[objNull]];
+if not (isNull _u) then
    {
-      _unit = param [0,objNull,[objNull]];
-      if not (isNull _unit) then
-         {
-            // primaryWeapon items
-            private ["_randomPattern","_primaryWeapon"];
-            _randomPattern = [1,0,1,0,1,1,1,1,0,0,1,1,1];
-            _primaryWeapon = primaryWeapon _unit;
-            if (selectRandom _randomPattern isEqualTo 1) then
-               { // Select random scope
-                  private ["_scopes"];
-                  _scopes = getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "WeaponSlotsInfo" >> "CowsSlot" >> "compatibleItems");
-                  if (("allowTWS" call VEMFr_fnc_getSetting) isEqualTo 0) then
-                     {
-                        private["_forbiddenScopes"];
-                        _forbiddenScopes = [];
+      _p = [1,0,1,0,1,1,1,1,0,0,1,1,1];
+      _w = primaryWeapon _u;
+      if ((selectRandom _p) isEqualTo 1) then
+         { // Select random scope
+            _a = getArray (configFile >> "CfgWeapons" >> _w >> "WeaponSlotsInfo" >> "CowsSlot" >> "compatibleItems");
+            if (("allowTWS" call VEMFr_fnc_config) isEqualTo 0) then
+               {
+                  _bin = [];
+                  {
+                     if (((toLower _x) find "tws") > -1) then
                         {
-                           if (((toLower _x) find "tws") > -1) then
-                              {
-                                 _forbiddenScopes pushBack _x;
-                              };
-                        } forEach _scopes;
-                        {
-                           _index = _scopes find _x;
-                           _scopes deleteAt _index;
-                        } forEach _forbiddenScopes;
-                     };
-                  _unit addPrimaryWeaponItem (selectRandom _scopes);
+                           _bin pushBack _x;
+                        };
+                  } forEach _a;
+                  {
+                     _a deleteAt (_a find _x);
+                  } forEach _bin;
                };
-            if (selectRandom _randomPattern isEqualTo 1) then
-               { // Select random muzzle
-                  _unit addPrimaryWeaponItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "WeaponSlotsInfo" >> "MuzzleSlot" >> "compatibleItems")));
-               };
-            if (selectRandom _randomPattern isEqualTo 1) then
-               { // Select random pointer
-                  _unit addPrimaryWeaponItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "WeaponSlotsInfo" >> "PointerSlot" >> "compatibleItems")));
-               };
-            if (selectRandom _randomPattern isEqualTo 1) then
-               { // Select random bipod
-                  _unit addPrimaryWeaponItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "WeaponSlotsInfo" >> "UnderbarrelSlot" >> "compatibleItems")));
-               };
-
-            private ["_handgunWeapon","_randomPattern"];
-            // handgunWeapon items
-            _handgunWeapon = handgunWeapon _unit;
-            _randomPattern = [1,0,1,0,0,1,0,0,0,0,1,1,1];
-            if (selectRandom _randomPattern isEqualTo 1) then
-               { // Select random scope
-                  _unit addHandgunItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _handgunWeapon >> "WeaponSlotsInfo" >> "CowsSlot" >> "compatibleItems")));
-               };
-            if (selectRandom _randomPattern isEqualTo 1) then
-               { // Select random muzzle
-                  _unit addHandgunItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _handgunWeapon >> "WeaponSlotsInfo" >> "MuzzleSlot" >> "compatibleItems")));
-               };
-            _done = true;
+            _u addPrimaryWeaponItem (selectRandom _a);
          };
+      if ((selectRandom _p) isEqualTo 1) then
+         { // Select random muzzle
+            _u addPrimaryWeaponItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _w >> "WeaponSlotsInfo" >> "MuzzleSlot" >> "compatibleItems")));
+         };
+      if ((selectRandom _p) isEqualTo 1) then
+         { // Select random pointer
+            _u addPrimaryWeaponItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _w >> "WeaponSlotsInfo" >> "PointerSlot" >> "compatibleItems")));
+         };
+      if ((selectRandom _p) isEqualTo 1) then
+         { // Select random bipod
+            _u addPrimaryWeaponItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _w >> "WeaponSlotsInfo" >> "UnderbarrelSlot" >> "compatibleItems")));
+         };
+
+      // handgunWeapon items
+      _w = handgunWeapon _u;
+      _p = [1,0,1,0,0,1,0,0,0,0,1,1,1];
+      if ((selectRandom _p) isEqualTo 1) then
+         { // Select random scope
+            _u addHandgunItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _w >> "WeaponSlotsInfo" >> "CowsSlot" >> "compatibleItems")));
+         };
+      if ((selectRandom _p) isEqualTo 1) then
+         { // Select random muzzle
+            _u addHandgunItem (selectRandom (getArray (configFile >> "CfgWeapons" >> _w >> "WeaponSlotsInfo" >> "MuzzleSlot" >> "compatibleItems")));
+         };
+      _r = true;
    };
-_done
+_r
