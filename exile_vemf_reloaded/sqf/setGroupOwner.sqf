@@ -20,7 +20,7 @@ if not(isNull _grp) then
       _force = uiNamespace getVariable ["VEMFr_forceAItoClients", nil];
       if not(isNil "_force") then { if (_force isEqualType true) then { if _force then { _hcNbld = -1 } } };
 
-      private ["_to"];
+      private "_to";
       if (_hcNbld isEqualTo 1) then
          {
             _arr = [];
