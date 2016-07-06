@@ -126,7 +126,8 @@ class CfgVemfReloaded
 		nonPopulated = -1; // Allow/disallow this mission type being placed at locations without buildings | using -1 will ignore this setting and use the global settting
 		randomModes = 1; // Enable/disable randomization of AI types (linked to aiMode setting)
 	   skipDistance = 800; // No missions at locations which have players within this range (in meters)
-	   smokeTypes[] = {"SmokeShell","SmokeShellBlue","SmokeShellGreen","SmokeShellOrange","SmokeShellRed","SmokeShellYellow"};
+		skipDistanceReversed = 0; // If set higher than 0, missions will only spawn if player is at least given amount (in meters) away from a location whilst at the same time not be further away than twice the given number (in meters)
+		smokeTypes[] = {"SmokeShell","SmokeShellBlue","SmokeShellGreen","SmokeShellOrange","SmokeShellRed","SmokeShellYellow"};
 		spawnCrateFirst = 0; // Enable/disable the spawning of loot crate before mission has been completed
 	   streetLights = 0; // Enable/disable street lights at mission location
 	   streetLightsRestore = 1; // Enable/disable restoration of street lights after mission completion
