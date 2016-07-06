@@ -12,16 +12,16 @@ if (VEMFrInvasionCount <= (([[_this0],["maxInvasions"]] call VEMFr_fnc_config) s
 	// Define the settings
 	_ms = [
 		[_this0],
-		["groupCount","groupUnits","maxDistancePrefered","skipDistance","useMarker","markCrateVisual","markCrateOnMap","announce","streetLights","streetLightsRestore","streetLightsRange","allowCrateLift","allowRepeat","randomModes","spawnCrateFirst","mines","flairTypes","smokeTypes","minesCleanup"]
+		["groupCount","groupUnits","maxDistancePrefered","skipDistance","useMarker","markCrateVisual","markCrateOnMap","announce","streetLights","streetLightsRestore","streetLightsRange","allowCrateLift","allowRepeat","randomModes","spawnCrateFirst","mines","flairTypes","smokeTypes","minesCleanup","skipDistanceReversed"]
 	] call VEMFr_fnc_config;
 	_ms params [
-		"_ms0","_ms1","_ms2","_ms3","_ms4","_ms5","_ms6","_ms7","_ms8","_ms9","_ms10","_ms11","_ms12","_ms13","_ms14","_ms15","_ms16","_ms17","_ms18"
+		"_ms0","_ms1","_ms2","_ms3","_ms4","_ms5","_ms6","_ms7","_ms8","_ms9","_ms10","_ms11","_ms12","_ms13","_ms14","_ms15","_ms16","_ms17","_ms18","_ms19"
 	];
 
 	([[_this0,"crateParachute"],["enabled","altitude"]] call VEMFr_fnc_config) params ["_cp0","_cp1"];
 
-	_l = ["loc", false, position (selectRandom allPlayers), _ms3, _ms2, _ms3, _this0] call VEMFr_fnc_findPos;
-	if (_l isEqualType locationNull) then
+	_l = ["loc", false, position (selectRandom allPlayers), if (_ms19 > 0) then {_ms19} else {_ms3}, _ms2, if (_ms19 > 0) then {_ms19} else {_ms3}, _this0] call VEMFr_fnc_findPos;
+	if not(isNil "_l") then
 	{
 		_ln = text _l;
 		_lp = position _l;
@@ -46,7 +46,7 @@ if (VEMFrInvasionCount <= (([[_this0],["maxInvasions"]] call VEMFr_fnc_config) s
 			};
 		};
 
-		private ["_mrkr"];
+		private "_mrkr";
 		if (_ms4 isEqualTo 1) then
 		{ // Create/place the marker if enabled
 			_mrkr = createMarker [format["VEMFr_DynaLocInva_ID%1", random 9000], _lp];
@@ -83,7 +83,7 @@ if (VEMFrInvasionCount <= (([[_this0],["maxInvasions"]] call VEMFr_fnc_config) s
 			} forEach (nearestObjects [_lp, ["Lamps_Base_F","PowerLines_base_F","Land_PowerPoleWooden_L_F"], _ms10]);
 		};
 
-		private ["_crate"];
+		private "_crate";
 		_dSpwnCrt = {
 			// Choose a box
 			_bx = selectRandom (([[_this0],["crateTypes"]] call VEMFr_fnc_config) select 0);
@@ -158,7 +158,7 @@ if (VEMFrInvasionCount <= (([[_this0],["maxInvasions"]] call VEMFr_fnc_config) s
 								_x moveInDriver _heli;
 							} else
 							{
-								private ["_path"];
+								private "_path";
 								{
 									if (isNull (_heli turretUnit _x)) then
 										{
@@ -186,7 +186,7 @@ if (VEMFrInvasionCount <= (([[_this0],["maxInvasions"]] call VEMFr_fnc_config) s
 						_nts pushBack _x;
 					} forEach (units _hlGrp);
 
-					_wp = _hlGrp addWaypoint [_lp, 2, 1, "SAD"];
+					_wp = _hlGrp addWaypoint [[_lp select 0, _lp select 1, 50], 0, 2, "SAD"];
 					_wp setWaypointType "SAD";
 					_wp setWaypointSpeed "NORMAL";
 					_wp setWaypointBehaviour "AWARE";
@@ -250,7 +250,6 @@ if (VEMFrInvasionCount <= (([[_this0],["maxInvasions"]] call VEMFr_fnc_config) s
 			// Deal with the 50s
 			if not(isNil "_cl50s") then
 				{
-					private["_cal50sDelete"];
 					_d = ([[_this0],["cal50sDelete"]] call VEMFr_fnc_config) select 0;
 					if (_d > 0) then
 						{
@@ -297,7 +296,7 @@ if (VEMFrInvasionCount <= (([[_this0],["maxInvasions"]] call VEMFr_fnc_config) s
 
 									if (_ms6 isEqualTo 1) then
 										{
-											private ["_mrkr"];
+											private "_mrkr";
 											_mrkr = createMarker [format["VEMF_lootCrate_ID%1", random 9000], position _crate];
 											_mrkr setMarkerShape "ICON";
 											_mrkr setMarkerType "mil_box";
