@@ -24,7 +24,7 @@
 
 _send =
 	{
-		private ["_arr"];
+		private "_arr";
 		if (count _this isEqualTo 0) then
 			{
 				_arr = allPlayers;

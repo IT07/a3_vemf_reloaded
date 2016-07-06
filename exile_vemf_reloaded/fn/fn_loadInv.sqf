@@ -26,7 +26,7 @@ if ((_this1 in ("missionList" call VEMFr_fnc_config)) OR (_this1 isEqualTo "Stat
 		scopeName "this";
 		if (_this2 isEqualTo 0) then // "Militia"
 			{
-				private ["_s","_unifs","_headG","_vests","_packs","_lnchers","_rfles","_pstls","_ls"];
+				private ["_s","_unifs","_headG","_vests","_packs","_lnchers","_rfles","_pstls","_ls","_lc","_a"];
 				// Define settings
 				_s = [["aiGear"],["aiUniforms","aiHeadGear","aiVests","aiBackpacks","aiLaunchers","aiRifles","aiPistols"]] call VEMFr_fnc_config;
 				_s params ["_unifs","_headG","_vests","_packs","_lnchers","_rfles","_pstls"];
@@ -61,7 +61,6 @@ if ((_this1 in ("missionList" call VEMFr_fnc_config)) OR (_this1 isEqualTo "Stat
 					_ls = [[_this1],["allowLaunchers","hasLauncherChance"]] call VEMFr_fnc_config;
 					if ((_ls select 0) isEqualTo 1) then
 						{
-							private ["_lc"];
 							_lc = _ls select 1;
 							if ((_lc isEqualTo 100) OR ((ceil random (100 / _lc) isEqualTo (ceil random (100 / _lc))))) then
 								{
@@ -71,7 +70,6 @@ if ((_this1 in ("missionList" call VEMFr_fnc_config)) OR (_this1 isEqualTo "Stat
 											_xx addBackpack _g;
 										};
 									_g = selectRandom _lnchers;
-									private ["_a"];
 									_a = getArray (configFile >> "cfgWeapons" >> _g >> "magazines");
 									if (count _a > 2) then
 										{

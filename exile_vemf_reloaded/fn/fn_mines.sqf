@@ -15,7 +15,7 @@
 */
 
 scopeName "mines";
-private ["_r","_this0","_this1","_this2","_this3","_s","_ms","_a"];
+private ["_r","_this0","_this1","_this2","_this3","_s","_ms","_a","_mt"];
 params [
    ["_this0",[],[[]]],
    ["_this1",-1,[0]],
@@ -27,7 +27,6 @@ _s = [[_this3],["mines","minesAmount"]] call VEMFr_fnc_config;
 _s params ["_ms","_a"];
 if ((_this3 in ("missionList" call VEMFr_fnc_config)) AND (_ms > 0) AND ((count _this0) isEqualTo 3) AND (_this1 > -1) AND (_this2 > _this1) AND (_a > -1)) then
    {
-      private ["_mt"];
       if (_ms isEqualTo 1) then { _mt = ["ATMine"] };
       if (_ms isEqualTo 2) then { _mt = ["APERSMine"] };
       if (_ms isEqualTo 3) then { _mt = ["ATMine","APERSMine"] };

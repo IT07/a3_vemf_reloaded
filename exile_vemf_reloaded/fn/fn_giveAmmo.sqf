@@ -15,7 +15,7 @@
     BOOLEAN - true if successful
 */
 
-private ["_r","_this0"];
+private ["_r","_this0","_m"];
 params [
    ["_this0", objNull, [objNull]],
    ["_this1", "", [""]],
@@ -26,7 +26,6 @@ params [
 _r = [];
 if not(_this1 isEqualTo "") then
    {
-      private ["_m"];
       _m = selectRandom (getArray (configFile >> "CfgWeapons" >> _this1 >> "magazines"));
       for "_l" from 1 to 5 do
          {
@@ -40,7 +39,6 @@ if not(_this2 isEqualTo "") then
    {
       if not((backPack _this0) isEqualTo "") then
          {
-            private ["_m"];
             _m = selectRandom (getArray (configFile >> "CfgWeapons" >> _this2 >> "magazines"));
             for "_l" from 1 to 3 do
                {
@@ -53,7 +51,6 @@ if not(_this2 isEqualTo "") then
 
 if not(_this3 isEqualTo "") then
    {
-      private ["_m"];
       _m = selectRandom (getArray (configFile >> "CfgWeapons" >> _this3 >> "magazines"));
       for "_l" from 1 to 4 do
          {

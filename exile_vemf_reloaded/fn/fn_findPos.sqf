@@ -8,7 +8,7 @@
 	_this select 0: STRING - Mode to use. Options: "loc" or "pos"
 	_this select 1: BOOLEAN - True if _pos needs to be a road
 	_this select 2: POSITION - Center for nearestLocations check
-	_this select 3: SCALAR - Distance in meters. Locations closer than that will be excluded
+	_this select 3: SCALAR - Distance in meters. Locations closer than given position will be excluded/included
 	_this select 4: SCALAR - Max prefered distance in meters from center. If not achievable, further dest will be selected
 	_this select 5: SCALAR - Distance in meters to check from _this2 for players
 	_this select 6: STRING (optional) - Exact config name of mission override settings to load
@@ -21,8 +21,9 @@
 private [
 	"_r","_this0","_this1","_this2","_this3","_this4","_this5","_this6",
 	"_s0","_s1","_s2","_s3",
-	"_rad","_arr","_bin","_used","_badNames","_maps","_bad",
-	"_locPos","_xx","_pos","_hi","_low","_dist","_loc"
+	"_ms0",
+	"_rad","_arr","_bin","_used","_fltr","_badNames","_maps","_bad",
+	"_pos","_xx","_pos","_hi","_low","_dist","_loc"
 ];
 
 params [
@@ -36,6 +37,7 @@ params [
 ];
 
 ([["nonPopulated","noMissionPos","missionDistance","missionList"]] call VEMFr_fnc_config) params ["_s0","_s1","_s2","_s3"];
+([[_this6],["skipDistanceReversed"]] call VEMFr_fnc_config) params ["_ms0"];
 
 if (_this6 in _s3) then
 	{
@@ -46,7 +48,7 @@ _rad = 5000;
 if (_this0 isEqualTo "loc") then
 	{
 		// Get a list of locations close to _this2 (position of player)
-		_arr = nearestLocations [_this2, ["CityCenter","Strategic","StrongpointArea","NameVillage","NameCity","NameCityCapital",if (_s0 isEqualTo 1) then {"nameLocal","Area","BorderCrossing","Hill","fakeTown","Name","RockArea","ViewPoint"}], worldSize];
+		_arr = nearestLocations [_this2, ["CityCenter","Strategic","StrongpointArea","NameVillage","NameCity","NameCityCapital",if (_s0 isEqualTo 1) then {"nameLocal","Area","BorderCrossing","Hill","fakeTown","Name","RockArea","ViewPoint"}], if (_ms0 > 0) then {_ms0*2} else {worldSize}];
 		if ((count _arr) > 0) then
 			{
 				_maps = "isClass _x" configClasses (configFile >> "CfgVemfReloaded" >> "locationBlackLists");
@@ -64,57 +66,35 @@ if (_this0 isEqualTo "loc") then
 
 				_bin = [];
 				_used = uiNamespace getVariable ["VEMFrUsedLocs",[]];
-				{ // Check _arr for invalid locations (too close, hasPlayers or inBlacklist)
-					if ([locationPosition _x, _this5] call VEMFr_fnc_playerNear) then
+
+				_fltr =
+					{
+						scopeName "filter";
+						_xx = _x;
 						{
-							_bin pushBack _x;
+							if (((_x select 0) distance (locationPosition _xx)) <= (_x select 1)) then { _bin pushBack _xx; breakOut "filter" };
+						} forEach _s1;
+
+						if (_x in _used) then { _bin pushBack _x }
+							else
+							{
+								{
+									if (((locationPosition _xx) distance (locationPosition _x)) < _s2) then { _bin pushBack _xx; breakOut "filter" };
+								} forEach _used;
+							};
+
+						if ((text _x) in _bad) then { _bin pushBack _x };
+					};
+				{
+					_dist = _this2 distance (locationPosition _x);
+					if (_ms0 > 0) then
+						{
+							if ((_dist <= (_ms0*2)) AND (_dist > _ms0)) then { call _fltr }
+								else { _bin pushBack _x };
 						} else
 						{
-							if ((count _s1) > 0) then
-								{
-									_locPos = locationPosition _x;
-									_xx = _x;
-									{
-										if ((count _x) isEqualTo 2) then
-											{
-												if (((_x select 0) distance _locPos) <= (_x select 1)) then
-													{
-														_bin pushBack _xx;
-													};
-											} else
-											{
-												["fn_findPos", 0, format["found invalid entry in mission blacklist: %1", _x]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
-											};
-									} forEach _s1;
-								};
-
-							if ((text _x) in _bad) then
-								{
-									_bin pushBack _x;
-								} else
-								{
-									if (_this2 distance (locationPosition _x) < _this3) then
-										{
-											_bin pushBack _x;
-										} else
-										{
-											if (_x in _used) then
-												{
-													_bin pushBack _x;
-												};
-										};
-								};
-
-							if ((count _used) > 0) then
-								{
-									_xx = _x;
-									{
-										if (((locationPosition _xx) distance (locationPosition _x)) < _s2) then
-											{
-												_bin pushBack _xx;
-											};
-									} forEach _used;
-								};
+							if (_dist > _this3) then { call _fltr }
+								else { _bin pushBack _x };
 						};
 				} forEach _arr;
 
@@ -162,4 +142,4 @@ if (_this0 isEqualTo "pos") then
 			};
 	};
 
-_r
+if not(isNil "_r") then { _r };

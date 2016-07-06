@@ -34,18 +34,16 @@ if ((_this4 in ("missionList" call VEMFr_fnc_config)) OR (_this4 isEqualTo "Stat
 		scopeName "outer";
 		_r = [];
 		_this0 = [_this0 select 0, _this0 select 1, _this5];
-		private ["_s","_ccrcy","_mshk","_mspd","_stmn","_sptDst","_sptTm","_crg","_rldSpd","_cmmndng","_gnrl","_i"];
+		private ["_s","_ccrcy","_mshk","_mspd","_stmn","_sptDst","_sptTm","_crg","_rldSpd","_cmmndng","_gnrl","_i","_grp","_unit"];
 
 		_s = [["aiSkill", ([["aiSkill"],["difficulty"]] call VEMFr_fnc_config) select 0],["accuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"]] call VEMFr_fnc_config;
 		_s params ["_ccrcy","_mshk","_mspd","_stmn","_sptDst","_sptTm","_crg","_rldSpd","_cmmndng","_gnrl"];
 		for "_g" from 1 to _this1 do
 			{
-				private["_grp"];
 				_grp = createGroup (("unitClass" call VEMFr_fnc_config) call VEMFr_fnc_checkSide);
 				_grp allowFleeing 0;
 				for "_u" from 1 to _this2 do
 					{
-						private ["_unit"];
 						_unit = _grp createUnit [("unitClass" call VEMFr_fnc_config), _this0, [], _this6, "FORM"]; // Create Unit There
 						_allUnits pushBack _unit;
 						_unit addMPEventHandler ["mpkilled","if (isDedicated) then { [[(_this select 0),(name(_this select 0))],[(_this select 1),(name(_this select 1))]] ExecVM 'exile_vemf_reloaded\sqf\aiKilled.sqf' }"];
