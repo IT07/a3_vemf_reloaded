@@ -15,11 +15,11 @@
 ];
 
 
-_crWpn = "Weapon";
-if (vehicle _k isEqualTo _k) then { _crWpn = currentWeapon _k };
-if not(vehicle _k isEqualTo _k) then { _crWpn = currentWeapon (vehicle _k) };
+private ["_crWpn","_cfg"];
+if (vehicle _k isEqualTo _k) then { _crWpn = currentWeapon _k; _cfg = "CfgWeapons" }
+else { _crWpn = typeOf (vehicle _k); _cfg = "CfgVehicles" };
 _dist = _t distance _k;
 
 _sk = "sayKilled" call VEMFr_fnc_config;
-if (_sk isEqualTo 1) then { [format["(VEMFr) %1 [%2, %3m] %4", _nk, getText(configFile >> "CfgWeapons" >> _crWpn >> "displayName"), round _dist, if (("sayKilledName" call VEMFr_fnc_config) > 0) then {_nt} else {"AI"}]] ExecVM "exile_vemf_reloaded\sqf\systemChatToClient.sqf" };
-if (_sk isEqualTo 2) then { [format["(VEMFr) You [%1, %2m] %4", getText(configFile >> "CfgWeapons" >> _crWpn >> "displayName"), round _dist, if (("sayKilledName" call VEMFr_fnc_config) > 0) then {_nt} else {"AI"}]] ExecVM "exile_vemf_reloaded\sqf\systemChatToClient.sqf" };
+if (_sk < 2) then { [format["(VEMFr) %1 [%2] %3 (%4m)", _nk, getText(configFile >> _cfg >> _crWpn >> "displayName"), if (("sayKilledName" call VEMFr_fnc_config) > 0) then {_nt} else {"AI"}, round _dist]] ExecVM "exile_vemf_reloaded\sqf\systemChatToClient.sqf" }
+else { [format["(VEMFr) You [%1] %2 (%3m)", getText(configFile >> _cfg >> _crWpn >> "displayName"), if (("sayKilledName" call VEMFr_fnc_config) > 0) then {_nt} else {"AI"}, round _dist]] ExecVM "exile_vemf_reloaded\sqf\systemChatToClient.sqf" };
