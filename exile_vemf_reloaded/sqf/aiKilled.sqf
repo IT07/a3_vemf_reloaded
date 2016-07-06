@@ -24,16 +24,105 @@
 
 if (isPlayer _k) then
 	{
+		scopeName "isPlayer";
+		_rspct =
+		{
+			_arr = [[]];
+			(_arr select 0) pushBack [(selectRandom ["AI WACKED","AI CLIPPED","AI WIPED","AI ERASED","AI LYNCHED","AI WRECKED","AI SNUFFED","AI WASTED","AI ZAPPED"]), _rw];
+			_dist = _t distance _k;
+			private "_ok";
+			if (_dist < 2500) then
+			{
+				scopeName "below2500";
+				if (_dist <= 5) then
+				{
+					(_arr select 0) pushBack ["CQB Master", 25];
+					_ok = true;
+					_ok breakOut "below2500";
+				};
+				if (_dist <= 10) then
+				{
+					(_arr select 0) pushBack ["Close one", 15];
+					_ok = true;
+					_ok breakOut "below2500";
+				};
+				if (_dist <= 50) then
+				{
+					(_arr select 0) pushBack ["Danger close", 15];
+					_ok = true;
+					_ok breakOut "below2500";
+				};
+				if (_dist <= 100) then
+				{
+					(_arr select 0) pushBack ["Lethal aim", 20];
+					_ok = true;
+					_ok breakOut "below2500";
+				};
+				if (_dist <= 200) then
+				{
+					(_arr select 0) pushBack ["Deadly.", 25];
+					_ok = true;
+					_ok breakOut "below2500";
+				};
+				if (_dist <= 500) then
+				{
+					(_arr select 0) pushBack ["Niiiiice.", 30];
+					_ok = true;
+					_ok breakOut "below2500";
+				};
+				if (_dist <= 1000) then
+				{
+					(_arr select 0) pushBack ["Dat distance...", 45];
+					_ok = true;
+					_ok breakOut "below2500";
+				};
+				if (_dist <= 2000) then
+				{
+					(_arr select 0) pushBack ["Danger far.", 50];
+					_ok = true;
+					_ok breakOut "below2500";
+				};
+				if (_dist > 2000) then
+				{
+					(_arr select 0) pushBack [format["hax? %1m!!!", round _dist], 65];
+					_ok = true;
+					_ok breakOut "below2500";
+				};
+			};
+
+			if _ok then
+			{
+				[_k, "showFragRequest", _arr] call ExileServer_system_network_send_to;
+				_rspct = (_k getVariable ["ExileScore", 0]) + (((_arr select 0) select 1) select 1) + _rw;
+				_k setVariable ["ExileScore", _rspct];
+				ExileClientPlayerScore = _rspct;
+				(owner _k) publicVariableClient "ExileClientPlayerScore";
+				ExileClientPlayerScore = nil;
+
+				_kllCnt = (_k getVariable ["ExileKills",0]) + 1;
+				_k setVariable ["ExileKills", _kllCnt];
+				ExileClientPlayerKills = _kllCnt;
+				(owner _k) publicVariableClient "ExileClientPlayerKills";
+				ExileClientPlayerKills = nil;
+
+				format["addAccountKill:%1", getPlayerUID _k] call ExileServer_system_database_query_fireAndForget;
+				format['setAccountScore:%1:%2', _rspct, getPlayerUID _k] call ExileServer_system_database_query_fireAndForget;
+			} else
+			{
+				["handleKillMessage", 0, format["There is something wrong with the kill distance (%1)", _dist]] ExecVM "exile_vemf_reloaded\sqf\log.sqf";
+				breakOut "isPlayer";
+			};
+		};
+
+		_rw = "respectReward" call VEMFr_fnc_config;
+
 		if (_k isKindOf "Man") then // Roadkill or regular kill
 			{
 				if (vehicle _k isEqualTo _k) then // If on foot
 					{
 						if (vehicle _t isEqualTo _t) then
 							{
-								if (("respectReward" call VEMFr_fnc_config) > 0) then
-								   {
-										[_t, _k] ExecVM "exile_vemf_reloaded\sqf\respect.sqf";
-									};
+								if (_rw > 0) then { call _rspct };
 								[[_t, _nt],[_k, _nk]] ExecVM "exile_vemf_reloaded\sqf\sayKilledWeapon.sqf";
 							} else
 							{
@@ -45,10 +134,7 @@ if (isPlayer _k) then
 											};
 									} else
 									{
-										if (("respectReward" call VEMFr_fnc_config) > 0) then
-										   {
-												[_t, _k] ExecVM "exile_vemf_reloaded\sqf\respect.sqf";
-											};
+										if (_rw > 0) then { call _rspct };
 										[[_t, _nt],[_k, _nk]] ExecVM "exile_vemf_reloaded\sqf\sayKilledWeapon.sqf";
 									};
 							};
@@ -84,10 +170,7 @@ if (isPlayer _k) then
 					} else
 					{
 						_k = effectiveCommander _k;
-						if (("respectReward" call VEMFr_fnc_config) > 0) then
-							{
-								[_t, _k] ExecVM "exile_vemf_reloaded\sqf\respect.sqf";
-							};
+						if (_rw > 0) then { call _rspct };
 						[[_t, _nt],[_k, _nk]] ExecVM "exile_vemf_reloaded\sqf\sayKilledWeapon.sqf";
 					};
 			};
