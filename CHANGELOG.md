@@ -1,5 +1,17 @@
 ## VEMFr Changelog
 
+#### `v0745.1`
+*Server-side* <br />
+**[ADDED]** option for enabling "reversed-spawning". Feature requested by @CameraChick <br />
+**[DELETED]** old functions that were supposed to be gone <br />
+**[FIXED]** waypoint issues for helicopters that patrol at DynamicLocationInvasion missions <br />
+**[FIXED]** no additional respect as a reward for killing AI
+**[NEW]** killing AI will be added to the kill-count of the killer <br />
+**[NEW]** kill messages now display the vehicle that was used to kill instead of the gun (on the vehicle) that was used to kill <br />
+**[REMOVED]** respect.sqf <br />
+**[TWEAKED]** code performance of multiple functions <br />
+<br />
+
 #### `v0745.0`
 *Server-side* <br />
 **[ADDED]** option to enable/disable AI names for kill messages <br />
