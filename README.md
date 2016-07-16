@@ -1,19 +1,19 @@
-#ArmA3_exile_vemf_reloaded
-###VEMFr; a mission system for ArmA3 Exile Mod
-####Based on VEMF (Vampire's Epoch Mission Framework)
+#a3_vemf_reloaded
+###VEMFr; a mission system for ArmA3 Exile/Epoch Mod
 <br />
 ######HOW TO DOWNLOAD
 ```
-ArmA3_exile_vemf_reloaded.7z (click it) >> Raw button (click it)
+a3_vemf_reloaded.7z (click it) >> Raw button (click it)
 ```
 ######INSTALLATION GUIDE
 ```
-Exile.MapName\init.sqf (contents) >> MPmissions\Exile.*nameOfMap*\init.sqf
-Exile.MapName\description.ext (contents) >> MPmissions\Exile.*nameOfMap*\description.ext
+MissionName.MapName\init.sqf (contents) >> MPmissions\*nameOfMission*.*nameOfMap*\init.sqf
+MissionName.MapName\description.ext (contents) >> MPmissions\*nameOfMission*.*nameOfMap*\description.ext
 ```
 ```
-.7z >> exile_vemf_reloaded.pbo >> @ExileServer\addons\
-.7z >> exile_vemf_reloaded_config.pbo >> @ExileServer\addons\
+.7z >> a3_vemf_reloaded.pbo >> @ExileServer\addons\ OR @epochhive\addons\
+.7z >> a3_vemf_reloaded_config.pbo >> @ExileServer\addons\ OR @epochhive\addons\
 ```
 ######CONFIGURATION GUIDE
-To customize VEMFr to your needs/liking, edit the *config.cpp* located inside the *exile_vemf_reloaded_config.pbo* <br />
+For the sake of comfort, VEMFr uses a separate .pbo to store -and use- settings. <br />
+All default settings are stored inside a3_vemf_reloaded.pbo by default. If you want to change a certain setting, then use a3_vemf_reloaded_config\config.cpp for that. It will save you a lot of time. You are welcome.
