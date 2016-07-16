@@ -1,4 +1,0 @@
-class RscTitles
-{
-	#include "VEMFr_client\gui\RscDisplayVEMFrClient.hpp"
-};
