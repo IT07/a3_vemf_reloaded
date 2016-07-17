@@ -31,7 +31,7 @@ if (VEMFrInvasionCount <= (([[_this0],["maxInvasions"]] call VEMFr_fnc_config) s
 		[_this0, 1, format["Invading %1...", _ln]] ExecVM ("log" call VEMFr_fnc_scriptPath);
 
 		_m = ([[_mod],["aiMode"]] call VEMFr_fnc_config) select 0;
-		if (_ms13 isEqualTo 1) then { _m = selectRandom [0,1]; if ((call VEMFr_fnc_whichMod) isEqualTo "Exile") then { _m pushBack 2 } };
+		if (_ms13 isEqualTo 1) then { _m = [0,1]; if ((call VEMFr_fnc_whichMod) isEqualTo "Exile") then { _m pushBack 2 }; _m = selectRandom _m };
 		if (_ms7 isEqualTo 1) then
 			{
 				if (_m isEqualTo 0) then { [_m, "NEW INVASION", format["Raiders have invaded %1 @ %2", _ln, mapGridPosition _lp]] ExecVM "a3_vemf_reloaded\sqf\notificationToClient.sqf" };
