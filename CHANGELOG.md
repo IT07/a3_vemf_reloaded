@@ -1,11 +1,17 @@
 ## VEMFr Changelog
 
+#### `v0750.1`
+*Server-side* <br />
+**[FIXED]** Error pushback: Type Number, expected Array <br />
+<br />
+
 #### `v0750.0`
 *Server-side* <br />
-**[NEW]** VEMFr is now compatible with Exile and Epoch <br />
-**[NEW]** VEMFr for Exile and VEMFr for Epoch are now merged into one <br />
 **[CHANGED]** a3_exile_vemf_reloaded is now called a3_vemf_reloaded <br />
 **[FIXED]** setting sayKilled has no effect <br />
+**[NEW]** VEMFr is now compatible with Exile and Epoch <br />
+**[NEW]** VEMFr for Exile and VEMFr for Epoch are now merged into one <br />
+**[NEW]** support for Tanoa map <br />
 <br />
 *Client-side* <br />
 **[TWEAKED]** Gap inbetween the title and message of a mission broadcast <br />
