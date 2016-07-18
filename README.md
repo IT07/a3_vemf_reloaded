@@ -3,7 +3,7 @@
 <br />
 ######HOW TO DOWNLOAD
 ```
-a3_vemf_reloaded.7z (click it) >> Raw button (click it)
+a3_vemf_reloaded.7z (click it) >> Download button (click it)
 ```
 ######INSTALLATION GUIDE
 ```
