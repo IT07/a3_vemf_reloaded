@@ -97,7 +97,7 @@ class RscDisplayVEMFrClient
 		class txtTitle: RscText
 		{
 			x = 0.285 * safezoneW + safezoneX;
-			y = 0.825 * safezoneH + safezoneY;
+			y = 0.8235 * safezoneH + safezoneY;
 			w = 0 * safezoneW;
 			h = 0.02 * safezoneH;
 
