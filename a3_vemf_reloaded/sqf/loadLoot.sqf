@@ -15,108 +15,122 @@
 */
 
 params [
-	["_crate", objNull, [objNull]],
+	["_obj", objNull, [objNull]],
 	["_locName", "", [""]],
 	["_locPos", [], [[]]]
 ];
 
-_crate setVariable ["isVEMFrCrate", 1, true];
-clearBackpackCargoGlobal  _crate;
-clearItemCargoGlobal _crate;
-clearMagazineCargoGlobal _crate;
-clearWeaponCargoGlobal _crate;
+_obj setVariable ["isVEMFrCrate", 1, true];
+clearBackpackCargoGlobal  _obj;
+clearItemCargoGlobal _obj;
+clearMagazineCargoGlobal _obj;
+clearWeaponCargoGlobal _obj;
 
-_ms = [
-	["crateLoot"],
-	[
-		"primarySlotsMax","primarySlotsMin","secondarySlotsMax","secondarySlotsMin","magSlotsMax","magSlotsMin","attSlotsMax","attSlotsMin","itemSlotsMax","itemSlotsMin",
-		"vestSlotsMax","vestSlotsMin","headGearSlotsMax","headGearSlotsMin","bagSlotsMax","bagSlotsMin","primaryWeaponLoot","secondaryWeaponLoot","magLoot","attLoot",
-		"itemLoot","vestLoot","backpackLoot","headGearLoot","blackListLoot"
-	]
-] call VEMFr_fnc_config;
-_ms params [
-	"_maxPrim","_minPrim","_maxSec","_minSec","_maxMagSlots","_minMagSlots","_maxAttSlots","_minAttSlots","_maxItemSlots","_minItemSlots","_maxVestSlots","_minVestSlots",
-	"_maxHeadGearSlots","_minHeadGearSlots","_maxBagSlots","_minBagSlots","_primaries","_secondaries","_magazines","_attachments","_items","_vests","_backpacks","_headGear","_blackList"
-];
+([
+	["missionSettings","DynamicLocationInvasion","crateSettings"],
+	["rifleSlotsMax","rifleSlotsMin","pistolSlotsMax","pistolSlotsMin","magSlotsMax","magSlotsMin","attSlotsMax","attSlotsMin","itemSlotsMax","itemSlotsMin",
+	"vestSlotsMax","vestSlotsMin","headGearSlotsMax","headGearSlotsMin","bagSlotsMax","bagSlotsMin"]
+] call VEMFr_fnc_config) params ["_cs0","_cs1","_cs2","_cs3","_cs4","_cs5","_cs6","_cs7","_cs8","_cs9","_cs10","_cs11","_cs12","_cs13","_cs14","_cs15"];
 
-// Add primary weapons
-for "_j" from 0 to (_maxPrim - _minPrim + floor random _minPrim) do
+([
+	["missionSettings","DynamicLocationInvasion","crateLootVanilla"],
+	["attachments","backpacks","headGear",format["items%1", call VEMFr_fnc_whichMod],"magazines","pistols","rifles","vests"]
+] call VEMFr_fnc_config) params ["_vl0","_vl1","_vl2","_vl3","_vl4","_vl5","_vl6","_vl7"];
+
+if (("Apex" call VEMFr_fnc_modAppID) in (getDLCs 1)) then
 	{
-		_g = _primaries call BIS_fnc_selectRandom;
-		if not((_g select 0) in _blackList) then
+		private ["_el0","_el1","_el2","_el3","_el4","_el5","_el6","_el7"];
+		([
+			["missionSettings","DynamicLocationInvasion","crateLootApex"],
+			["attachments","backpacks","headGear","headGearSpecial","magazines","pistols","rifles","vests"]
+		] call VEMFr_fnc_config) params ["_el0","_el1","_el2","_el3","_el4","_el5","_el6","_el7"];
+		_vl0 append _el0;
+		_vl1 append _el1;
+		_vl2 append _el2;
+		if ((([["missionSettings","DynamicLocationInvasion","crateSettings"],["allowThermalHelmets"]] call VEMFr_fnc_config) select 0) isEqualTo 1) then { _vl2 append _el3 };
+		_vl4 append _el4;
+		_vl5 append _el5;
+		_vl6 append _el6;
+		_vl7 append _el7;
+	};
+
+_bad = ([["blacklists","loot"],["classes"]] call VEMFr_fnc_config) select 0;
+
+if ((round random 2) isEqualTo 1) then
+	{
+		// Rifles
+		for "_l" from 0 to (_cs0 - _cs1 + floor random _cs1) do
 			{
-				_crate addWeaponCargoGlobal [_g select 0, _g select 1];
+				_g = selectRandom _vl6;
+				if not((_g select 0) in _bad) then { _obj addWeaponCargoGlobal [_g select 0, (1 + (floor random (_g select 1)))] };
 			};
 	};
 
-// Secondary weapons
-for "_j" from 0 to (_maxSec - _minSec + floor random _minSec) do
+if ((round random 2) isEqualTo 1) then
 	{
-		_g = _secondaries call BIS_fnc_selectRandom;
-		if not((_g select 0) in _blackList) then
+		// Pistols
+		for "_l" from 0 to (_cs2 - _cs3 + floor random _cs3) do
 			{
-				_crate addWeaponCargoGlobal [_g select 0, _g select 1];
+				_g = selectRandom _vl5;
+				if not((_g select 0) in _bad) then { _obj addWeaponCargoGlobal [_g select 0, (1 + (floor random (_g select 1)))] };
 			};
 	};
 
-// Magazines
-for "_j" from 0 to (_maxMagSlots - _minMagSlots + floor random _minMagSlots) do
+if ((round random 2) isEqualTo 1) then
 	{
-		_g = _magazines call BIS_fnc_selectRandom;
-		if not((_g select 0) in _blackList) then
+		// Magazines
+		for "_l" from 0 to (_cs4 - _cs5 + floor random _cs5) do
 			{
-				_crate addMagazineCargoGlobal [_g select 0, _g select 1];
+				_g = selectRandom _vl4;
+				if not((_g select 0) in _bad) then { _obj addMagazineCargoGlobal [_g select 0, (1 + (floor random (_g select 1)))] };
 			};
 	};
 
-// Weapon attachments
-for "_j" from 0 to (_maxAttSlots - _minAttSlots + floor random _minAttSlots) do
+if ((round random 4) isEqualTo 1) then
 	{
-		_g = _attachments call BIS_fnc_selectRandom;
-		if not((_g select 0) in _blackList) then
+		// Weapon attachments
+		for "_l" from 0 to (_cs6 - _cs7 + floor random _cs7) do
 			{
-				_crate addItemCargoGlobal [_g select 0, _g select 1];
+				_g = selectRandom _vl0;
+				if not((_g select 0) in _bad) then { _obj addItemCargoGlobal [_g select 0, (1 + (floor random (_g select 1)))] };
 			};
 	};
 
 // Items
-for "_j" from 0 to (_maxItemSlots - _minItemSlots + floor random _minItemSlots) do
+for "_l" from 0 to (_cs8 - _cs9 + floor random _cs9) do
 	{
-		_g = _items call BIS_fnc_selectRandom;
-		if not((_g select 0) in _blacklist) then
+		_g = selectRandom _vl3;
+		if not((_g select 0) in _bad) then { _obj addItemCargoGlobal [_g select 0, (1 + (floor random (_g select 1)))] };
+	};
+
+if ((round random 4) isEqualTo 1) then
+	{
+		// Vests
+		for "_l" from 0 to (_cs10 - _cs11 + floor random _cs11) do
 			{
-				_crate addItemCargoGlobal [_g select 0, _g select 1];
+				_g = selectRandom _vl7;
+				if not((_g select 0) in _bad) then { _obj addItemCargoGlobal [_g select 0, (1 + (floor random (_g select 1)))] };
 			};
 	};
 
-// Vests
-for "_j" from 0 to (_maxVestSlots - _minVestSlots + floor random _minVestSlots) do
+if ((round random 2) isEqualTo 1) then
 	{
-		_g = _vests call BIS_fnc_selectRandom;
-		if not((_g select 0) in _blackList) then
+		// Helmets / caps / berets / bandanas
+		for "_l" from 0 to (_cs12 - _cs13 + floor random _cs13) do
 			{
-				_crate addItemCargoGlobal [_g select 0, _g select 1];
+				_g = selectRandom _vl2;
+				if not((_g select 0) in _bad) then { _obj addItemCargoGlobal [_g select 0, (1 + (floor random (_g select 1)))] };
 			};
 	};
 
-// Helmets / caps / berets / bandanas
-for "_j" from 0 to (_maxHeadGearSlots - _minHeadGearSlots + floor random _minHeadGearSlots) do
+if ((round random 3) isEqualTo 1) then
 	{
-		_g = _headGear call BIS_fnc_selectRandom;
-		if not((_g select 0) in _blackList) then
+		// Backpacks
+		for "_l" from 0 to (_cs14 - _cs15 + floor random _cs15) do
 			{
-				_crate addItemCargoGlobal [_g select 0, _g select 1];
+				_g = selectRandom _vl1;
+				if not((_g select 0) in _bad) then { _obj addBackpackCargoGlobal [_g select 0, (1 + (floor random (_g select 1)))] };
 			};
 	};
 
-// Backpacks
-for "_j" from 0 to (_maxBagSlots - _minBagSlots + floor random _minBagSlots) do
-	{
-		_g = _backpacks call BIS_fnc_selectRandom;
-		if not((_g select 0) in _blackList) then
-			{
-				_crate addBackpackCargoGlobal [_g select 0, _g select 1];
-			};
-	};
-
-["loadLoot", 1, format["Loot loaded into crate located in '%1' at %2", _locName, mapGridPosition _crate]] ExecVM ("log" call VEMFr_fnc_scriptPath);
+["loadLoot", 1, format["Loot loaded into crate located in '%1' at %2", _locName, mapGridPosition _obj]] ExecVM ("log" call VEMFr_fnc_scriptPath);

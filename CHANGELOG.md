@@ -16,6 +16,7 @@
 **[ADDED]** inventory configs for new factions <br />
 **[FIXED]** still using old ExecVM method <br />
 **[NEW]** mission "BaseAttack" is now compatible with Epoch <br />
+**[NEW]** loot crates will not always have the same loadout now <br />
 **[REMOVED]** S.W.A.T. faction <br />
 **[TWEAKED]** blacklist settings <br />
 **[TWEAKED]** aiInventory settings <br />
