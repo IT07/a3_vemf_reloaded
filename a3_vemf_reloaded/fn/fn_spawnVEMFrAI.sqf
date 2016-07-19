@@ -46,7 +46,7 @@ if ((_this4 in ("missionList" call VEMFr_fnc_config)) OR (_this4 isEqualTo "Stat
 					{
 						_unit = _grp createUnit [(([[call VEMFr_fnc_whichMod],["unitClass"]] call VEMFr_fnc_config) select 0), _this0, [], _this6, "FORM"]; // Create Unit There
 						_allUnits pushBack _unit;
-						_unit addMPEventHandler ["mpkilled","if (isDedicated) then { [[(_this select 0),(name(_this select 0))],[(_this select 1),(name(_this select 1))]] ExecVM 'a3_vemf_reloaded\sqf\aiKilled.sqf' }"];
+						_unit addMPEventHandler ["mpkilled","if (isDedicated) then { [[(_this select 0),(name(_this select 0))],[(_this select 1),(name(_this select 1))]] ExecVM ('aiKilled' call VEMFr_fnc_scriptPath) }"];
 						// Set skills
 						_unit setSkill ["aimingAccuracy", _ccrcy];
 						_unit setSkill ["aimingShake", _mshk];
