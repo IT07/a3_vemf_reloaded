@@ -22,11 +22,11 @@ while {true} do
                   {
                      if ((count (units _x)) > 0) then
                         {
-                           //["REMOTEguard",1,format["Attempting to transfer group: %1", _x]] ExecVM "a3_vemf_reloaded\sqf\log.sqf";
+                           //["REMOTEguard",1,format["Attempting to transfer group: %1", _x]] ExecVM ("log" call VEMFr_fnc_scriptPath);
                            // Group still has units, check if there is anyone that can be the owner
-                           _h = [_x] ExecVM "a3_vemf_reloaded\sqf\setGroupOwner.sqf";
+                           _h = [_x] ExecVM ("setGroupOwner" call VEMFr_fnc_scriptPath);
                            waitUntil { if (scriptDone _h) then {true} else {uiSleep 0.1; false} };
-                           //["REMOTEguard",1,format["Transfer attempted. Group (%1) is %2", _x, if (local _x) then {"still local!"} else {"now REMOTE"}]] ExecVM "a3_vemf_reloaded\sqf\log.sqf";
+                           //["REMOTEguard",1,format["Transfer attempted. Group (%1) is %2", _x, if (local _x) then {"still local!"} else {"now REMOTE"}]] ExecVM ("log" call VEMFr_fnc_scriptPath);
                         } else
                         {
                            deleteGroup _x;
