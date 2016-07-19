@@ -1,5 +1,27 @@
 ## VEMFr Changelog
 
+#### `v0751.0`
+#######UPDATE NOTE: completely re-configure your config overrides because many settings have been moved!
+*Server-side* <br />
+**[ADDED]** new function: retrieve DLC appIDs <br />
+**[ADDED]** new faction: Guerilla <br />
+**[ADDED]** new faction: Special Forces <br />
+**[ADDED]** new faction: Gendarmerie (Apex-only) <br />
+**[ADDED]** new faction: Bandits (Apex-only) <br />
+**[ADDED]** Exile-items for loot crate <br />
+**[ADDED]** Epoch-items for loot crate <br />
+**[ADDED]** option to allow/disallow thermal-vision helmets in loot crate <br />
+**[ADDED]** location blacklist for Tanoa <br />
+**[ADDED]** loot classnames from Apex <br />
+**[ADDED]** inventory configs for new factions <br />
+**[NEW]** mission "BaseAttack" is now compatible with Epoch <br />
+**[REMOVED]** S.W.A.T. faction <br />
+**[TWEAKED]** blacklist settings <br />
+**[TWEAKED]** aiInventory settings <br />
+**[TWEAKED]** crate loot settings <br />
+**[TWEAKED]** config comments <br />
+<br />
+
 #### `v0750.1`
 *Server-side* <br />
 **[FIXED]** Error pushback: Type Number, expected Array <br />
