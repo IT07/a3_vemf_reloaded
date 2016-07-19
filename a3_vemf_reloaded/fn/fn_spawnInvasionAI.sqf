@@ -30,16 +30,16 @@ if (_this4 in ("missionList" call VEMFr_fnc_config)) then
 	{
 		private [
 			"_grps","_s","_ccrcy","_mShk","_mSpd","_stmna","_sptDst","_sptTme",
-			"_crge","_rldSpd","_cmmndng","_gnrl","_notTheseHouses","_gdHss","_nHss","_cl50s","_nts"
+			"_crge","_rldSpd","_cmmndng","_gnrl","_gdHss","_nHss","_cl50s","_nts"
 		];
 		_r = [[],[]];
 		_grps = [];
 		_s = [["aiSkill", ([["aiSkill"],["difficulty"]] call VEMFr_fnc_config) select 0],["accuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"]] call VEMFr_fnc_config;
 		_s params ["_ccrcy","_mShk","_mSpd","_stmna","_sptDst","_sptTme","_crge","_rldSpd","_cmmndng","_gnrl"];
-		_notTheseHouses = "housesBlackList" call VEMFr_fnc_config;
+		_bad = ([["blacklists","buildings"],["classes"]] call VEMFr_fnc_config) select 0;
 		_gdHss = [];
 		{ // Filter the houses that are too small for one group
-			if not(typeOf _x in _notTheseHouses) then
+			if not(typeOf _x in _bad) then
 				{
 					if ([_x, _this2] call BIS_fnc_isBuildingEnterable) then
 						{
@@ -55,7 +55,7 @@ if (_this4 in ("missionList" call VEMFr_fnc_config)) then
 				_nHss = true;
 			};
 
-		_cl50s = ([["DynamicLocationInvasion"],["cal50s"]] call VEMFr_fnc_config) select 0;
+		_cl50s = ([["missionSettings","DynamicLocationInvasion"],["cal50s"]] call VEMFr_fnc_config) select 0;
 
 		_nts = []; // Define units array. the for loops below will fill it with units
 		for "_g" from 1 to _this1 do // Spawn Groups near Position
@@ -117,7 +117,7 @@ if (_this4 in ("missionList" call VEMFr_fnc_config)) then
 								_hsPstns deleteAt (_hsPstns find _spwnPs);
 							};
 
-						_nt addMPEventHandler ["mpkilled","if (isDedicated) then { [[(_this select 0),(name(_this select 0))],[(_this select 1),(name(_this select 1))]] ExecVM 'a3_vemf_reloaded\sqf\aiKilled.sqf' }"];
+						_nt addMPEventHandler ["mpkilled","if (isDedicated) then { [[(_this select 0),(name(_this select 0))],[(_this select 1),(name(_this select 1))]] ExecVM ('aiKilled' call VEMFr_fnc_scriptPath) }"];
 
 						// Set skills
 						_nt setSkill ["aimingAccuracy", _ccrcy];
