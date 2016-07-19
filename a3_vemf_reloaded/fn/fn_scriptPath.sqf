@@ -9,5 +9,5 @@
 */
 
 private "_r";
-_r = getText (configFile >> "CfgVemfrScripts" >> (param [0,"",[""]]));
+_r = getText (configFile >> "CfgVemfrScripts" >> _this);
 _r
