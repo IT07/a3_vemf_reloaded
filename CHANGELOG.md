@@ -14,6 +14,7 @@
 **[ADDED]** location blacklist for Tanoa <br />
 **[ADDED]** loot classnames from Apex <br />
 **[ADDED]** inventory configs for new factions <br />
+**[FIXED]** still using old ExecVM method <br />
 **[NEW]** mission "BaseAttack" is now compatible with Epoch <br />
 **[REMOVED]** S.W.A.T. faction <br />
 **[TWEAKED]** blacklist settings <br />
