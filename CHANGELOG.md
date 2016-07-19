@@ -22,6 +22,9 @@
 **[TWEAKED]** crate loot settings <br />
 **[TWEAKED]** config comments <br />
 **[TWEAKED]** VEMFr startup RPT output <br />
+**[TWEAKED]** respect handling of AI kills <br />
+**[TWEAKED]** checkClasses.sqf <br />
+
 <br />
 
 #### `v0750.1`
