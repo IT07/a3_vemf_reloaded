@@ -36,7 +36,7 @@ params [
 ];
 
 ([["nonPopulated","noMissionPos","missionDistance","missionList"]] call VEMFr_fnc_config) params ["_s0","_s1","_s2","_s3"];
-_ms0 = ([[_this6],["skipDistanceReversed"]] call VEMFr_fnc_config) select 0;
+_ms0 = ([["missionSettings",_this6],["skipDistanceReversed"]] call VEMFr_fnc_config) select 0;
 if (_this6 in _s3) then { _s0 = ([[_this6],["nonPopulated"]] call VEMFr_fnc_config) select 0 };
 
 if (_this0 isEqualTo "loc") then
@@ -45,17 +45,15 @@ if (_this0 isEqualTo "loc") then
 		_arr = nearestLocations [_this2, ["CityCenter","Strategic","StrongpointArea","NameVillage","NameCity","NameCityCapital", if (_s0 isEqualTo 1) then {"nameLocal","Area","BorderCrossing","Hill","fakeTown","Name","RockArea","ViewPoint"}], if (_ms0 > 0) then {_ms0*2} else {worldSize}];
 		if ((count _arr) > 0) then
 			{
-				_maps = "isClass _x" configClasses (configFile >> "CfgVemfReloaded" >> "locationBlackLists");
-				{ // Make a list of locationBlackLists's children
-					_maps set [_forEachIndex, toLower (configName _x)];
-				} forEach _maps;
+				_maps = "isClass _x" configClasses (configFile >> "CfgVemfReloaded" >> "blacklists" >> "locations");
+				{ _maps set [_forEachIndex, toLower (configName _x)] } forEach _maps;
 
 				if ((toLower worldName) in _maps) then
 					{
-						_bad = ([["locationBlackLists", worldName],["locations"]] call VEMFr_fnc_config) select 0
+						_bad = ([["blacklists","locations", worldName],["names"]] call VEMFr_fnc_config) select 0
 					} else
 					{
-						_bad = ([["locationBlackLists","Other"],["locations"]] call VEMFr_fnc_config) select 0
+						_bad = ([["blacklists","locations","Other"],["names"]] call VEMFr_fnc_config) select 0
 					};
 
 				_bin = [];
