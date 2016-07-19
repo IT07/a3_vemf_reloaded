@@ -21,6 +21,7 @@
 **[TWEAKED]** aiInventory settings <br />
 **[TWEAKED]** crate loot settings <br />
 **[TWEAKED]** config comments <br />
+**[TWEAKED]** VEMFr startup RPT output <br />
 <br />
 
 #### `v0750.1`
