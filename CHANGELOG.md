@@ -1,5 +1,11 @@
 ## VEMFr Changelog
 
+#### `v0751.1`
+*Server-side* <br />
+**[FIXED]** BaseAttack missions keep spawning on the same flag <br />
+**[FIXED]** minimumLevel setting not being used properly <br />
+<br />
+
 #### `v0751.0`
 #######UPDATE NOTE: completely re-configure your config overrides because many settings have been moved!
 *Server-side* <br />
