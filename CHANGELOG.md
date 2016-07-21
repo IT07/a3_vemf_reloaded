@@ -1,5 +1,10 @@
 ## VEMFr Changelog
 
+#### `v0751.2`
+*Server-side* <br />
+**[FIXED]** Error type bool, expected number <br />
+<br />
+
 #### `v0751.1`
 *Server-side* <br />
 **[FIXED]** BaseAttack missions keep spawning on the same flag <br />
