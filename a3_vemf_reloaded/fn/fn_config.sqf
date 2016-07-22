@@ -24,7 +24,6 @@ _chck =
 		if (isNumber _cfg) then { _v = getNumber _cfg };
 		if (isText _cfg) then {	_v = getText _cfg };
 		if (isArray _cfg) then { _v = getArray _cfg };
-		if (isNil "_v") then { _v = "nil" };
 	};
 
 if (_this isEqualType "") then
