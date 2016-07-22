@@ -1,5 +1,11 @@
 ## VEMFr Changelog
 
+#### `v0751.3`
+*Server-side* <br />
+**[FIXED]** Error >: Type String, expected Number,Not a Number <br />
+**[FIXED]** code trying to get settings from old config layout <br />
+<br />
+
 #### `v0751.2`
 *Server-side* <br />
 **[FIXED]** Error type bool, expected number <br />
