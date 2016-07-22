@@ -37,7 +37,7 @@ params [
 
 ([["nonPopulated","noMissionPos","missionDistance","missionList"]] call VEMFr_fnc_config) params ["_s0","_s1","_s2","_s3"];
 _ms0 = ([["missionSettings",_this6],["skipDistanceReversed"]] call VEMFr_fnc_config) select 0;
-if (_this6 in _s3) then { _s0 = ([[_this6],["nonPopulated"]] call VEMFr_fnc_config) select 0 };
+if (_this6 in _s3) then { _s0 = ([["missionSettings",_this6],["nonPopulated"]] call VEMFr_fnc_config) select 0 };
 
 if (_this0 isEqualTo "loc") then
 	{

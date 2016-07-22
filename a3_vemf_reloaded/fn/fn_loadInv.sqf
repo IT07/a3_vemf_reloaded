@@ -59,7 +59,7 @@ if ((_this1 in ("missionList" call VEMFr_fnc_config)) OR (_this1 isEqualTo "Stat
 					_xx addGoggles _g;
 					_g = selectRandom _vests;
 					_xx addVest _g;
-					_ls = [[_this1],["allowLaunchers","hasLauncherChance"]] call VEMFr_fnc_config;
+					_ls = [["missionSettings",(_this1)],["allowLaunchers","hasLauncherChance"]] call VEMFr_fnc_config;
 					if ((_ls select 0) isEqualTo 1) then
 						{
 							_lc = _ls select 1;
@@ -281,7 +281,7 @@ if ((_this1 in ("missionList" call VEMFr_fnc_config)) OR (_this1 isEqualTo "Stat
 					_xx addHeadGear _g;
 					_g = selectRandom _vests;
 					_xx addVest _g;
-					_ls = [[_this1],["allowLaunchers","hasLauncherChance"]] call VEMFr_fnc_config;
+					_ls = [["missionSettings",(_this1)],["allowLaunchers","hasLauncherChance"]] call VEMFr_fnc_config;
 					if ((_ls select 0) isEqualTo 1) then
 						{
 							_lc = _ls select 1;

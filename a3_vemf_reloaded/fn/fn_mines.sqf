@@ -23,8 +23,7 @@ params [
    ["_this3", "", [""]]
 ];
 
-_s = [[_this3],["mines","minesAmount"]] call VEMFr_fnc_config;
-_s params ["_ms","_a"];
+([["missionSettings",(_this3)],["mines","minesAmount"]] call VEMFr_fnc_config) params ["_ms","_a"];
 if ((_this3 in ("missionList" call VEMFr_fnc_config)) AND (_ms > 0) AND ((count _this0) isEqualTo 3) AND (_this1 > -1) AND (_this2 > _this1) AND (_a > -1)) then
    {
       if (_ms isEqualTo 1) then { _mt = ["ATMine"] };
@@ -36,7 +35,7 @@ if ((_this3 in ("missionList" call VEMFr_fnc_config)) AND (_ms > 0) AND ((count 
             breakOut "mines"
          };
       _r = [];
-      ["fn_mines", 1, format["Placing %1 mines at %2", _a, _this0]] ExecVM ("log" call VEMFr_fnc_scriptPath);
+
       for "_m" from 1 to _a do
          {
             _r pushBack (createMine [selectRandom _mt, ([_this0, _this1, _this2, 2, 0, 20, 0] call BIS_fnc_findSafePos), [], 0]);

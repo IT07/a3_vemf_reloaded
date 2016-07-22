@@ -34,7 +34,7 @@ if (_this4 in ("missionList" call VEMFr_fnc_config)) then
 		];
 		_r = [[],[]];
 		_grps = [];
-		_s = [["aiSkill", ([["aiSkill"],["difficulty"]] call VEMFr_fnc_config) select 0],["accuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"]] call VEMFr_fnc_config;
+		_s = [["aiSkill",(([["aiSkill"],["difficulty"]] call VEMFr_fnc_config) select 0)],["accuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"]] call VEMFr_fnc_config;
 		_s params ["_ccrcy","_mShk","_mSpd","_stmna","_sptDst","_sptTme","_crge","_rldSpd","_cmmndng","_gnrl"];
 		_bad = ([["blacklists","buildings"],["classes"]] call VEMFr_fnc_config) select 0;
 		_gdHss = [];
@@ -55,7 +55,7 @@ if (_this4 in ("missionList" call VEMFr_fnc_config)) then
 				_nHss = true;
 			};
 
-		_cl50s = ([["missionSettings","DynamicLocationInvasion"],["cal50s"]] call VEMFr_fnc_config) select 0;
+		_cl50s = ([["missionSettings",(_this4)],["cal50s"]] call VEMFr_fnc_config) select 0;
 
 		_nts = []; // Define units array. the for loops below will fill it with units
 		for "_g" from 1 to _this1 do // Spawn Groups near Position
