@@ -1,5 +1,13 @@
 ## VEMFr Changelog
 
+#### `v0751.4`
+*Server-side* <br />
+**[NEW]** some config settings now use yes/no instead of 1/0 <br />
+**[TWEAKED]** spawn chance of rifles in loot crate <br />
+**[NEW]** AI now have random amounts of money on them <br />
+**[NEW]** The loot crate (DynamicLocationInvasion mission) now has random amount of money in it <br />
+<br />
+
 #### `v0751.3`
 *Server-side* <br />
 **[FIXED]** Error >: Type String, expected Number,Not a Number <br />
