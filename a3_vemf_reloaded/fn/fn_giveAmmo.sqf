@@ -15,12 +15,12 @@
     BOOLEAN - true if successful
 */
 
-private ["_r","_this0","_m"];
+private [("_r"),("_this0"),("_m")];
 params [
-   ["_this0", objNull, [objNull]],
-   ["_this1", "", [""]],
-   ["_this2", "", [""]],
-   ["_this3", "", [""]]
+   [("_this0"),(objNull),([objNull])],
+   [("_this1"),(""),([""])],
+   [("_this2"),(""),([""])],
+   [("_this3"),(""),([""])]
 ];
 
 _r = [];

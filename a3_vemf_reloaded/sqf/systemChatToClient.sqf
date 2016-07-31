@@ -10,12 +10,12 @@
 */
 
 params [
-   ["_line", "", [""]],
-   ["_to", [], [[]]]
+   [("_line"),(""),([""])],
+   [("_to"),([]),([[]])]
 ];
 
 if (_to isEqualTo []) then { _to = allPlayers };
 {
-   VEMFrMsgToClient = [_line, "sys"];
+   VEMFrMsgToClient = [(_line),("sys")];
 	(owner _x) publicVariableClient "VEMFrMsgToClient";
 } forEach _to;

@@ -6,18 +6,18 @@ VEMFrMissionCount = VEMFrMissionCount + 1;
 if isNil "VEMFrInvasionCount" then { VEMFrInvasionCount = 0; };
 VEMFrInvasionCount = VEMFrInvasionCount + 1;
 _this0 = param [0, "", [""]];
-if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call VEMFr_fnc_config) select 0)) then
+if (VEMFrInvasionCount <= (([[("missionSettings"),(_this0)],["maxInvasions"]] call VEMFr_fnc_config) select 0)) then
 {
 	scopeName "outer";
 	_mod = call VEMFr_fnc_whichMod;
 
 	// Define the settings
 	([
-		["missionSettings",_this0],
-		["groupCount","groupUnits","maxDistancePrefered","skipDistance","useMarker","markCrateVisual","markCrateOnMap","announce","streetLights","streetLightsRestore","streetLightsRange","allowCrateLift","allowRepeat","randomModes","spawnCrateFirst","mines","flairTypes","smokeTypes","minesCleanup","skipDistanceReversed"]
-	] call VEMFr_fnc_config) params ["_ms0","_ms1","_ms2","_ms3","_ms4","_ms5","_ms6","_ms7","_ms8","_ms9","_ms10","_ms11","_ms12","_ms13","_ms14","_ms15","_ms16","_ms17","_ms18","_ms19"];
+		[("missionSettings"),(_this0)],
+		[("groupCount"),("groupUnits"),("maxDistancePrefered"),("skipDistance"),("useMarker"),("markCrateVisual"),("markCrateOnMap"),("announce"),("streetLightsEnabled"),("streetLightsRestore"),("streetLightsRange"),("allowCrateLift"),("allowRepeat"),("randomModes"),("spawnCrateFirst"),("mines"),("flairTypes"),("smokeTypes"),("minesCleanup"),("skipDistanceReversed")]
+	] call VEMFr_fnc_config) params [("_ms0"),("_ms1"),("_ms2"),("_ms3"),("_ms4"),("_ms5"),("_ms6"),("_ms7"),("_ms8"),("_ms9"),("_ms10"),("_ms11"),("_ms12"),("_ms13"),("_ms14"),("_ms15"),("_ms16"),("_ms17"),("_ms18"),("_ms19")];
 
-	([["missionSettings",_this0,"crateParachute"],["enabled","altitude"]] call VEMFr_fnc_config) params ["_cp0","_cp1"];
+	([[("missionSettings"),(_this0),("crateParachute")],[("enabled"),("altitude")]] call VEMFr_fnc_config) params [("_cp0"),("_cp1")];
 
 	_l = ["loc", false, position (selectRandom allPlayers), if (_ms19 > 0) then {_ms19} else {_ms3}, _ms2, if (_ms19 > 0) then {_ms19} else {_ms3}, _this0] call VEMFr_fnc_findPos;
 	if not(isNil "_l") then
@@ -28,18 +28,18 @@ if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call V
 		[_this0, 1, format["Invading %1...", _ln]] ExecVM ("log" call VEMFr_fnc_scriptPath);
 
 		_m = ([[_mod],["aiMode"]] call VEMFr_fnc_config) select 0;
-		if (_ms13 isEqualTo 1) then { _m = [0,1,2]; if (("Apex" call VEMFr_fnc_modAppID) in (getDLCs 1)) then { _m pushBack 3; _m pushBack 4 }; _m = selectRandom _m };
-		if (_ms7 isEqualTo 1) then
+		if (_ms13 isEqualTo "yes") then { _m = [0,1,2]; if (("Apex" call VEMFr_fnc_modAppID) in (getDLCs 1)) then { _m pushBack 3; _m pushBack 4 }; _m = selectRandom _m };
+		if (_ms7 isEqualTo "yes") then
 			{
-				if (_m isEqualTo 0) then { [_m,"NEW MISSION", format["%1 Guerilla has invaded %2 @ %3", worldName, _ln, mapGridPosition _lp]] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
-				if (_m isEqualTo 1) then { [_m,"NEW MISSION", format["%1 Police forces are now controlling %2 @ %3", worldName, _ln, mapGridPosition _lp]] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
+				if (_m isEqualTo 0) then { [(_m),("NEW MISSION"),(format[("%1 Guerilla has invaded %2 @ %3"),(worldName),(_ln),(mapGridPosition _lp)])] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
+				if (_m isEqualTo 1) then { [(_m),("NEW MISSION"),(format[("%1 Police forces are now controlling %2 @ %3"),(worldName),(_ln),(mapGridPosition _lp)])] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
 				if (_m isEqualTo 2) then {	[_m,"NEW MISSION", format["%1 Special Forces are now raiding %2 @ %3", worldName, _ln, mapGridPosition _lp]] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
 				if (_m isEqualTo 3) then { [1,"NEW MISSION", format["The Gendarmerie has invaded %1 @ %2", _ln, mapGridPosition _lp]] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
 				if (_m isEqualTo 4) then { [0,"NEW MISSION", format["%1 bandits have taken %2 @ %3", worldName, _ln, mapGridPosition _lp]] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
 			};
 
 		private "_mrkr";
-		if (_ms4 isEqualTo 1) then
+		if (_ms4 isEqualTo "yes") then
 		{ // Create/place the marker if enabled
 			_mrkr = createMarker [format["VEMFrMarker%1", _ln], _lp];
 			_mrkr setMarkerShape "ICON";
@@ -52,7 +52,7 @@ if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call V
 		};
 
 		// If enabled, kill all the lights
-		if (_ms8 isEqualTo 0) then
+		if (_ms8 isEqualTo "no") then
 		{
 			{
 				if (damage _x < 0.95) then
@@ -67,9 +67,9 @@ if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call V
 		_dSpwnCrt =
 		{
 			// Choose a box
-			_bx = selectRandom (([["missionSettings",_this0],["crateTypes"]] call VEMFr_fnc_config) select 0);
+			_bx = selectRandom (([[("missionSettings"),(_this0)],[("crateTypes")]] call VEMFr_fnc_config) select 0);
 			_ps = [_lp, 0, 200, 0, 0, 300, 0] call bis_fnc_findSafePos;
-			if (_cp0 > 0) then
+			if (_cp0 isEqualTo "yes") then
 			{
 				_cht = createVehicle ["I_Parachute_02_F", _ps, [], 0, "FLY"];
 				if (_mod isEqualTo "Epoch") then { _cht call EPOCH_server_setVToken };
@@ -113,8 +113,8 @@ if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call V
 
 			_cl50s = _spwnd select 1;
 
-			([["missionSettings",_this0,"heliPatrol"],["enabled","classesVanilla","classesHeliDLC","classesApex","locked"]] call VEMFr_fnc_config) params ["_hp0","_hp1","_hp2","_hp3","_hp4"];
-			if ((_hp0 > 0) AND ((_m isEqualTo 1) OR (_m isEqualTo 2) OR (_m isEqualTo 3))) then
+			([[("missionSettings"),(_this0),("heliPatrol")],[("enabled"),("classesVanilla"),("classesHeliDLC"),("classesApex"),("locked")]] call VEMFr_fnc_config) params [("_hp0"),("_hp1"),("_hp2"),("_hp3"),("_hp4")];
+			if ((_hp0 isEqualTo "yes") AND ((_m isEqualTo 1) OR (_m isEqualTo 2) OR (_m isEqualTo 3))) then
 				{
 					[_this0, 1, format["Adding a heli patrol to the invasion of %1 at %2", _ln, mapGridPosition _lp]] ExecVM ("log" call VEMFr_fnc_scriptPath);
 					_classes = _hp1;
@@ -124,7 +124,7 @@ if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call V
 					if (_mod isEqualTo "Epoch") then { _heli call EPOCH_server_setVToken };
 					_heli setPosATL [(getPos _heli) select 0, (getPos _heli) select 1, 750];
 					_heli flyInHeight 80;
-					if (_hp4 isEqualTo 1) then { _heli lock true };
+					if (_hp4 isEqualTo "yes") then { _heli lock true };
 
 					_trrts = allTurrets [_heli, false];
 
@@ -176,14 +176,14 @@ if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call V
 				};
 
 			// Place the crate if enabled
-			if (_ms14 isEqualTo 1) then
+			if (_ms14 isEqualTo "yes") then
 				{
 					call _dSpwnCrt;
 				};
 
 			// Place mines if enabled
-			private ["_mnsPlcd","_mines"];
-			if (_ms15 > 0) then
+			private [("_mnsPlcd"),("_mines")];
+			if (_ms15 isEqualTo "yes") then
 				{
 					_mnsPlcd = [_lp, 5, 100, _this0] call VEMFr_fnc_mines;
 					if ((count _mnsPlcd) > 0) then
@@ -199,39 +199,34 @@ if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call V
 			_h = [_nts] ExecVM ("killedMonitor" call VEMFr_fnc_scriptPath);
 			waitUntil { if (scriptDone _h) then {true} else {uiSleep 1; false} };
 
-			["DynamicLocationInvasion", 1, format["mission in %1 has been completed!", _ln]] ExecVM ("log" call VEMFr_fnc_scriptPath);
+			[("DynamicLocationInvasion"),(1),(format[("mission in %1 has been completed!"),(_ln)])] ExecVM ("log" call VEMFr_fnc_scriptPath);
 
-			if (_ms12 isEqualTo 1) then
+			if (_ms12 isEqualTo "yes") then
 				{
 					_u = uiNamespace getVariable "VEMFrUsedLocs";
 					_u deleteAt (_u find _l);
 				};
 
 			// Broadcast
-			if (_ms7 isEqualTo 1) then
+			if (_ms7 isEqualTo "yes") then
 				{
-					if (_m isEqualTo 0) then { [_m,"MISSION ENDED", format["%1 @ %2 is now clear of %3 Guerillas", _ln, mapGridPosition (_lp), worldName]] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
-					if (_m isEqualTo 1) then { [_m,"MISSION ENDED", format["%1 @ %2 is now clear of %3 Police Forces", _ln, mapGridPosition (_lp), worldName]] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
-					if (_m isEqualTo 2) then { [_m,"MISSION ENDED", format["%1 @ %2 is now clear of %3 Special Forces", _ln, mapGridPosition (_lp)]] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
-					if (_m isEqualTo 3) then { [1,"MISSION ENDED", format["%1 @ %2 is now clear of %3 Gendarmerie", _ln, mapGridPosition _lp, worldName]] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
-					if (_m isEqualTo 4) then { [0,"MISSION ENDED", format["%1 @ %2 is now clear of %3 bandits", _ln, mapGridPosition _lp, worldName]] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
+					if (_m isEqualTo 0) then { [(_m),("MISSION ENDED"),(format[("%1 @ %2 is now clear of %3 Guerillas"),(_ln),(mapGridPosition _lp),(worldName)])] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
+					if (_m isEqualTo 1) then { [(_m),("MISSION ENDED"),(format[("%1 @ %2 is now clear of %3 Police Forces"),(_ln),(mapGridPosition _lp),(worldName)])] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
+					if (_m isEqualTo 2) then { [(_m),("MISSION ENDED"),(format[("%1 @ %2 is now clear of %3 Special Forces"),(_ln),(mapGridPosition _lp)])] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
+					if (_m isEqualTo 3) then { [(1),("MISSION ENDED"),(format[("%1 @ %2 is now clear of %3 Gendarmerie"),(_ln),(mapGridPosition _lp),(worldName)])] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
+					if (_m isEqualTo 4) then { [(0),("MISSION ENDED"),(format[("%1 @ %2 is now clear of %3 bandits"),(_ln),(mapGridPosition _lp),(worldName)])] ExecVM ("notificationToClient" call VEMFr_fnc_scriptPath) };
 				};
 
 			// Deal with the 50s
 			if not(isNil "_cl50s") then
 				{
-					_d = ([["missionSettings",_this0],["cal50sDelete"]] call VEMFr_fnc_config) select 0;
-					if (_d > 0) then
-						{
-							{
-								if (_d isEqualTo 1) then { deleteVehicle _x };
-								if (_d isEqualTo 2) then { _x setDamage 1 };
-							} forEach _cl50s;
-						};
+					_d = ([[("missionSettings"),(_this0)],["cal50sDelete"]] call VEMFr_fnc_config) select 0;
+					if (_d isEqualTo "yes") then { { deleteVehicle _x } forEach _cl50s };
+					if (_d isEqualTo "destroy") then { { _x setDamage 1 } forEach _cl50s };
 				};
 
 			if not(isNil "_mrkr") then { deleteMarker _mrkr };
-			if (_ms14 isEqualTo 0) then { call _dSpwnCrt };
+			if (_ms14 isEqualTo "no") then { call _dSpwnCrt };
 
 			// Put a marker on the crate if enabled
 			if not(isNil "_crate") then
@@ -240,7 +235,7 @@ if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call V
 						{
 							if not ([getPos _crate, 3] call VEMFr_fnc_playerNear) then
 								{
-									if (_ms5 isEqualTo 1) then
+									if (_ms5 isEqualTo "yes") then
 										{
 											// If night, attach a chemlight
 											if (sunOrMoon <= 0.35) then
@@ -257,7 +252,7 @@ if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call V
 												};
 										};
 
-									if (_ms6 isEqualTo 1) then
+									if (_ms6 isEqualTo "yes") then
 										{
 											private "_mrkr";
 											_mrkr = createMarker [format["VEMF_lootCrate_ID%1", random 9000], position _crate];
@@ -287,7 +282,7 @@ if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call V
 			// Explode or remove the mines
 			if not(isNil "_mnsPlcd") then
 				{
-					if (_ms18 isEqualTo 2) then
+					if (_ms18 isEqualTo "explode") then
 						{
 							[_this0, _ln, _mnsPlcd] spawn
 								{
@@ -305,7 +300,7 @@ if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call V
 
 							_mnsPlcd = nil;
 						};
-					if (_ms18 isEqualTo 1) then
+					if (_ms18 isEqualTo "yes") then
 						{
 							[_mnsPlcd] spawn
 								{
@@ -319,7 +314,7 @@ if (VEMFrInvasionCount <= (([["missionSettings",_this0],["maxInvasions"]] call V
 				};
 
 			// If enabled, fix all the lights
-			if (_ms9 isEqualTo 1) then
+			if (_ms9 isEqualTo "yes") then
 				{
 					{
 						if (damage _x > 0.94) then

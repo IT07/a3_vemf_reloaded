@@ -19,30 +19,32 @@
 */
 
 private [
-	"_r","_this0","_this1","_this2","_this3","_this4","_this5","_this6",
-	"_s0","_s1","_s2","_s3",
-	"_ms0","_arr","_bin","_used","_fltr","_badNames","_maps","_bad",
-	"_pos","_xx","_pos","_hi","_low","_dist","_loc"
+	("_r"),("_this0"),("_this1"),("_this2"),("_this3"),("_this4"),("_this5"),("_this6"),
+	("_s0"),("_s1"),("_s2"),("_s3"),
+	("_ms0"),("_arr"),("_bin"),("_used"),("_fltr"),("_badNames"),("_maps"),("_bad"),
+	("_pos"),("_xx"),("_pos"),("_hi"),("_low"),("_dist"),("_loc")
 ];
 
 params [
-	["_this0", "", [""]],
-	["_this1", false, [false]],
-	["_this2", [], [[]]],
-	["_this3", -1, [0]],
-	["_this4", -1, [0]],
-	["_this5", -1, [0]],
-	["_this6", "", [""]]
+	[("_this0"),(""),([""])],
+	[("_this1"),(false),([false])],
+	[("_this2"),([]),([[]])],
+	[("_this3"),(-1),([0])],
+	[("_this4"),(-1),([0])],
+	[("_this5"),(-1),([0])],
+	[("_this6"),(""),([""])]
 ];
 
-([["nonPopulated","noMissionPos","missionDistance","missionList"]] call VEMFr_fnc_config) params ["_s0","_s1","_s2","_s3"];
-_ms0 = ([["missionSettings",_this6],["skipDistanceReversed"]] call VEMFr_fnc_config) select 0;
-if (_this6 in _s3) then { _s0 = ([["missionSettings",_this6],["nonPopulated"]] call VEMFr_fnc_config) select 0 };
+([[("nonPopulated"),("noMissionPos"),("missionDistance"),("missionList")]] call VEMFr_fnc_config) params [("_s0"),("_s1"),("_s2"),("_s3")];
+_ms0 = ([[("missionSettings"),(_this6)],["skipDistanceReversed"]] call VEMFr_fnc_config) select 0;
+if (_this6 in _s3) then { _s0 = ([[("missionSettings"),(_this6)],["nonPopulated"]] call VEMFr_fnc_config) select 0 };
 
 if (_this0 isEqualTo "loc") then
 	{
 		// Get a list of locations close to _this2 (position of player)
-		_arr = nearestLocations [_this2, ["CityCenter","Strategic","StrongpointArea","NameVillage","NameCity","NameCityCapital", if (_s0 isEqualTo 1) then {"nameLocal","Area","BorderCrossing","Hill","fakeTown","Name","RockArea","ViewPoint"}], if (_ms0 > 0) then {_ms0*2} else {worldSize}];
+		_t = [("CityCenter"),("Strategic"),("StrongpointArea"),("NameVillage"),("NameCity"),("NameCityCapital")];
+		if (_s0 isEqualTo "yes") then { _t append [("nameLocal"),("Area"),("BorderCrossing"),("Hill"),("fakeTown"),("Name"),("RockArea"),("ViewPoint")] };
+		_arr = nearestLocations [(_this2),(_t),(if (_ms0 > 0) then {_ms0*2} else {worldSize})];
 		if ((count _arr) > 0) then
 			{
 				_maps = "isClass _x" configClasses (configFile >> "CfgVemfReloaded" >> "blacklists" >> "locations");
@@ -50,14 +52,14 @@ if (_this0 isEqualTo "loc") then
 
 				if ((toLower worldName) in _maps) then
 					{
-						_bad = ([["blacklists","locations", worldName],["names"]] call VEMFr_fnc_config) select 0
+						_bad = ([[("blacklists"),("locations"),(worldName)],["names"]] call VEMFr_fnc_config) select 0
 					} else
 					{
-						_bad = ([["blacklists","locations","Other"],["names"]] call VEMFr_fnc_config) select 0
+						_bad = ([[("blacklists"),("locations"),("Other")],["names"]] call VEMFr_fnc_config) select 0
 					};
 
 				_bin = [];
-				_used = uiNamespace getVariable ["VEMFrUsedLocs",[]];
+				_used = uiNamespace getVariable [("VEMFrUsedLocs"),([])];
 
 				_fltr =
 					{

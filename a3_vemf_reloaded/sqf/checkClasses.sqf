@@ -11,7 +11,7 @@
     nothing
 */
 
-if (("validateLoot" call VEMFr_fnc_config) isEqualTo 1) then
+if (("validateLoot" call VEMFr_fnc_config) isEqualTo "yes") then
 { // _validateLoot is enabled, go ahead...
    if (("debugMode" call VEMFr_fnc_config) < 1) then { ["checkLoot", 0, "Can not validate classnames: no output allowed in RPT"] ExecVM ("log" call VEMFr_fnc_scriptPath) }
       else

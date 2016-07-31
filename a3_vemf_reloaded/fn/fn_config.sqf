@@ -17,12 +17,12 @@
     ARRAY - Result
 */
 
-private["_r","_chck","_v","_cfg"];
+private [("_r"),("_chck"),("_v"),("_cfg")];
 _r = [];
 _chck =
 	{
 		if (isNumber _cfg) then { _v = getNumber _cfg };
-		if (isText _cfg) then {	_v = getText _cfg };
+		if (isText _cfg) then {	_v = toLower (getText _cfg) };
 		if (isArray _cfg) then { _v = getArray _cfg };
 	};
 
@@ -43,7 +43,7 @@ if (_this isEqualType []) then
 	{
 		if (_this isEqualTypeArray [[],[]]) then
 			{
-				private ["_p","_b"];
+				private [("_p"),("_b")];
 				_p = _this select 0;
 				_b =
 					{

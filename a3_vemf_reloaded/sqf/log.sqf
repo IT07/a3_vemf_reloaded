@@ -18,9 +18,9 @@ if (("debugMode" call VEMFr_fnc_config) > 0) then
 {
    scopeName "_top";
    params [
-      ["_p", "", [""]],
-      ["_t", 3, [0]],
-      ["_l", "", [""]]
+      [("_p"),(""),([""])],
+      [("_t"),(3),([0])],
+      [("_l"),(""),([""])]
    ];
 
    _do = { diag_log text format["IT07: [VEMFr] %1 -- %2: %3", _p, _this, _l] };

@@ -14,25 +14,25 @@
 */
 
 (_this select 0) params [
-	["_t", objNull, [objNull]],
-	["_nt", "", [""]]
+	[("_t"),(objNull),([objNull])],
+	[("_nt"),(""),([""])]
 ];
 (_this select 1) params [
-	["_k", objNull, [objNull]],
-	["_nk", "", [""]]
+	[("_k"),(objNull),([objNull])],
+	[("_nk"),(""),([""])]
 ];
 
+_mod = call VEMFr_fnc_whichMod;
 if (isPlayer _k) then
 	{
 		scopeName "isPlayer";
-		_mod = call VEMFr_fnc_whichMod;
-		private ["_rspct","_crpt"];
+		private [("_rspct"),("_crpt")];
 		if (_mod isEqualTo "Exile") then
 			{
 				_rspct =
 					{
 						_arr = [[]];
-						(_arr select 0) pushBack [(selectRandom ["AI WACKED","AI CLIPPED","AI WIPED","AI ERASED","AI LYNCHED","AI WRECKED","AI SNUFFED","AI WASTED","AI ZAPPED"]), _rw];
+						(_arr select 0) pushBack [(selectRandom [("AI WACKED"),("AI CLIPPED"),("AI WIPED"),("AI ERASED"),("AI LYNCHED"),("AI WRECKED"),("AI SNUFFED"),("AI WASTED"),("AI ZAPPED")]), _rw];
 						_dist = _t distance _k;
 						_bns = call
 						{
@@ -120,7 +120,7 @@ if (isPlayer _k) then
 							{
 								if (typeOf (vehicle _t) isEqualTo "Steerable_Parachute_F") then
 									{
-										if ("logCowardKills" call VEMFr_fnc_config isEqualTo 1) then
+										if ("logCowardKills" call VEMFr_fnc_config isEqualTo "yes") then
 											{
 												["fn_aiKilled", 1, format["A coward (%1 @ %2) killed a parachuting AI", _nk, mapGridPosition _k]] ExecVM ("log" call VEMFr_fnc_scriptPath);
 											};
@@ -133,7 +133,7 @@ if (isPlayer _k) then
 							};
 					} else // If in vehicle (a.k.a. roadkill)
 					{
-						if (("punishRoadKills" call VEMFr_fnc_config) isEqualTo 1) then
+						if (("punishRoadKills" call VEMFr_fnc_config) isEqualTo "yes") then
 							{
 								if (_mod isEqualTo "Exile") then
 									{
@@ -147,7 +147,7 @@ if (isPlayer _k) then
 										[_k, "showFragRequest", [[["ROADKILL..."],["Penalty:", -_pnsh]]]] call ExileServer_system_network_send_to;
 										format['setAccountScore:%1:%2', _nwRspct, getPlayerUID _k] call ExileServer_system_database_query_fireAndForget;
 
-										if (("sayKilled" call VEMFr_fnc_config) isEqualTo 1) then { [format["%1 roadkilled %2", _nk, if (("sayKilledName" call VEMFr_fnc_config) > 0) then {_nt + " (AI)"} else {"an AI"}]] ExecVM ("systemChatToClient" call VEMFr_fnc_scriptPath) };
+										if (("sayKilled" call VEMFr_fnc_config) isEqualTo "yes") then { [format["%1 roadkilled %2", _nk, if (("sayKilledName" call VEMFr_fnc_config) isEqualTo "yes") then {_nt + " (AI)"} else {"an AI"}]] ExecVM ("systemChatToClient" call VEMFr_fnc_scriptPath) };
 									};
 
 								if (_mod isEqualTo "Epoch") then
@@ -165,7 +165,7 @@ if (isPlayer _k) then
 			{
 				if ((typeOf (vehicle _t)) isEqualTo "Steerable_Parachute_F") then
 					{
-						if ("logCowardKills" call VEMFr_fnc_config isEqualTo 1) then
+						if ("logCowardKills" call VEMFr_fnc_config isEqualTo "yes") then
 							{
 								["fn_aiKilled", 1, format["A coward (%1 @ %2) killed a parachuting AI", _nk, mapGridPosition _k]] ExecVM ("log" call VEMFr_fnc_scriptPath);
 							};
@@ -179,8 +179,8 @@ if (isPlayer _k) then
 			};
 	};
 
-	([["aiCleanup"],["removeLaunchers","aiDeathRemovalEffect","removeHeadGear"]] call VEMFr_fnc_config) params ["_ms0","_ms1","_ms2"];
-	if (_ms0 isEqualTo 1) then
+	([["aiCleanup"],["removeLaunchers","aiDeathRemovalEffect","removeHeadGear"]] call VEMFr_fnc_config) params [("_ms0"),("_ms1"),("_ms2")];
+	if (_ms0 isEqualTo "yes") then
 		{
 			_sw = secondaryWeapon _t;
 			if not(_sw isEqualTo "") then
@@ -195,12 +195,9 @@ if (isPlayer _k) then
 					} forEach (magazines _t);
 				};
 		};
-	if (_ms2 isEqualTo 1) then // If removeHeadGear setting is enabled
-		{
-			removeHeadGear _t;
-		};
+	if (_ms2 isEqualTo "yes") then { removeHeadGear _t };
 
-	if (_ms1 isEqualTo 1) then // If killEffect enabled
+	if (_ms1 isEqualTo "yes") then // If killEffect enabled
 		{
 			playSound3D ["A3\Missions_F_Bootcamp\data\sounds\vr_shutdown.wss", _t, false, getPosASL _t, 2, 1, 60];
 			for "_u" from 1 to 12 do
@@ -218,6 +215,13 @@ if (isPlayer _k) then
 			removeAllWeapons _t;
 			// Automatic cleanup yaaay
 			deleteVehicle _t;
-		};
+		} else
+			{
+				if (_mod isEqualTo "Exile") then
+					{
+						_v = ([[(_mod)],["aiMoney"]] call VEMFr_fnc_config) select 0;
+						if (_v > 0) then { _t setVariable ["exilemoney",(2 + ((round random _v) - 2)),(true)] };
+					};
+			};
 
 		_t removeAllEventHandlers "MPKilled";

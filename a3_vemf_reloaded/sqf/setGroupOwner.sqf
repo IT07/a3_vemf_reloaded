@@ -21,7 +21,7 @@ if not(isNull _grp) then
       if not(isNil "_force") then { if (_force isEqualType true) then { if _force then { _hcNbld = -1 } } };
 
       private "_to";
-      if (_hcNbld isEqualTo 1) then
+      if (_hcNbld isEqualTo "yes") then
          {
             _arr = [];
             {

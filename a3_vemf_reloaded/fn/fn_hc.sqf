@@ -11,7 +11,7 @@
     OBJECT - the headless client
 */
 
-private ["_r","_n","_arr","_gl"];
+private [("_r"),("_n"),("_arr"),("_gl")];
 _n = "headLessClientNames" call VEMFr_fnc_config;
 _arr = [];
 _gl = uiNamespace getVariable "VEMFrHcLoad";

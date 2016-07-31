@@ -20,7 +20,7 @@ if not (isNull _u) then
       if ((selectRandom _p) isEqualTo 1) then
          { // Select random scope
             _a = getArray (configFile >> "CfgWeapons" >> _w >> "WeaponSlotsInfo" >> "CowsSlot" >> "compatibleItems");
-            if (("allowTWS" call VEMFr_fnc_config) isEqualTo 0) then
+            if (("allowTWS" call VEMFr_fnc_config) isEqualTo "no") then
                {
                   _bin = [];
                   {

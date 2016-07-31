@@ -15,9 +15,9 @@
 */
 
 params [
-	["_obj", objNull, [objNull]],
-	["_locName", "", [""]],
-	["_locPos", [], [[]]]
+	[("_obj"),(objNull),([objNull])],
+	[("_locName"),(""),([""])],
+	[("_locPos"),([]),([[]])]
 ];
 
 _obj setVariable ["isVEMFrCrate", 1, true];
@@ -27,36 +27,43 @@ clearMagazineCargoGlobal _obj;
 clearWeaponCargoGlobal _obj;
 
 ([
-	["missionSettings","DynamicLocationInvasion","crateSettings"],
-	["rifleSlotsMax","rifleSlotsMin","pistolSlotsMax","pistolSlotsMin","magSlotsMax","magSlotsMin","attSlotsMax","attSlotsMin","itemSlotsMax","itemSlotsMin",
-	"vestSlotsMax","vestSlotsMin","headGearSlotsMax","headGearSlotsMin","bagSlotsMax","bagSlotsMin"]
-] call VEMFr_fnc_config) params ["_cs0","_cs1","_cs2","_cs3","_cs4","_cs5","_cs6","_cs7","_cs8","_cs9","_cs10","_cs11","_cs12","_cs13","_cs14","_cs15"];
+	[("missionSettings"),("DynamicLocationInvasion"),("crateSettings")],
+	[("rifleSlotsMax"),("rifleSlotsMin"),("pistolSlotsMax"),("pistolSlotsMin"),("magSlotsMax"),("magSlotsMin"),("attSlotsMax"),("attSlotsMin"),("itemSlotsMax"),("itemSlotsMin"),
+	("vestSlotsMax"),("vestSlotsMin"),("headGearSlotsMax"),("headGearSlotsMin"),("bagSlotsMax"),("bagSlotsMin")]
+] call VEMFr_fnc_config) params [("_cs0"),("_cs1"),("_cs2"),("_cs3"),("_cs4"),("_cs5"),("_cs6"),("_cs7"),("_cs8"),("_cs9"),("_cs10"),("_cs11"),("_cs12"),("_cs13"),("_cs14"),("_cs15")];
 
 ([
-	["missionSettings","DynamicLocationInvasion","crateLootVanilla"],
-	["attachments","backpacks","headGear",format["items%1", call VEMFr_fnc_whichMod],"magazines","pistols","rifles","vests"]
-] call VEMFr_fnc_config) params ["_vl0","_vl1","_vl2","_vl3","_vl4","_vl5","_vl6","_vl7"];
+	[("missionSettings"),("DynamicLocationInvasion"),("crateLootVanilla")],
+	[("attachments"),("backpacks"),("headGear"),(format["items%1", call VEMFr_fnc_whichMod]),("magazines"),("pistols"),("rifles"),("vests")]
+] call VEMFr_fnc_config) params [("_vl0"),("_vl1"),("_vl2"),("_vl3"),("_vl4"),("_vl5"),("_vl6"),("_vl7")];
+
+if ((call VEMFr_fnc_whichMod) isEqualTo "Exile") then
+	{
+		private "_c";
+		_c = ([["Exile"],["crateMoney"]] call VEMFr_fnc_config) select 0;
+		if (_c > 0) then { _obj setVariable [("ExileMoney"),((_c / 2) + (round random (_c / 2))),(true)] };
+	};
 
 if (("Apex" call VEMFr_fnc_modAppID) in (getDLCs 1)) then
 	{
-		private ["_el0","_el1","_el2","_el3","_el4","_el5","_el6","_el7"];
+		private [("_el0"),("_el1"),("_el2"),("_el3"),("_el4"),("_el5"),("_el6"),("_el7")];
 		([
-			["missionSettings","DynamicLocationInvasion","crateLootApex"],
-			["attachments","backpacks","headGear","headGearSpecial","magazines","pistols","rifles","vests"]
-		] call VEMFr_fnc_config) params ["_el0","_el1","_el2","_el3","_el4","_el5","_el6","_el7"];
+			[("missionSettings"),("DynamicLocationInvasion"),("crateLootApex")],
+			[("attachments"),("backpacks"),("headGear"),("headGearSpecial"),("magazines"),("pistols"),("rifles"),("vests")]
+		] call VEMFr_fnc_config) params [("_el0"),("_el1"),("_el2"),("_el3"),("_el4"),("_el5"),("_el6"),("_el7")];
 		_vl0 append _el0;
 		_vl1 append _el1;
 		_vl2 append _el2;
-		if ((([["missionSettings","DynamicLocationInvasion","crateSettings"],["allowThermalHelmets"]] call VEMFr_fnc_config) select 0) isEqualTo 1) then { _vl2 append _el3 };
+		if ((([[("missionSettings"),("DynamicLocationInvasion"),("crateSettings")],["allowThermalHelmets"]] call VEMFr_fnc_config) select 0) isEqualTo "yes") then { _vl2 append _el3 };
 		_vl4 append _el4;
 		_vl5 append _el5;
 		_vl6 append _el6;
 		_vl7 append _el7;
 	};
 
-_bad = ([["blacklists","loot"],["classes"]] call VEMFr_fnc_config) select 0;
+_bad = ([[("blacklists"),("loot")],["classes"]] call VEMFr_fnc_config) select 0;
 
-if ((round random 2) isEqualTo 1) then
+if ((round random 1) isEqualTo 1) then
 	{
 		// Rifles
 		for "_l" from 0 to (_cs0 - _cs1 + floor random _cs1) do
@@ -66,7 +73,7 @@ if ((round random 2) isEqualTo 1) then
 			};
 	};
 
-if ((round random 2) isEqualTo 1) then
+if ((round random 3) isEqualTo 1) then
 	{
 		// Pistols
 		for "_l" from 0 to (_cs2 - _cs3 + floor random _cs3) do
