@@ -10,24 +10,20 @@
 	this remade version of VEMF had its name changed into a3_vemf_reloaded.
 */
 
-///////////////
-/// NOTE: settings that are set to 0 means they are DISABLED | settings set to 1 (or higher) are either enabled or have a specific function
-///////////////
-
 class CfgVemfReloaded
 	{
 		/////// Debugging/learning/logging ///////
 		debugMode = 3; // 0 = no debugging | 1 = ERRORS only | 2 = INFO only | 3 = ERRORS & INFO
-		overridesToRPT = 1; // Enable/disable logging of override settings to .RPT
+		overridesToRPT = yes; // Enable/disable logging of override settings to .RPT
 		///////////////////////////////////////
 
 		// Global settings
 		addons[] = {}; // Not used for now
-		allowTWS = 0; // Enable/disable the usage of TWS scopes by AI
-		headLessClientSupport = 0;
+		allowTWS = no; // Enable/disable the usage of TWS scopes by AI
+		headLessClientSupport = no;
 		headLessClientNames[] = {"HC1"};
 		killPercentage = 100; // How much of total AI has to be killed for mission completion (in percentage)
-		logCowardKills = 1; // Enable/disable logging of who killed AI whilst it was parachuting down
+		logCowardKills = yes; // Enable/disable logging of who killed AI whilst it was parachuting down
 		maxGlobalMissions = 10; // Enable/disable global mission amount limit
 		maxNew = 2; // Enable/disable MAXIMUM time (in minutes) before new mission can run
 		minNew = 1; // Enable/disable MINIMUM time (in minutes) before new mission can run
@@ -36,13 +32,13 @@ class CfgVemfReloaded
 		missionDistance = 2000; // Enable/disable minimum distance between missions
 		missionList[] = {"DynamicLocationInvasion","BaseAttack"}; // Each entry should represent an .sqf file in the missions folder
 		noMissionPos[] = {{{2998.62,18175.4,0.00143886},500},{{14601.3,16799.3,0.00143814},800},{{23334.8,24189.5,0.00132132},600}}; // Format: {{position},radius} | Default: Exile Altis safezones
-		nonPopulated = 1; // Enable/disable allowance of missions at locations WITHOUT (enterable) buildings
-		punishRoadKills = 1; // Enable/disable respect deduction if player roadkills AI
-		removeAllAssignedItems = 0; // Enable/disable removal of Map, Compass, Watch and Radio from all AI
-		sayKilled = 1; // Enable/disable AI kill messages
-		sayKilledName = 0; // Enable/disable the usage of AI's names instead of just "AI"
+		nonPopulated = yes; // Enable/disable allowance of missions at locations WITHOUT (enterable) buildings
+		punishRoadKills = yes; // Enable/disable respect deduction if player roadkills AI
+		removeAllAssignedItems = no; // Enable/disable removal of Map, Compass, Watch and Radio from all AI
+		sayKilled = yes; // Enable/disable AI kill messages
+		sayKilledName = no; // Enable/disable the usage of AI's names instead of just "AI"
 	 	timeOutTime = 25; // Enable/disable mission timeOutTime (in minutes)
-		validateLoot = 1; // Enable/disable validation of all defined loot classnames. Checks if classnames exist in server's game configFile
+		validateLoot = yes; // Enable/disable validation of all defined loot classnames. Checks if classnames exist in server's game configFile
 
 		class blacklists
 		{
@@ -73,6 +69,8 @@ class CfgVemfReloaded
 		class Exile // Exile specific settings
 			{
 				aiMode = 1; // 0 = Guerilla | 1 = Regular Police | 2 = Police SF (Special Forces) | 3 = Gendarmerie (needs Apex DLC) | 4 = Apex Bandits (needs Apex DLC)
+				aiMoney = 10; // (max) amount of money that AI will have on them
+				crateMoney = 200; // (max) amount of money in the loot crate
 				respectReward = 5; // 0 = no respect for killing AI | respectReward > 0 = amount of minimum respect reward for player
 				respectRoadKillDeduct = 20; // 0 = no deduction for roadkilling AI | respectRoadKillDeduct > 0 = amount of respect to take from player;
 				// AI Unit settings
@@ -83,7 +81,7 @@ class CfgVemfReloaded
 		class Epoch // Epoch specific settings
 			{
 				aiMode = 0; // 0 = Guerilla | 1 = Regular Police | 2 = Police SF (Special Forces) | 3 = Gendarmerie (needs Apex DLC) | 4 = Apex Bandits (needs Apex DLC)
-				cryptoReward = 5; // Minimal crypto gain. VEMFr dynamically adds more depending on shooting skills
+				cryptoReward = 5; // Minimal crypto gain for killing AI. VEMFr dynamically adds more depending on shooting skills
 				cryptoRoadKillPunish = 20; // 0 = no punishment for road-killing AI | energyRoadKillPunish > 0 = amount of energy to take from player
 				unitClass = "I_G_Soldier_lite_F"; // Default: "I_G_Soldier_lite_F"
 				// NOTE: VEMFr will automatically adjust to the AI's side that belongs to the unit of given unitClass
@@ -94,11 +92,11 @@ class CfgVemfReloaded
 				class BaseAttack // BaseAttack (mission) settings
 					{
 						aiSetup[] = {2,5}; // format: {amountOfGroups,unitsInEachGroup};
-						allowLaunchers = 1; // Allow/disallow AI to have rocket launchers
+						allowLaunchers = yes; // Allow/disallow AI to have rocket launchers
 						hasLauncherChance = 25; // In percentage. How big the chance that each AI gets a launcher
 						maxAttacks = 5; // Maximum amount of active attacks at the same time | can not be turned off
 						minimumLevel = 2; // Minimum required level of base before it can get attacked
-						randomModes = 0; // Enable/disable the randomization of the AI mode for this mission-type
+						randomModes = no; // Enable/disable the randomization of the AI mode for this mission-type
 						/*
 							NOTES:
 							1) every territory flag can only be attacked once every restart
@@ -110,15 +108,15 @@ class CfgVemfReloaded
 				class DynamicLocationInvasion // DynamicLocationInvasion (mission) settings
 					{
 						allowCrateLift = 0; // Allow/disallow the loot crate to be lifted with helicopter
-						allowLaunchers = 1; // Allow/disallow AI to have rocket launchers
-						allowRepeat = 0; // Allow/disallow re-invading of a previously invaded city/town/location
-						announce = 1; // Enable/disable mission notificatons
+						allowLaunchers = yes; // Allow/disallow AI to have rocket launchers
+						allowRepeat = no; // Allow/disallow re-invading of a previously invaded city/town/location
+						announce = yes; // Enable/disable mission notificatons
 						cal50s = 3; // Max amount of .50 caliber machineguns at mission | Needs to be lower than total unit count per mission
-						cal50sDelete = 1; // Enable/disable the removal of .50cal | 2 = destroy (not remove)
+						cal50sDelete = yes; // Enable/disable the removal of .50cal | optional: destroy
 
 						class crateSettings
 						{
-							allowThermalHelmets = 0; // Allow/disallow special (Apex) thermal-vision helmets in loot crate
+							allowThermalHelmets = no; // Allow/disallow special (Apex) thermal-vision helmets in loot crate
 
 							rifleSlotsMax = 7; // Maximum primary weapons in each loot crate
 							rifleSlotsMin = 2; // Minimum primary weapons in each loot crate
@@ -290,7 +288,7 @@ class CfgVemfReloaded
 
 						class crateParachute
 							{
-								enabled = 0; // Enable/disable parachute of the loot crate
+								enabled = no; // Enable/disable parachute of the loot crate
 								altitude = 250; // loot crate spawn-altitude in meters
 							};
 						crateTypes[] = {"Box_FIA_Ammo_F","Box_FIA_Support_F","Box_FIA_Wps_F","I_SupplyCrate_F","Box_IND_AmmoVeh_F","Box_NATO_AmmoVeh_F","Box_East_AmmoVeh_F"};
@@ -301,39 +299,39 @@ class CfgVemfReloaded
 
 						class heliPatrol
 							{
-								enabled = 1;
+								enabled = yes;
 								classesVanilla[] = {"B_Heli_Light_01_armed_F","B_Heli_Attack_01_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","O_Heli_Light_02_F","O_Heli_Light_02_v2_F","I_Heli_light_03_F"}; // the types of heli(s)
 								classesHeliDLC[] = {};
 								classesApex[] = {"B_CTRG_Heli_Transport_01_sand_F","B_CTRG_Heli_Transport_01_tropic_F"};
-								locked = 0; // Enable/disable heli lock to prevent/allow players from flying it
+								locked = no; // Enable/disable heli lock to prevent/allow players from flying it
 							};
 
-						useMarker = 1; // Enable/disable mission markers
-						markCrateOnMap = 1; // Enable/disable loot crate marker on map called "Loot"
-						markCrateVisual = 1; // Enable/disable loot crate VISUAL marker (smoke and/or chem)
+						useMarker = yes; // Enable/disable mission markers
+						markCrateOnMap = yes; // Enable/disable loot crate marker on map called "Loot"
+						markCrateVisual = yes; // Enable/disable loot crate VISUAL marker (smoke and/or chem)
 						/* maxDistance NOTE: make sure to keep this number very high. 15000 is for Altis */
 						maxDistancePrefered = 7000; // Prefered maximum mission distance from player
 						maxInvasions = 7; // Max amount of active uncompleted invasions allowed at the same time
-						mines = 0; // Enable/disable mines at mission | 1 = anti-Armor mines | 2 = anti-Personell mines | 3 = both anti-Armor and anti-Personell mines
+						mines = no; // Enable/disable mines at mission | AT = anti-Tank mines | AP = anti-Personell mines | ATAP = both anti-Armor and anti-Personell mines
 						minesAmount = 20; // Ignore if mines = 0;
-						minesCleanup = 1; // Enable/disable the removal of mines once mission has been completed | 2 = explode mines
-						nonPopulated = -1; // Allow/disallow this mission type being placed at locations without buildings | using -1 will ignore this setting and use the global settting
-						randomModes = 1; // Enable/disable randomization of AI types (linked to aiMode setting)
+						minesCleanup = yes; // Enable/disable the removal of mines once mission has been completed | optional: explode
+						nonPopulated = ignore; // Allow/disallow this mission type being placed at locations without buildings | using -1 will ignore this setting and use the global settting
+						randomModes = yes; // Enable/disable randomization of AI types (linked to aiMode setting)
 				   	skipDistance = 800; // No missions at locations which have players within this range (in meters)
 						skipDistanceReversed = 0; // If set higher than 0, missions will only spawn if player is at least given amount (in meters) away from a location whilst at the same time not be further away than twice the given number (in meters)
 						smokeTypes[] = {"SmokeShell","SmokeShellBlue","SmokeShellGreen","SmokeShellOrange","SmokeShellRed","SmokeShellYellow"};
-						spawnCrateFirst = 0; // Enable/disable the spawning of loot crate before mission has been completed
-				   	streetLights = 0; // Enable/disable street lights at mission location
-				   	streetLightsRestore = 1; // Enable/disable restoration of street lights after mission completion
+						spawnCrateFirst = no; // Enable/disable the spawning of loot crate before mission has been completed
+				   	streetLightsEnabled = no; // Enable/disable street lights at mission location
+				   	streetLightsRestore = yes; // Enable/disable restoration of street lights after mission completion
 				   	streetLightsRange = 500; // Affects streetlights within this distance from mission's center
 					};
 			};
 
 		class aiCleanUp // Contains settings for removal of items from each AI that gets eliminated
 			{
-				aiDeathRemovalEffect = 0; // Enable/disable the "death effect" from Virtual Arsenal. Flashes AI and deletes it after being eliminated
-				removeHeadGear = 0; // Enable/disable removal of headgear after AI has been eliminated, obviously
-				removeLaunchers = 0; // Enable/disable removal of rocket launchers from AI after they are eliminated
+				aiDeathRemovalEffect = no; // Enable/disable the "death effect" from Virtual Arsenal. Flashes AI and deletes it after being eliminated
+				removeHeadGear = no; // Enable/disable removal of headgear after AI has been eliminated, obviously
+				removeLaunchers = no; // Enable/disable removal of rocket launchers from AI after they are eliminated
 			};
 
 		class aiInventory
@@ -468,9 +466,9 @@ class CfgVemfReloaded
 		class aiStatic // Simply spawns units at desired positions
 			{
 				amount[] = {10,20,12,11,40,21,19}; // How much AI units on each seperate position. Example: 1st location, 10. 2nd location, 20. 3rd location, 12. And so on....
-				enabled = 0; // Enable/disable static AI spawning
+				enabled = no; // Enable/disable static AI spawning
 				positions[] = {}; // Add positions here. Each position must have {} around it and must be seperated with a comma if multiple positions present. Last position in list should NOT have a comma behind it!
-				random = 1; // Enable/disable randomization of AI units amount
+				random = yes; // Enable/disable randomization of AI units amount
 			};
 	};
 
