@@ -15,7 +15,7 @@
 ];
 
 
-private ["_crWpn","_cfg"];
+private [("_crWpn"),("_cfg")];
 if (vehicle _k isEqualTo _k) then { _crWpn = currentWeapon _k; _cfg = "CfgWeapons" }
 else { _crWpn = typeOf (vehicle _k); _cfg = "CfgVehicles" };
 _dist = _t distance _k;

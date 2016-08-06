@@ -11,7 +11,7 @@
     Returns: BOOLEAN - true if no errors occured
 */
 
-private ["_r","_p","_w","_a","_bin"];
+private [("_r"),("_p"),("_w"),("_a"),("_bin")];
 _u = param [0,objNull,[objNull]];
 if not (isNull _u) then
    {

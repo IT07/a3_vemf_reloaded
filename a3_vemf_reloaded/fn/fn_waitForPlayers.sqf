@@ -22,7 +22,7 @@ _r = false;
 if ([(_this0),(_this1)] call VEMFr_fnc_playerNear) then { _r = true }
  	else
 		{
-			private ["_t","_tot"];
+			private [("_t"),("_tot")];
 			_t = round time;
 			_tot = ("timeOutTime" call VEMFr_fnc_config)*60;
 			waitUntil { if (([(_this0),(_this1)] call VEMFr_fnc_playerNear) OR (round time - _t > _tot)) then {true} else {uiSleep 4; false} };
