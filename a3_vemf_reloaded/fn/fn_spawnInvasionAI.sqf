@@ -6,64 +6,45 @@
 
 	Params:
 	_this select 0: POSITION - where to spawn the units around
-	_this select 1: SCALAR - how many groups to spawn
-	_this select 2: SCALAR - how many units to put in each group
-	_this select 3: SCALAR - AI mode
-	_this select 4: STRING - exact config name of mission
-	_this select 5: SCALAR (optional) - maximum spawn distance from center
+	_this select 1: SCALAR - AI mode
+	_this select 2: STRING - exact config name of mission
+	_this select 3: SCALAR (optional) - maximum spawn distance from center
 
 	Returns:
 	ARRAY format [[groups],[50cals]]
 */
 
-private [("_r"),("_this0"),("_this1"),("_this2"),("_this3"),("_this4"),("_this5")];
+private [("_r"),("_this0"),("_ms0"),("_ms1"),("_this3")];
 params [
 	[("_this0"),([]),([[]])],
-	[("_this1"),(1),([0])],
-	[("_this2"),(1),([0])],
-	[("_this3"),(-1),([0])],
-	[("_this4"),(""),([""])],
-	[("_this5"),(175),([0])]
+	[("_this1"),(-1),([0])],
+	[("_this2"),(""),([""])],
+	[("_this3"),(175),([0])]
 ];
 
-if (_this4 in ("missionList" call VEMFr_fnc_config)) then
+if (_this2 in ("missionList" call VEMFr_fnc_config)) then
 	{
 		private [("_grps"),("_s"),("_ccrcy"),("_mShk"),("_mSpd"),("_stmna"),("_sptDst"),("_sptTme"),("_crge"),("_rldSpd"),("_cmmndng"),("_gnrl"),("_gdHss"),("_nHss"),("_cl50s"),("_nts")];
 		_r = [[],[]];
 		_grps = [];
 		([[("aiSkill"),(([["aiSkill"],["difficulty"]] call VEMFr_fnc_config) select 0)],[("accuracy"),("aimingShake"),("aimingSpeed"),("endurance"),("spotDistance"),("spotTime"),("courage"),("reloadSpeed"),("commanding"),("general")]] call VEMFr_fnc_config) params [("_ccrcy"),("_mShk"),("_mSpd"),("_stmna"),("_sptDst"),("_sptTme"),("_crge"),("_rldSpd"),("_cmmndng"),("_gnrl")];
 		_bad = ([[("blacklists"),("buildings")],["classes"]] call VEMFr_fnc_config) select 0;
-		_gdHss = [];
-		{ // Filter the houses that are too small for one group
-			if not(typeOf _x in _bad) then
-				{
-					if ([(_x),(_this2)] call BIS_fnc_isBuildingEnterable) then
-						{
-							_gdHss pushBack _x;
-						};
-				};
-		} forEach (nearestTerrainObjects [(_this0),(["House"]),(_this5)]);
+		([[("missionSettings"),(_this2)],[("groupCount"),("groupUnits")]] call VEMFr_fnc_config) params [("_ms0"),("_ms1")];
+		_ms0 = (round random (_ms0 select 1)) max (_ms0 select 0);
+		_ms1 = (round random (_ms1 select 1)) max (_ms1 select 0);
 
+		_gdHss = [];
+		{ if not(typeOf _x in _bad) then { if ([(_x),(_ms1)] call BIS_fnc_isBuildingEnterable) then { _gdHss pushBack _x } } } forEach (nearestTerrainObjects [(_this0),(["House"]),(_this3)]);
 		_gdHss = _gdHss call BIS_fnc_arrayShuffle;
 		_nHss = false;
-		if (count _gdHss < _this1) then
-			{
-				_nHss = true;
-			};
+		if ((count _gdHss) < _ms0) then { _nHss = true };
 
-		_cl50s = ([[("missionSettings"),(_this4)],["cal50s"]] call VEMFr_fnc_config) select 0;
+		_cl50s = ([[("missionSettings"),(_this2)],["cal50s"]] call VEMFr_fnc_config) select 0;
 
 		_nts = []; // Define units array. the for loops below will fill it with units
-		for "_g" from 1 to _this1 do // Spawn Groups near Position
+		for "_g" from 1 to _ms0 do // Spawn Groups near Position
 			{
-				if not _nHss then
-					{
-						if (count _gdHss < 1) then
-							{
-								_nHss = true
-							};
-					};
-
+				if not _nHss then { if (count _gdHss < 1) then { _nHss = true } };
 				private [("_grp"),("_hs"),("_hsPstns"),("_plcd50"),("_i")];
 				_grp = createGroup ((([[call VEMFr_fnc_whichMod],["unitClass"]] call VEMFr_fnc_config) select 0) call VEMFr_fnc_checkSide);
 				(_r select 0) pushBack _grp;
@@ -77,12 +58,12 @@ if (_this4 in ("missionList" call VEMFr_fnc_config)) then
 					};
 
 				_plcd50 = false;
-				for "_u" from 1 to _this2 do
+				for "_u" from 1 to _ms1 do
 					{
 						private [("_spwnPs"),("_hmg"),("_nt")];
 						if _nHss then
 							{
-								_spwnPs = [(_this0),(20),(_this5),(1),(0),(200),(0)] call BIS_fnc_findSafePos; // Find Nearby Position
+								_spwnPs = [(_this0),(20),(_this3),(1),(0),(200),(0)] call BIS_fnc_findSafePos; // Find Nearby Position
 							} else
 							{
 								_spwnPs = selectRandom _hsPstns;
@@ -141,7 +122,7 @@ if (_this4 in ("missionList" call VEMFr_fnc_config)) then
 						_nt enableAI "PATH";
 					};
 
-				_i = [(units _grp),(_this4),(_this3)] call VEMFr_fnc_loadInv; // Load the AI's inventory
+				_i = [(units _grp),(_this2),(_this1)] call VEMFr_fnc_loadInv; // Load the AI's inventory
 				if isNil "_i" then
 					{
 						[("fn_spawnInvasionAI"),(0),("failed to load AI's inventory...")] ExecVM ("log" call VEMFr_fnc_scriptPath);
@@ -149,7 +130,7 @@ if (_this4 in ("missionList" call VEMFr_fnc_config)) then
 				_grps pushBack _grp; // Push it into the _grps array
 			};
 
-		if (((count _grps) isEqualTo _this1) AND _nHss) then
+		if (((count _grps) isEqualTo _ms0) AND _nHss) then
 			{
 				private [("_wypnts"),("_wp"),("_cyc")];
 				_wypnts =
@@ -173,7 +154,7 @@ if (_this4 in ("missionList" call VEMFr_fnc_config)) then
 			};
 	} else
 	{
-		[("fn_spawnInvasionAI"),(0),(format[("'%1' is not in missionList"),(_this4)])] ExecVM ("log" call VEMFr_fnc_scriptPath);
+		[("fn_spawnInvasionAI"),(0),(format[("'%1' is not in missionList"),(_this2)])] ExecVM ("log" call VEMFr_fnc_scriptPath);
 	};
 
 _r
