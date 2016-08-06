@@ -29,6 +29,7 @@ if ((_this3 in ("missionList" call VEMFr_fnc_config)) AND ((count _this0) isEqua
       if (_ms isEqualTo "AT") then { _mt = ["ATMine"] };
       if (_ms isEqualTo "AP") then { _mt = ["APERSMine"] };
       if (_ms isEqualTo "ATAP") then { _mt = ["ATMine","APERSMine"] };
+      if (isNil "_mt") exitWith { [("fn_mines"),(0),("Something wrong the mines setting.")] ExecVM ("log" call VEMFr_fnc_scriptPath) };
       _r = [];
 
       for "_m" from 1 to _a do
