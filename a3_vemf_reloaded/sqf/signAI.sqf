@@ -12,4 +12,7 @@
     nothing
 */
 
-(param [0, grpNull, [grpNull]]) setVariable ["isVEMFrGroup",true,true];
+private "_grp";
+_grp = param [0, grpNull, [grpNull]];
+_grp setVariable [("isVEMFrGroup"),(true),(true)];
+_grp setVariable [("isVEMFrGroupLocal"),(true),(true)];
