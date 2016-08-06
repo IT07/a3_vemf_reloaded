@@ -23,13 +23,10 @@ if not(isNull _grp) then
       private "_to";
       if (_hcNbld isEqualTo "yes") then
          {
-            _arr = [];
-            {
-               if (typeOf _x isEqualTo "HeadlessClient_F") then { _arr pushBack [_x, owner _x] };
-            } forEach allPlayers;
-
-            if (count _arr > 0) then { _to = call VEMFr_fnc_hc } else { uiNamespace setVariable ["VEMFr_forceAItoClients", true] };
-         } else // If Headlessclient setting is not enabled
+            _to = call VEMFr_fnc_hc;
+            if isNil("_to") then { uiNamespace setVariable [("VEMFr_forceAItoClients"),(true)] };
+         };
+      if ((_hcNbld isEqualTo "no") OR (uiNamespace getVariable [("VEMFr_forceAItoClients"),(false)])) then
          {
             if ((count allPlayers) > 0) then
                {
@@ -48,6 +45,6 @@ if not(isNull _grp) then
          if not(isNil "_to") then
             {
                _grp setGroupOwner (owner _to);
-               waitUntil { if not(local _grp) then {true} else {uiSleep 0.1; false} };
+               _grp setVariable [("isVEMFrGroupLocal"),(false),(true)];
             };
    };
