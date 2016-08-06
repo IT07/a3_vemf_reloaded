@@ -20,8 +20,8 @@ class CfgVemfReloaded
 		// Global settings
 		addons[] = {}; // Not used for now
 		allowTWS = no; // Enable/disable the usage of TWS scopes by AI
-		headLessClientSupport = no;
-		headLessClientNames[] = {"HC1"};
+		headlessClientSupport = no;
+		headlessClientNames[] = {"HC1"};
 		killPercentage = 100; // How much of total AI has to be killed for mission completion (in percentage)
 		logCowardKills = yes; // Enable/disable logging of who killed AI whilst it was parachuting down
 		maxGlobalMissions = 10; // Enable/disable global mission amount limit
