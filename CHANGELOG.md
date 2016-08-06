@@ -1,5 +1,17 @@
 ## VEMFr Changelog
 
+#### `v0751.5`
+*Server-side* <br />
+**[CHANGED]** headLessClientSupport setting is now headlessClientSupport <br />
+**[FIXED]** VEMFr_fnc_hc is unable to find headless clients <br />
+**[FIXED]** fn_spawnInvasionAI.sqf does not spawn the correct amounts of AI units and groups. <br />
+**[FIXED]** setGroupOwner.sqf was not able to find headless clients <br />
+**[TWEAKED]** fail-safe technology for fn_mines.sqf <br />
+**[TWEAKED]** parameters for fn_spawnInvasionAI.sqf <br />
+**[TWEAKED]** chance of rifles to be present in the loot crates <br />
+**[TWEAKED]** reliability/efficiency/speed of REMOTEguard.sqf <br />
+<br />
+
 #### `v0751.4`
 *Server-side* <br />
 **[NEW]** some config settings now use yes/no instead of 1/0 <br />
