@@ -6,7 +6,7 @@ class CfgPatches
 		requiredAddons[] = {};
 		fileName = "a3_vemf_reloaded.pbo";
 		requiredVersion = 1.60; // VEMFr does not work on older versions due to use of the latest scripting commands
-		version = "0751.4"; // Do NOT change
+		version = "0751.5"; // Do NOT change
 		author = "IT07";
 	};
 };
