@@ -63,7 +63,7 @@ if (("Apex" call VEMFr_fnc_modAppID) in (getDLCs 1)) then
 
 _bad = ([[("blacklists"),("loot")],["classes"]] call VEMFr_fnc_config) select 0;
 
-if ((round random 1) isEqualTo 1) then
+if ((round random 30) > 1) then
 	{
 		// Rifles
 		for "_l" from 0 to (_cs0 - _cs1 + floor random _cs1) do
@@ -73,7 +73,7 @@ if ((round random 1) isEqualTo 1) then
 			};
 	};
 
-if ((round random 3) isEqualTo 1) then
+if ((round random 10) > 1) then
 	{
 		// Pistols
 		for "_l" from 0 to (_cs2 - _cs3 + floor random _cs3) do
