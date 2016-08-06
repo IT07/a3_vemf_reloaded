@@ -102,7 +102,7 @@ if (VEMFrInvasionCount <= (([[("missionSettings"),(_this0)],["maxInvasions"]] ca
 
 		if ([_lp, 800] call VEMFr_fnc_waitForPlayers) then
 		{
-			_spwnd = [_lp, ((_ms0 select 0) + round random ((_ms0 select 1) - (_ms0 select 0))), ((_ms1 select 0) + round random ((_ms1 select 1) - (_ms1 select 0))), _m, _this0, 200] call VEMFr_fnc_spawnInvasionAI;
+			_spwnd = [(_lp),(_m),(_this0),(200)] call VEMFr_fnc_spawnInvasionAI;
 			_nts = [];
 			{
 				[_x] ExecVM ("signAI" call VEMFr_fnc_scriptPath);
