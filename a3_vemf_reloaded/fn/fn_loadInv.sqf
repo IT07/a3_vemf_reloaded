@@ -312,4 +312,5 @@ if ((_this1 in ("missionList" call VEMFr_fnc_config)) OR (_this1 isEqualTo "Stat
 				breakOut "this";
 			};
 	};
-_r
+
+if not(isNil "_r") then { _r };
