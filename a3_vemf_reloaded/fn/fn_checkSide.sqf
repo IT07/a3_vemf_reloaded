@@ -21,4 +21,4 @@ if not(_f isEqualTo "") then
       if (_f isEqualTo "OPF_G_F") then { _r = EAST };
    } else { [("fn_checkSide"),(0),(format["Failed to find faction of %1", _this])] ExecVM ("log" call VEMFr_fnc_scriptPath) };
 
-_r
+if not(isNil"_r") then { _r };

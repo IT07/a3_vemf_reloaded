@@ -10,4 +10,4 @@
 
 private "_r";
 _r = getText (configFile >> "CfgVemfrScripts" >> _this);
-_r
+if not(isNil"_r") then { _r };

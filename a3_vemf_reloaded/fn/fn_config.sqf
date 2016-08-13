@@ -79,4 +79,4 @@ if (_this isEqualType []) then
 			};
 	};
 
-_r
+if not(isNil"_r") then { _r };
