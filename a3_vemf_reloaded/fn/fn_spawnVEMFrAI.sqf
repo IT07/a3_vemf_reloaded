@@ -87,4 +87,4 @@ if ((_this4 in ("missionList" call VEMFr_fnc_config)) OR (_this4 isEqualTo "Stat
 		[("fn_spawnVEMFrAI"),(0),(format["'%1' is not in missionList or is not equal to 'Static'", _this4])] ExecVM ("log" call VEMFr_fnc_scriptPath);
 	};
 
-if not(isNil"_r") then { _r };
+_r

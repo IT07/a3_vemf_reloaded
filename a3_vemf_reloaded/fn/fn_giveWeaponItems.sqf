@@ -61,5 +61,4 @@ if not (isNull _u) then
          };
       _r = true;
    };
-
-if not(isNil"_r") then { _r };
+_r

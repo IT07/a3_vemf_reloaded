@@ -39,4 +39,4 @@ if ((_this3 in ("missionList" call VEMFr_fnc_config)) AND ((count _this0) isEqua
          };
    };
 
-if not(isNil"_r") then { _r };
+_r

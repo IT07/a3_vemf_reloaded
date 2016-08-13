@@ -30,4 +30,4 @@ if (((count _this0) isEqualTo 3) AND (_this1 > -1)) then
       } forEach allPlayers;
    };
 
-if not(isNil"_r") then { _r };
+_r

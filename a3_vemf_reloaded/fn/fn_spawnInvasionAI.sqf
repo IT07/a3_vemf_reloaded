@@ -157,4 +157,4 @@ if (_this2 in ("missionList" call VEMFr_fnc_config)) then
 		[("fn_spawnInvasionAI"),(0),(format[("'%1' is not in missionList"),(_this2)])] ExecVM ("log" call VEMFr_fnc_scriptPath);
 	};
 
-if not(isNil"_r") then { _r };
+_r

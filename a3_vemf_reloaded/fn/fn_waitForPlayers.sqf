@@ -28,4 +28,4 @@ if ([(_this0),(_this1)] call VEMFr_fnc_playerNear) then { _r = true }
 			waitUntil { if (([(_this0),(_this1)] call VEMFr_fnc_playerNear) OR (round time - _t > _tot)) then {true} else {uiSleep 4; false} };
 			if ([(_this0),(_this1)] call VEMFr_fnc_playerNear) then { _r = true };
 		};
-if not(isNil"_r") then { _r };
+_r

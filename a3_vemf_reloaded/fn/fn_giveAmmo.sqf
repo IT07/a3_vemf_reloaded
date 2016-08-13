@@ -60,4 +60,5 @@ if not(_this3 isEqualTo "") then
       _r pushBack true;
    };
 
-if ((count _r) > 0) then { _r = true; _r } else { _r = nil };
+if ((count _r) > 0) then { _r = true } else { _r = nil };
+_r
