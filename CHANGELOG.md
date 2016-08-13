@@ -1,5 +1,12 @@
 ## VEMFr Changelog
 
+#### `v0751.6`
+*Server-side* <br />
+**[TWEAKED]** Tolerance for errors in some functions <br />
+**[TWEAKED]** RPT VEMFr start-up message <br />
+**[FIXED]** Epoch: error in file a3_vemf_reloaded\missions\BaseAttack.sqf, line 46 <br />
+<br />
+
 #### `v0751.5`
 *Server-side* <br />
 **[CHANGED]** headLessClientSupport setting is now headlessClientSupport <br />
