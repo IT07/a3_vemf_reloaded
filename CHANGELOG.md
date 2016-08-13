@@ -1,5 +1,16 @@
 ## VEMFr Changelog
 
+#### `v0751.6`
+#######UPDATE NOTE: re-configure the mine settings!
+*Server-side* <br />
+**[CHANGED]** mine settings of the DynamicLocationInvasion mission type. They are inside their own class now.
+**[FIXED]** mines are not working <br />
+**[FIXED]** (EPOCH) error in BaseAttack.sqf, line 46 <br />
+**[TWEAKED]** error tolerance in some functions <br />
+**[TWEAKED]** order of startup reports <br />
+**[TWEAKED]** start-up message of VEMFr <br />
+<br />
+
 #### `v0751.5`
 *Server-side* <br />
 **[CHANGED]** headLessClientSupport setting is now headlessClientSupport <br />
