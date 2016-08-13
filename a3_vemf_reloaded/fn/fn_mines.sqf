@@ -15,7 +15,7 @@
 */
 
 scopeName "mines";
-private [("_r"),("_this0"),("_this1"),("_this2"),("_this3"),("_ms"),("_a"),("_mt")];
+private [("_r"),("_this0"),("_this1"),("_this2"),("_this3"),("_t"),("_c"),("_mt")];
 params [
    [("_this0"),([]),([[]])],
    [("_this1"),(-1),([0])],
@@ -23,20 +23,20 @@ params [
    [("_this3"),(""),([""])]
 ];
 
-([["missionSettings",(_this3)],["mines","minesAmount"]] call VEMFr_fnc_config) params [("_ms"),("_a")];
-if ((_this3 in ("missionList" call VEMFr_fnc_config)) AND ((count _this0) isEqualTo 3) AND (_this1 > -1) AND (_this2 > _this1) AND (_a > -1)) then
+if (_this3 in ("missionList" call VEMFr_fnc_config)) then
    {
-      if (_ms isEqualTo "AT") then { _mt = ["ATMine"] };
-      if (_ms isEqualTo "AP") then { _mt = ["APERSMine"] };
-      if (_ms isEqualTo "ATAP") then { _mt = ["ATMine","APERSMine"] };
-      if (isNil "_mt") exitWith { [("fn_mines"),(0),("Something wrong the mines setting.")] ExecVM ("log" call VEMFr_fnc_scriptPath) };
+      ([[("missionSettings"),(_this3),("mines")],[("count"),("type")]] call VEMFr_fnc_config) params [("_c"),("_t")];
+      if (_t isEqualTo "at") then { _mt = ["ATMine"] };
+      if (_t isEqualTo "ap") then { _mt = ["APERSMine"] };
+      if (_t isEqualTo "atap") then { _mt = ["ATMine","APERSMine"] };
+      if (isNil "_mt") exitWith { [("fn_mines"),(0),(format["Invalid mines type: %1",(_t)])] ExecVM ("log" call VEMFr_fnc_scriptPath) };
       _r = [];
 
-      for "_m" from 1 to _a do
+      for "_m" from 1 to _c do
          {
             _r pushBack (createMine [selectRandom _mt, ([_this0, _this1, _this2, 2, 0, 20, 0] call BIS_fnc_findSafePos), [], 0]);
             uiSleep 0.1;
          };
    };
 
-_r
+if not(isNil"_r") then { _r };
