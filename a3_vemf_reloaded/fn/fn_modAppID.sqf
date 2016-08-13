@@ -13,4 +13,4 @@
 
 private "_r";
 _r = getNumber (configFile >> "CfgAppIDs" >> _this);
-_r
+if not(isNil"_r") then { _r };

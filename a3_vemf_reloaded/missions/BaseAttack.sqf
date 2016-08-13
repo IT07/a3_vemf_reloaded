@@ -43,7 +43,7 @@ if (VEMFrAttackCount <= _s0) then
             private "_c";
             if (_mod isEqualTo "Epoch") then { _c = [("Epoch_Male_F"),("Epoch_Female_F"),("Epoch_Female_Camo_F"),("Epoch_Female_CamoBlue_F"),("Epoch_Female_CamoBrn_F"),("Epoch_Female_CamoRed_F"),("Epoch_Female_Ghillie3_F"),("Epoch_Female_Ghillie2_F"),("Epoch_Female_Ghillie1_F"),("Epoch_Female_Wetsuit_F"),("Epoch_Female_WetsuitB_F"),("Epoch_Female_WetsuitC_F"),("Epoch_Female_WetsuitP_F"),("Epoch_Female_WetsuitW_F")] };
             if (_mod isEqualTo "Exile") then { _c = ["Exile_Unit_Player"] };
-            _nrPlyr = selectRandom (nearestObjects [_pos, _c,(_base getVariable "ExileTerritorySize")]);
+            _nrPlyr = selectRandom (nearestObjects [(_pos),(_c),(_base getVariable [("ExileTerritorySize"),(200)])]);
             if not(isNil "_nrPlyr") then
                {
                   _baseNm = "a base";

@@ -13,4 +13,4 @@ private "_r";
 if not(isNull(configFile >> "CfgPatches" >> "exile_server")) then { _r = "Exile" };
 if not(isNull(configFile >> "CfgPatches" >> "a3_epoch_server")) then { _r = "Epoch" };
 
-_r
+if not(isNil"_r") then { _r };
