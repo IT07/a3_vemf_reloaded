@@ -14,12 +14,14 @@ if (VEMFrInvasionCount <= (([[("missionSettings"),(_this0)],["maxInvasions"]] ca
 	// Define the settings
 	([
 		[("missionSettings"),(_this0)],
-		[("groupCount"),("groupUnits"),("maxDistancePrefered"),("skipDistance"),("useMarker"),("markCrateVisual"),("markCrateOnMap"),("announce"),("streetLightsEnabled"),("streetLightsRestore"),("streetLightsRange"),("allowCrateLift"),("allowRepeat"),("randomModes"),("spawnCrateFirst"),("mines"),("flairTypes"),("smokeTypes"),("minesCleanup"),("skipDistanceReversed")]
-	] call VEMFr_fnc_config) params [("_ms0"),("_ms1"),("_ms2"),("_ms3"),("_ms4"),("_ms5"),("_ms6"),("_ms7"),("_ms8"),("_ms9"),("_ms10"),("_ms11"),("_ms12"),("_ms13"),("_ms14"),("_ms15"),("_ms16"),("_ms17"),("_ms18"),("_ms19")];
+		[("groupCount"),("groupUnits"),("maxDistancePrefered"),("skipDistance"),("useMarker"),("markCrateVisual"),("markCrateOnMap"),("announce"),("streetLightsEnabled"),("streetLightsRestore"),("streetLightsRange"),("allowCrateLift"),("allowRepeat"),("randomModes"),("spawnCrateFirst"),("flairTypes"),("smokeTypes"),("skipDistanceReversed")]
+	] call VEMFr_fnc_config) params [("_ms0"),("_ms1"),("_ms2"),("_ms3"),("_ms4"),("_ms5"),("_ms6"),("_ms7"),("_ms8"),("_ms9"),("_ms10"),("_ms11"),("_ms12"),("_ms13"),("_ms14"),("_ms15"),("_ms16"),("_ms17")];
 
 	([[("missionSettings"),(_this0),("crateParachute")],[("enabled"),("altitude")]] call VEMFr_fnc_config) params [("_cp0"),("_cp1")];
 
-	_l = ["loc", false, position (selectRandom allPlayers), if (_ms19 > 0) then {_ms19} else {_ms3}, _ms2, if (_ms19 > 0) then {_ms19} else {_ms3}, _this0] call VEMFr_fnc_findPos;
+	([[("missionSettings"),(_this0),("mines")],[("enabled"),("cleanup")]] call VEMFr_fnc_config) params [("_ms18"),("_ms19")];
+
+	_l = ["loc", false, position (selectRandom allPlayers), if (_ms17 > 0) then {_ms17} else {_ms3}, _ms2, if (_ms17 > 0) then {_ms17} else {_ms3}, _this0] call VEMFr_fnc_findPos;
 	if not(isNil "_l") then
 	{
 		_ln = text _l;
@@ -183,16 +185,11 @@ if (VEMFrInvasionCount <= (([[("missionSettings"),(_this0)],["maxInvasions"]] ca
 
 			// Place mines if enabled
 			private [("_mnsPlcd"),("_mines")];
-			if (_ms15 isEqualTo "yes") then
+			if (_ms18 isEqualTo "yes") then
 				{
 					_mnsPlcd = [_lp, 5, 100, _this0] call VEMFr_fnc_mines;
-					if ((count _mnsPlcd) > 0) then
-						{
-							[_this0, 1, format["%1 mines placed at %2", count _mnsPlcd, _ln]] ExecVM ("log" call VEMFr_fnc_scriptPath);
-						} else
-						{
-							[_this0, 0, format["Failed to place %1 mines at %2", count _mnsPlcd, _ln]] ExecVM ("log" call VEMFr_fnc_scriptPath);
-						};
+					if not(isNil "_mnsPlcd") then { [_this0, 1, format["%1 mines placed at %2", count _mnsPlcd, _ln]] ExecVM ("log" call VEMFr_fnc_scriptPath) }
+					else { [(_this0),(0),(format[("Failed to place %1 mines at %2"),(count _mnsPlcd),(_ln)])] ExecVM ("log" call VEMFr_fnc_scriptPath) };
 				};
 
 			// Wait for Mission Completion
@@ -241,13 +238,13 @@ if (VEMFrInvasionCount <= (([[("missionSettings"),(_this0)],["maxInvasions"]] ca
 											if (sunOrMoon <= 0.35) then
 												{
 													[_this0, 1, "attaching a chemlight to the crate"] ExecVM ("log" call VEMFr_fnc_scriptPath);
-													_lightType = selectRandom _ms16;
+													_lightType = selectRandom _ms15;
 													(_lightType createVehicle (position _crate)) attachTo [_crate,[0,0,0]];
 												} else
 												{
 													[_this0, 1, "attaching smoke to the crate"] ExecVM ("log" call VEMFr_fnc_scriptPath);
 													// Attach smoke
-													_rndmColor = selectRandom _ms17;
+													_rndmColor = selectRandom _ms16;
 													(createVehicle [_rndmColor, getPos _crate, [], 0, "CAN_COLLIDE"]) attachTo [_crate,[0,0,0]];
 												};
 										};
@@ -282,7 +279,7 @@ if (VEMFrInvasionCount <= (([[("missionSettings"),(_this0)],["maxInvasions"]] ca
 			// Explode or remove the mines
 			if not(isNil "_mnsPlcd") then
 				{
-					if (_ms18 isEqualTo "explode") then
+					if (_ms19 isEqualTo "explode") then
 						{
 							[_this0, _ln, _mnsPlcd] spawn
 								{
@@ -300,7 +297,7 @@ if (VEMFrInvasionCount <= (([[("missionSettings"),(_this0)],["maxInvasions"]] ca
 
 							_mnsPlcd = nil;
 						};
-					if (_ms18 isEqualTo "yes") then
+					if (_ms19 isEqualTo "yes") then
 						{
 							[_mnsPlcd] spawn
 								{
