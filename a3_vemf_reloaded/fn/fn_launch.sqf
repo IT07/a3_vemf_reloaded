@@ -8,11 +8,9 @@
 if (isNil "VEMFrHasStarted") then
 	{
 		VEMFrHasStarted = call compileFinal "true";
-		[("Launcher"),(2),(format["/// booting up VEMFr v%1 (%2) \\\", getText (configFile >> "CfgPatches" >> "a3_vemf_reloaded" >> "version"), call VEMFr_fnc_whichMod])] ExecVM ("log" call VEMFr_fnc_scriptPath);
+		[("Launcher"),(2),(format["/// booting VEMFr v%1 (%2) \\\", getText (configFile >> "CfgPatches" >> "a3_vemf_reloaded" >> "version"), call VEMFr_fnc_whichMod])] ExecVM ("log" call VEMFr_fnc_scriptPath);
 		uiNamespace setVariable ["VEMFrUsedLocs", []];
 		uiNamespace setVariable ["VEMFrHcLoad", [[],[]]];
-
-		[("Launcher"),(2),(format[("Headless client support is %1"),(if (("headlessClientSupport" call VEMFr_fnc_config) isEqualTo "yes") then {"enabled"} else {"not enabled"})] ExecVM ("log" call VEMFr_fnc_scriptPath) };
 
 		if (("overridesToRPT" call VEMFr_fnc_config) isEqualTo "yes") then { [] ExecVM ("overrides" call VEMFr_fnc_scriptPath) };
 
@@ -22,4 +20,4 @@ if (isNil "VEMFrHasStarted") then
 		} forEach [("checkClasses"),("missionTimer"),("REMOTEguard"),("spawnStaticAI")];
 
 		if ((call VEMFr_fnc_whichMod) isEqualTo "Epoch") then { west setFriend [independent, 0]; independent setFriend [west, 0] };
-	} else { [("Launcher"),(0),(format[("a3_vemf_reloaded FAILED to launch! VEMFrHasStarted (%1) is already defined!"),(VEMFrHasStarted)])] ExecVM ("log" call VEMFr_fnc_scriptPath) };
+	} else { [("Launcher"),(0),(format["a3_vemf_reloaded FAILED to launch! VEMFrHasStarted (%1) is already defined!", VEMFrHasStarted])] ExecVM ("log" call VEMFr_fnc_scriptPath) };
