@@ -1,9 +1,20 @@
 ## VEMFr Changelog
 
+#### `v0751.7`
+#######UPDATE NOTE: update BOTH server files and client files!
+*Server-side* <br />
+**[ADDED]** config blacklist for thermal scopes <br />
+**[ADDED]** minimumWait setting to the BaseAttack mission settings as suggested by Paul <br />
+**[CHANGED]** killPercentage setting. Each mission has this setting in its class now <br />
+**[NEW]** warning system for BaseAttack missions as requested by HarryNutz <br />
+**[TWEAKED]** code performance/speed and syntax <br />
+**[TWEAKED]** execution speed of mpKilled code <br />
+<br />
+
 #### `v0751.6`
 #######UPDATE NOTE: re-configure the mine settings!
 *Server-side* <br />
-**[CHANGED]** mine settings of the DynamicLocationInvasion mission type. They are inside their own class now.
+**[CHANGED]** mine settings of the DynamicLocationInvasion mission type. They are inside their own class now <br />
 **[FIXED]** mines are not working <br />
 **[FIXED]** (EPOCH) error in BaseAttack.sqf, line 46 <br />
 **[TWEAKED]** error tolerance in some functions <br />
