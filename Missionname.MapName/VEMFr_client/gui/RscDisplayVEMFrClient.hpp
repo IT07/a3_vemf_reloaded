@@ -6,7 +6,6 @@ class RscDisplayVEMFrClient
 	duration = 99999;
 	onLoad = "uiNamespace setVariable ['RscDisplayVEMFrClient', _this select 0]; ExecVM 'VEMFr_client\sqf\onLoad.sqf'";
 	onUnLoad = "uiNamespace setVariable ['RscDisplayVEMFrClient', displayNull]";
-	movingEnable = 0;
 	class RscBackground
 	{
 		access = 0;
