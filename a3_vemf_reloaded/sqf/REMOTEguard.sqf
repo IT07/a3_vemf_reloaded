@@ -12,22 +12,20 @@
     nothing
 */
 
-while {true} do
+while { true } do
    {
-      if ((count playableUnits) > 0) then
+      if ( ( count playableUnits ) > 0 ) then
          {
             {
-               if ((local _x) AND (_x getVariable [("isVEMFrGroup"),(false)]) AND (_x getVariable [("isVEMFrGroupLocal"),(false)])) then
+               if ( ( local _x ) AND ( _x getVariable [ "isVEMFrGroup", false ] ) AND ( _x getVariable [ "isVEMFrGroupLocal", false ] ) ) then
                   {
-                     if ((count (units _x)) > 0) then
+                     if ( ( count ( units _x ) ) > 0 ) then
                         {
-                           //["REMOTEguard",1,format["Attempting to transfer group: %1", _x]] ExecVM ("log" call VEMFr_fnc_scriptPath);
                            // Group still has units, check if there is anyone that can be the owner
-                           [_x] ExecVM ("setGroupOwner" call VEMFr_fnc_scriptPath);
-                           //["REMOTEguard",1,format["Transfer attempted. Group (%1) is %2", _x, if (local _x) then {"still local!"} else {"now REMOTE"}]] ExecVM ("log" call VEMFr_fnc_scriptPath);
+                           [ _x ] ExecVM ( "setGroupOwner" call VEMFr_fnc_scriptPath );
                         } else { deleteGroup _x };
                   };
-               if (not(local _x) AND (_x getVariable [("isVEMFrGroupLocal"),(false)])) then { _x setVariable [("isVEMFrGroupLocal"),(false),(true)] };
+               if ( not ( local _x ) AND ( _x getVariable [ "isVEMFrGroupLocal", false ] ) ) then { _x setVariable [ "isVEMFrGroupLocal", false, true ] };
             } forEach allGroups;
             uiSleep 0.5;
          } else { uiSleep 5 };

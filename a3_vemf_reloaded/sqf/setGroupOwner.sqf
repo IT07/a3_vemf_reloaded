@@ -12,28 +12,28 @@
     nothing
 */
 
-_grp = param [0, grpNull, [grpNull]];
-if not(isNull _grp) then
+_grp = _this select 0;
+if not ( isNull _grp ) then
    {
       // Check if HC is enabled
       _hcNbld = "headLessClientSupport" call VEMFr_fnc_config;
-      _force = uiNamespace getVariable ["VEMFr_forceAItoClients", nil];
-      if not(isNil "_force") then { if (_force isEqualType true) then { if _force then { _hcNbld = -1 } } };
+      _force = uiNamespace getVariable [ "VEMFr_forceAItoClients", nil ];
+      if not ( isNil "_force" ) then { if ( _force isEqualType true ) then { if _force then { _hcNbld = -1 } } };
 
       private "_to";
-      if (_hcNbld isEqualTo "yes") then
+      if ( _hcNbld isEqualTo "yes" ) then
          {
             _to = call VEMFr_fnc_hc;
-            if isNil("_to") then { uiNamespace setVariable [("VEMFr_forceAItoClients"),(true)] };
+            if ( isNil "_to" ) then { uiNamespace setVariable [ "VEMFr_forceAItoClients", true ] };
          };
-      if ((_hcNbld isEqualTo "no") OR (uiNamespace getVariable [("VEMFr_forceAItoClients"),(false)])) then
+      if ( ( _hcNbld isEqualTo "no" ) OR ( uiNamespace getVariable [ "VEMFr_forceAItoClients", false ] ) ) then
          {
-            if ((count allPlayers) > 0) then
+            if ( ( count allPlayers ) > 0 ) then
                {
                   _distToX = worldSize;
                   {
-                     _dist = _x distance (leader _grp);
-                     if (_dist <= _distToX) then
+                     _dist = _x distance ( leader _grp );
+                     if ( _dist <= _distToX ) then
                         {
                            _distToX = _dist;
                            _to = _x;
@@ -42,9 +42,9 @@ if not(isNull _grp) then
                };
          };
 
-         if not(isNil "_to") then
+         if not ( isNil "_to" ) then
             {
-               _grp setGroupOwner (owner _to);
-               _grp setVariable [("isVEMFrGroupLocal"),(false),(true)];
+               _grp setGroupOwner ( owner _to );
+               _grp setVariable [ "isVEMFrGroupLocal", false, true ];
             };
    };

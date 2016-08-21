@@ -9,5 +9,5 @@
 */
 
 private "_r";
-_r = getText (configFile >> "CfgVemfrScripts" >> _this);
-if not(isNil"_r") then { _r };
+_r = getText ( configFile >> "CfgVemfrScripts" >> _this );
+if not ( isNil "_r" ) then { _r };

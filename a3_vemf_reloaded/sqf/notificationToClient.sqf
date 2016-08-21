@@ -14,15 +14,9 @@
 	nothing
 */
 
-params [
-	[("_mt"),(-1),([-1])],
-	[("_title"),(""),([""])],
-	[("_line"),(""),([""])],
-	[("_to"),([]),([[]])]
-];
-
-if ((count _to) isEqualTo 0) then { _to = allPlayers };
+params [ "_mt", "_title", "_line", "_to" ];
+if ( isNil "_to" ) then { _to = allPlayers };
 {
-	VEMFrMsgToClient = [[(_mt),(_title),(_line)],("")];
-	(owner _x) publicVariableClient "VEMFrMsgToClient";
+	VEMFrMsgToClient = [ [ _mt, _title, _line ], "" ];
+	( owner _x ) publicVariableClient "VEMFrMsgToClient";
 } forEach _to;

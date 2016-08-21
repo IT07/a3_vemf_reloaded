@@ -12,22 +12,19 @@
     BOOL - true if player(s) found
 */
 
-private [("_r"),("_this0"),("_this1")];
+private "_r";
 // By default, we assume that there are no players close. The distance check below should prove otherwise if there are players close
 _r = false;
-params [
-   [("_this0"),([]),([[]])],
-   [("_this1"),(-1),([0])]
-];
-if (((count _this0) isEqualTo 3) AND (_this1 > -1)) then
+params [ "_this0", "_this1" ];
+if ( ( ( count _this0 ) isEqualTo 3 ) AND ( _this1 > -1 ) ) then
    {
       scopeName "find";
       {
-         if ((isPlayer _x) AND ((speed _x) < 250)) then
+         if ( ( isPlayer _x ) AND ( ( speed _x ) < 250 ) ) then
             {
-               if ((position _x distance _this0) < _this1) then { _r = true; breakOut "find" };
+               if ( ( ( position _x ) distance _this0 ) < _this1 ) then { _r = true; breakOut "find" };
             };
       } forEach allPlayers;
    };
 
-if not(isNil"_r") then { _r };
+if not ( isNil "_r" ) then { _r };

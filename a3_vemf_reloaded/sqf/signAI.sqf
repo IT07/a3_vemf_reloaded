@@ -13,6 +13,6 @@
 */
 
 private "_grp";
-_grp = param [0, grpNull, [grpNull]];
-_grp setVariable [("isVEMFrGroup"),(true),(true)];
-_grp setVariable [("isVEMFrGroupLocal"),(true),(true)];
+_grp = param [ 0, grpNull, [ grpNull ] ];
+_grp setVariable [ "isVEMFrGroup", true, true ];
+_grp setVariable [ "isVEMFrGroupLocal", true, true ];
