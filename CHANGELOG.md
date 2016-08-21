@@ -10,6 +10,10 @@
 **[TWEAKED]** code performance/speed and syntax <br />
 **[TWEAKED]** execution speed of mpKilled code <br />
 <br />
+*Client-side* <br />
+**[ADDED]** RscDisplayBaseAttack <br />
+**[TWEAKED]** code speed and syntax <br />
+<br />
 
 #### `v0751.6`
 #######UPDATE NOTE: re-configure the mine settings!
