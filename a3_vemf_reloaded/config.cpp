@@ -19,10 +19,9 @@ class CfgVemfReloaded
 
 		// Global settings
 		addons[] = {}; // Not used for now
-		allowTWS = no; // enable/disable the usage of TWS scopes by AI
+		allowTWS = no; // enable/disable the usage of TWS scopes by AI (WARNING: only tested on vanilla equipment)
 		headlessClientSupport = no;
 		headlessClientNames[] = {"HC1"};
-		killPercentage = 100; // How much of total AI has to be killed for mission completion (in percentage)
 		logCowardKills = yes; // enable/disable logging of who killed AI whilst it was parachuting down
 		maxGlobalMissions = 10; // enable/disable global mission amount limit
 		maxNew = 2; // enable/disable MAXIMUM time (in minutes) before new mission can run
@@ -64,6 +63,10 @@ class CfgVemfReloaded
 					"ChainSaw","srifle_DMR_03_spotter_F"
 				};
 			};
+			class scopes
+			{
+				thermal[] = {"optic_tws_mg","optic_tws","optic_Nightstalker"}; // WARNING: all classnames are case sensitive
+			};
 		};
 
 		class Exile // Exile specific settings
@@ -94,8 +97,10 @@ class CfgVemfReloaded
 						aiSetup[] = {2,5}; // format: {amountOfGroups,unitsInEachGroup};
 						allowLaunchers = yes; // Allow/disallow AI to have rocket launchers
 						hasLauncherChance = 25; // In percentage. How big the chance that each AI gets a launcher
+						killPercentage = 100; // How much of total AI has to be killed for mission completion (in percentage)
 						maxAttacks = 5; // Maximum amount of active attacks at the same time | can not be turned off
 						minimumLevel = 2; // Minimum required level of base before it can get attacked
+						minimumWait = 15; // Minimum time (in minutes) to wait whilst player is present in base
 						randomModes = no; // enable/disable the randomization of the AI mode for this mission-type
 						/*
 							NOTES:
@@ -291,7 +296,7 @@ class CfgVemfReloaded
 								enabled = no; // enable/disable parachute of the loot crate
 								altitude = 250; // loot crate spawn-altitude in meters
 							};
-							
+
 						crateTypes[] = {"Box_FIA_Ammo_F","Box_FIA_Support_F","Box_FIA_Wps_F","I_SupplyCrate_F","Box_IND_AmmoVeh_F","Box_NATO_AmmoVeh_F","Box_East_AmmoVeh_F"};
 						flairTypes[] = {"Chemlight_green","Chemlight_red","Chemlight_yellow","Chemlight_blue"};
 						groupCount[] = {2,4}; // In format: {minimum, maximum}; VEMF will pick a random number between min and max. If you want the same amount always, use same numbers for minimum and maximum.
@@ -307,6 +312,7 @@ class CfgVemfReloaded
 								locked = no; // enable/disable heli lock to prevent/allow players from flying it
 							};
 
+						killPercentage = 100; // How much of total AI has to be killed for mission completion (in percentage)
 						useMarker = yes; // enable/disable mission markers
 						markCrateOnMap = yes; // enable/disable loot crate marker on map called "Loot"
 						markCrateVisual = yes; // enable/disable loot crate VISUAL marker (smoke and/or chem)
