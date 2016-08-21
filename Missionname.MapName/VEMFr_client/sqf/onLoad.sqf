@@ -1,10 +1,10 @@
 disableSerialization;
-_dsp = uiNamespace getVariable ["RscDisplayVEMFrClient", displayNull];
+_dsp = uiNamespace getVariable [ "RscDisplayVEMFrClient", displayNull ];
 if not isNull _dsp then
    {
-      if (count (uiNamespace getVariable ["VEMFrMsgQueue", []]) isEqualTo 0) then
+      if ( count ( uiNamespace getVariable [ "VEMFrMsgQueue", [] ] ) isEqualTo 0 ) then
          {
-            (["RscDisplayVEMFrClient"] call BIS_fnc_rscLayer) cutFadeOut 0;
+            ( [ "RscDisplayVEMFrClient" ] call BIS_fnc_rscLayer ) cutFadeOut 0;
             systemChat "[VEMFrClient] No messages to display";
          } else
          {
@@ -14,13 +14,13 @@ if not isNull _dsp then
             _ctrlTitle = _dsp displayCtrl 11;
             _ctrlMsg = _dsp displayCtrl 12;
             {
-               [_dsp, _x] spawn
+               [ _dsp, _x ] spawn
                {
                   disableSerialization;
                   _dsp = _this select 0;
                   _data = _this select 1;
                   _ctrlPic = _dsp displayCtrl 10;
-                  if (ctrlFade _ctrlPic < 1) then
+                  if ( ( ctrlFade _ctrlPic ) < 1 ) then
                      {
                         _ctrlPic ctrlSetFade 1;
                         _ctrlPic ctrlCommit 0.5;
@@ -28,83 +28,66 @@ if not isNull _dsp then
                      };
                   _ctrlPic ctrlSetTextColor call
                      {
-                        private ["_return"];
-                        if (_data select 0 isEqualTo 0) then
-                           {
-                              _return = [0.5,0,0,1];
-                           };
-                        if (_data select 0 isEqualTo 1) then
-                           {
-                              _return = [0,0.3,0.6,1];
-                           };
-                        if (_data select 0 isEqualTo 2) then
-                           {
-                              _return = [0,0,0,1];
-                           };
-                        if isNil"_return" then
-                           {
-                              _return = [1,1,1,1];
-                           };
+                        private "_return";
+                        if ( ( _data select 0 ) isEqualTo 0 ) then { _return = [ 0.5, 0, 0, 1 ] };
+                        if ( ( _data select 0 ) isEqualTo 1 ) then { _return = [ 0, 0.3, 0.6, 1 ] };
+                        if ( ( _data select 0 ) isEqualTo 2 ) then { _return = [ 0, 0, 0, 1 ] };
+                        if ( isNil "_return" ) then { _return = [ 1, 1, 1, 1 ] };
                         _return
                      };
                   _ctrlPic ctrlSetFade 0;
                   _ctrlPic ctrlCommit 0.5;
                };
 
-               if (_ctrlTitle getVariable ["expanded",false] AND _ctrlMsg getVariable ["expanded", false]) then
+               if ( _ctrlTitle getVariable [ "expanded", false ] AND ( _ctrlMsg getVariable [ "expanded", false ] ) ) then
                   {
                      _ctrlPos = ctrlPosition _ctrlTitle;
-                     _ctrlTitle ctrlSetPosition [_ctrlPos select 0, _ctrlPos select 1, 0 * safezoneW, _ctrlPos select 3];
+                     _ctrlTitle ctrlSetPosition [ _ctrlPos select 0, _ctrlPos select 1, 0 * safezoneW, _ctrlPos select 3 ];
                      _ctrlTitle ctrlSetFade 1;
                      _ctrlTitle ctrlCommit 0.5;
-                     _ctrlTitle setVariable ["expanded", false];
+                     _ctrlTitle setVariable [ "expanded", false ];
                      uiSleep 0.75;
-                     _ctrlTitle ctrlSetText toUpper (_x select 1);
+                     _ctrlTitle ctrlSetText toUpper ( _x select 1 );
                      _ctrlPos = ctrlPosition _ctrlTitle;
-                     _ctrlTitle ctrlSetPosition [_ctrlPos select 0, _ctrlPos select 1, 0.1 * safezoneW, _ctrlPos select 3];
+                     _ctrlTitle ctrlSetPosition [ _ctrlPos select 0, _ctrlPos select 1, 0.1 * safezoneW, _ctrlPos select 3 ];
                      _ctrlTitle ctrlSetFade 0;
                      _ctrlTitle ctrlCommit 0.5;
-                     _ctrlTitle setVariable ["expanded", true];
+                     _ctrlTitle setVariable [ "expanded", true ];
 
                      _ctrlPos = ctrlPosition _ctrlMsg;
-                     _ctrlMsg ctrlSetPosition [_ctrlPos select 0, _ctrlPos select 1, 0 * safezoneW, _ctrlPos select 3];
+                     _ctrlMsg ctrlSetPosition [ _ctrlPos select 0, _ctrlPos select 1, 0 * safezoneW, _ctrlPos select 3 ];
                      _ctrlMsg ctrlSetFade 1;
                      _ctrlMsg ctrlCommit 0.5;
-                     _ctrlMsg setVariable ["expanded", false];
+                     _ctrlMsg setVariable [ "expanded", false ];
                      uiSleep 0.75;
-                     _ctrlMsg ctrlSetText (_x select 2);
+                     _ctrlMsg ctrlSetText ( _x select 2 );
                      _ctrlPos = ctrlPosition _ctrlMsg;
-                     _ctrlMsg ctrlSetPosition [_ctrlPos select 0, _ctrlPos select 1, 0.45 * safezoneW, _ctrlPos select 3];
+                     _ctrlMsg ctrlSetPosition [ _ctrlPos select 0, _ctrlPos select 1, 0.45 * safezoneW, _ctrlPos select 3 ];
                      _ctrlMsg ctrlSetFade 0;
                      _ctrlMsg ctrlCommit 0.5;
-                     _ctrlMsg setVariable ["expanded", true];
+                     _ctrlMsg setVariable [ "expanded", true ];
 
-                     uiSleep (count (_x select 2) / 5);
+                     uiSleep ( count ( _x select 2 ) / 5 );
                   } else
                   {
-                     _ctrlTitle ctrlSetText toUpper (_x select 1);
+                     _ctrlTitle ctrlSetText toUpper ( _x select 1 );
                      _ctrlPos = ctrlPosition _ctrlTitle;
-                     _ctrlTitle ctrlSetPosition [_ctrlPos select 0, _ctrlPos select 1, 0.1 * safezoneW, _ctrlPos select 3];
+                     _ctrlTitle ctrlSetPosition [ _ctrlPos select 0, _ctrlPos select 1, 0.1 * safezoneW, _ctrlPos select 3 ];
                      _ctrlTitle ctrlSetFade 0;
                      _ctrlTitle ctrlCommit 0.5;
-                     _ctrlTitle setVariable ["expanded", true];
+                     _ctrlTitle setVariable [ "expanded", true ];
 
-                     _ctrlMsg ctrlSetText (_x select 2);
+                     _ctrlMsg ctrlSetText ( _x select 2 );
                      _ctrlPos = ctrlPosition _ctrlMsg;
-                     _ctrlMsg ctrlSetPosition [_ctrlPos select 0, _ctrlPos select 1, 0.45 * safezoneW, _ctrlPos select 3];
+                     _ctrlMsg ctrlSetPosition [ _ctrlPos select 0, _ctrlPos select 1, 0.45 * safezoneW, _ctrlPos select 3 ];
                      _ctrlMsg ctrlSetFade 0;
                      _ctrlMsg ctrlCommit 0.5;
-                     _ctrlMsg setVariable ["expanded", true];
+                     _ctrlMsg setVariable [ "expanded", true ];
 
-                     uiSleep (count (_x select 2) / 5);
+                     uiSleep ( count ( _x select 2 ) / 5 );
                   };
-            } forEach (uiNamespace getVariable ["VEMFrMsgQueue",[]]);
-            uiNamespace setVariable ["VEMFrMsgQueue", []];
-            (["RscDisplayVEMFrClient"] call BIS_fnc_rscLayer) cutFadeOut 0.5;
+            } forEach ( uiNamespace getVariable [ "VEMFrMsgQueue", [] ] );
+            uiNamespace setVariable [ "VEMFrMsgQueue", [] ];
+            ( [ "RscDisplayVEMFrClient" ] call BIS_fnc_rscLayer ) cutFadeOut 0.5;
          };
-   } else
-   {
-      systemChat "Nope.";
-   };
-
-//(uiNamespace getVariable ["VEMFrMsgQueue", []]) pushBack ["title","message"];
+   } else { systemChat "Nope." };
