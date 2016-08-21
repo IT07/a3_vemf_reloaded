@@ -1,8 +1,8 @@
 class CfgVemfrScripts
    {
-      aiKilled = "a3_vemf_reloaded\sqf\aiKilled.sqf";
-      broadCast = "a3_vemf_reloaded\sqf\broadCast.sqf";
       checkLoot = "a3_vemf_reloaded\sqf\checkLoot.sqf";
+      handleKillCleanup = "a3_vemf_reloaded\sqf\handleKillCleanup.sqf";
+      handleKillReward = "a3_vemf_reloaded\sqf\handleKillReward.sqf";
       killedMonitor = "a3_vemf_reloaded\sqf\killedMonitor.sqf";
       loadLoot = "a3_vemf_reloaded\sqf\loadLoot.sqf";
       log = "a3_vemf_reloaded\sqf\log.sqf";
@@ -15,4 +15,5 @@ class CfgVemfrScripts
       signAI = "a3_vemf_reloaded\sqf\signAI.sqf";
       spawnStaticAI = "a3_vemf_reloaded\sqf\spawnStaticAI.sqf";
       systemChatToClient = "a3_vemf_reloaded\sqf\systemChatToClient.sqf";
+      warningToClient = "a3_vemf_reloaded\sqf\warningToClient.sqf";
    };
