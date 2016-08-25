@@ -1,5 +1,9 @@
 ## VEMFr Changelog
 
+#### `v0751.7a`
+**[FIXED]** Error Undefined variable in expression (spawnStaticAI) <br />
+<br />
+
 #### `v0751.7`
 #######UPDATE NOTE: update BOTH server files and client files!
 *Server-side* <br />
