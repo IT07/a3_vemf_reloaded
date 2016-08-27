@@ -149,11 +149,11 @@ if ( VEMFrInvasionCount <= ( ( [ [ "missionSettings", _this0 ], [ "maxInvasions"
 						_nts pushBack _x;
 					} forEach ( units _hlGrp );
 
-					_wp = _hlGrp addWaypoint [ [ _lp select 0, _lp select 1, 50 ], 0, 2 ];
-					_wp setWaypointType "SAD";
-					_wp setWaypointSpeed "NORMAL";
+					_wp = _hlGrp addWaypoint [ [ _lp select 0, _lp select 1, 50 ], 1, 1 ];
 					_wp setWaypointBehaviour "AWARE";
 					_wp setWaypointCombatMode "RED";
+					_wp setWaypointSpeed "NORMAL";
+					_wp setWaypointType "SAD";
 					//_wp setWaypointLoiterType "CIRCLE";
 					//_wp setWaypointLoiterRadius 200;
 					_hlGrp setCurrentWaypoint _wp;
