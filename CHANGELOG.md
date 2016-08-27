@@ -1,5 +1,14 @@
 ## VEMFr Changelog
 
+#### `v0752.0`
+*Server-side* <br />
+**[NEW]** addon "SimplePatrol" as requested by CameraChick <br />
+**[TWEAKED]** heli waypoint configuration <br />
+**[TWEAKED]** config syntax <br />
+*Client-side* <br />
+**[FIXED]** error: variable does not support serialization (@Lucy2990) <br />
+<br />
+
 #### `v0751.7a`
 **[FIXED]** Error Undefined variable in expression (spawnStaticAI) <br />
 <br />
