@@ -5,6 +5,7 @@
    handles the things that need to be done when RscDisplayBaseAttack is active
 */
 
+disableSerialization;
 _dsp = uiNamespace getVariable [ "RscDisplayBaseAttack", displayNull ];
 if not ( isNull _dsp ) then
    {
