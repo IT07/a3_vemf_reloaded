@@ -104,7 +104,7 @@ if ( _this2 in ( "missionList" call VEMFr_fnc_config ) ) then
 						_nt enableAI "AUTOTARGET";
 						_nt enableAI "MOVE";
 						_nt enableAI "ANIM";
-						_nt enableAI "TEAMSWITCH";
+						_nt disableAI "TEAMSWITCH";
 						_nt enableAI "FSM";
 						_nt enableAI "AIMINGERROR";
 						_nt enableAI "SUPPRESSION";
