@@ -23,6 +23,14 @@ if ( isNil "VEMFrHasStarted" ) then
 					if ( ( _x isEqualTo "checkClasses" ) OR ( _x isEqualTo "spawnStaticAI" ) ) then { waitUntil { if ( scriptDone _h ) then { true } else { uiSleep 0.1; false } } };
 				} forEach [ "checkClasses", "missionTimer", "REMOTEguard", "spawnStaticAI" ];
 
+				{
+					if ( ( ( [ [ "addonSettings", _x ], [ "enabled" ] ] call VEMFr_fnc_config ) select 0 ) isEqualTo "yes" ) then
+						{
+							_h = [] ExecVM format [ "a3_vemf_reloaded\addons\%1.sqf", _x ];
+							waitUntil { if ( scriptDone _h ) then { true } else { uiSleep 0.1; false } };
+						};
+				} forEach ( "addons" call VEMFr_fnc_config );
+
 				if ( ( call VEMFr_fnc_whichMod ) isEqualTo "Epoch" ) then { west setFriend [ independent, 0 ]; independent setFriend [ west, 0 ] };
 			};
 	} else { [ "Launcher", 0, format [ "a3_vemf_reloaded FAILED to launch! VEMFrHasStarted (%1) is already defined!", VEMFrHasStarted ] ] ExecVM ( "log" call VEMFr_fnc_scriptPath ) };
