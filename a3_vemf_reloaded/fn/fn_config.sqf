@@ -31,7 +31,7 @@ if ( _this isEqualType "" ) then
 		if ( isNull ( configFile >> "CfgVemfReloadedOverrides" >> _this ) ) then { _cfg = configFile >> "CfgVemfReloaded" >> _this
 			} else { _cfg = configFile >> "CfgVemfReloadedOverrides" >> _this };
 			call _chck;
-			_r = _v;
+			if not ( isNil "_v" ) then { _r = _v } else { [ "fn_config", 0, format [ "can not find setting '%1' in root", _this ] ] ExecVM ( "log" call VEMFr_fnc_scriptPath ) };
 	};
 
 if ( _this isEqualType [] ) then
@@ -57,7 +57,7 @@ if ( _this isEqualType [] ) then
 							_cfg = _cfg >> _x;
 						};
 					call _chck;
-					_r pushBack _v;
+					if not ( isNil "_v" ) then { _r pushBack _v } else { [ "fn_config", 0, format [ "can not find setting '%1' in '%2'", _x, _this select 0 ] ] ExecVM ( "log" call VEMFr_fnc_scriptPath ) };
 				} forEach ( _this select 1 );
 			};
 		if ( _this isEqualTypeArray [ [] ] ) then
@@ -66,7 +66,7 @@ if ( _this isEqualType [] ) then
 					_cfg = configFile >> "CfgVemfReloadedOverrides" >> _x;
 					if ( isNull _cfg ) then { _cfg = configFile >> "CfgVemfReloaded" >> _x };
 					call _chck;
-					_r pushBack _v;
+					if not ( isNil "_v" ) then { _r pushBack _v } else { [ "fn_config", 0, format [ "can not find setting '%1' in root", _x ] ] ExecVM ( "log" call VEMFr_fnc_scriptPath ) };
 				} forEach ( _this select 0 );
 			};
 	};
