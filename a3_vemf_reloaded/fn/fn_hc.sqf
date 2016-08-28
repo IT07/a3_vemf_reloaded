@@ -11,12 +11,12 @@
     OBJECT - the headless client
 */
 
-private [ "_r", "_n", "_arr", "_gl", "_hc" ];
-_n = "headLessClientNames" call VEMFr_fnc_config;
-_arr = [ ];
-_gl = uiNamespace getVariable "VEMFrHcLoad";
+private "_r";
+private _n = "headLessClientNames" call VEMFr_fnc_config;
+private _arr = [ ];
+private _gl = uiNamespace getVariable "VEMFrHcLoad";
 {
-   _hc = missionNameSpace getVariable [ _x, "nope" ];
+   private _hc = missionNameSpace getVariable [ _x, "nope" ];
    if not ( _hc isEqualTo "nope" ) then
       {
          if ( ( ( typeName _hc ) isEqualTo "OBJECT" ) AND ( ( toLower ( typeOf _hc ) ) isEqualTo ( toLower ( "HeadlessClient_F" ) ) ) ) then

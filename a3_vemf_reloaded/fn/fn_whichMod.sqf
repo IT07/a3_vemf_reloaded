@@ -8,9 +8,7 @@
    STRING - the name of the current server mod
 */
 
-private "_r";
-
+private _r = "unknown";
 if not ( isNull ( configFile >> "CfgPatches" >> "exile_server" ) ) then { _r = "Exile" };
 if not ( isNull ( configFile >> "CfgPatches" >> "a3_epoch_server" ) ) then { _r = "Epoch" };
-
-if not ( isNil "_r" ) then { _r };
+_r

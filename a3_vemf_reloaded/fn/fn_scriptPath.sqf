@@ -8,6 +8,4 @@
    STRING - path to sqf file
 */
 
-private "_r";
-_r = getText ( configFile >> "CfgVemfrScripts" >> _this );
-if not ( isNil "_r" ) then { _r };
+getText ( configFile >> "CfgVemfrScripts" >> _this );

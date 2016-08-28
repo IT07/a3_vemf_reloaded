@@ -11,6 +11,4 @@
    SCALAR - appID
 */
 
-private "_r";
-_r = getNumber ( configFile >> "CfgAppIDs" >> _this );
-if not ( isNil "_r" ) then { _r };
+getNumber ( configFile >> "CfgAppIDs" >> _this );

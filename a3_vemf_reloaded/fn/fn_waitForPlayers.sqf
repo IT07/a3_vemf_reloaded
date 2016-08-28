@@ -12,16 +12,14 @@
 	BOOL - true if there is a player present
 */
 
-private "_r";
 params [ "_this0", "_this1" ];
-_r = false;
+private _r = false;
 if ( [ _this0, _this1 ] call VEMFr_fnc_playerNear ) then { _r = true }
- 	else
-		{
-			private [ "_t", "_tot" ];
-			_t = round time;
-			_tot = ( "timeOutTime" call VEMFr_fnc_config ) * 60;
+   else
+      {
+         private _t = round time;
+			private _tot = ( "timeOutTime" call VEMFr_fnc_config ) * 60;
 			waitUntil { if ( ( [ _this0, _this1 ] call VEMFr_fnc_playerNear ) OR ( ( ( round time ) - _t ) > _tot ) ) then { true } else { uiSleep 4; false } };
 			if ( [ _this0, _this1 ] call VEMFr_fnc_playerNear ) then { _r = true };
 		};
-if not ( isNil "_r" ) then { _r };
+_r

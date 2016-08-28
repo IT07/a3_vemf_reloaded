@@ -17,62 +17,49 @@
 	ARRAY with group(s)
 */
 
-private [ "_r", "_allUnits" ];
 params [ "_this0", "_this1", "_this2", "_this3", "_this4", "_this5", "_this6" ];
-_allUnits = [];
-if ( ( _this4 in ( "missionList" call VEMFr_fnc_config ) ) OR ( _this4 isEqualTo "Static" ) OR ( _this4 in ( "addons" call VEMFr_fnc_config ) ) ) then
+
+private _r = [];
+private _allUnits = [];
+_this0 = [ _this0 select 0, _this0 select 1, if not ( isNil "_this5" ) then { _this5 } else { 0 } ];
+( [ [ "aiSkill", ( [ [ "aiSkill" ], [ "difficulty" ] ] call VEMFr_fnc_config ) select 0 ], [ "accuracy", "aimingShake", "aimingSpeed", "endurance", "spotDistance", "spotTime", "courage", "reloadSpeed", "commanding", "general" ] ] call VEMFr_fnc_config ) params [("_ccrcy"),("_mshk"),("_mspd"),("_stmn"),("_sptDst"),("_sptTm"),("_crg"),("_rldSpd"),("_cmmndng"),("_gnrl")];
+for "_g" from 1 to _this1 do
 	{
-		scopeName "outer";
-		_r = [];
-		_this0 = [ _this0 select 0, _this0 select 1, if not ( isNil "_this5" ) then { _this5 } else { 0 } ];
-		private [ "_s", "_ccrcy", "_mshk", "_mspd", "_stmn", "_sptDst", "_sptTm", "_crg", "_rldSpd", "_cmmndng", "_gnrl", "_i", "_grp", "_unit" ];
-
-		_s = [ [ "aiSkill", ( [ [ "aiSkill" ], [ "difficulty" ] ] call VEMFr_fnc_config ) select 0 ], [ "accuracy", "aimingShake", "aimingSpeed", "endurance", "spotDistance", "spotTime", "courage", "reloadSpeed", "commanding", "general" ] ] call VEMFr_fnc_config;
-		_s params [("_ccrcy"),("_mshk"),("_mspd"),("_stmn"),("_sptDst"),("_sptTm"),("_crg"),("_rldSpd"),("_cmmndng"),("_gnrl")];
-		for "_g" from 1 to _this1 do
+		private _grp = createGroup ( ( ( [ [ call VEMFr_fnc_whichMod ], [ "unitClass" ] ] call VEMFr_fnc_config ) select 0 ) call VEMFr_fnc_checkSide );
+		_grp allowFleeing 0;
+		for "_u" from 1 to _this2 do
 			{
-				_grp = createGroup ( ( ( [ [ call VEMFr_fnc_whichMod ], [ "unitClass" ] ] call VEMFr_fnc_config ) select 0 ) call VEMFr_fnc_checkSide );
-				_grp allowFleeing 0;
-				for "_u" from 1 to _this2 do
-					{
-						_unit = _grp createUnit [ ( [ [ call VEMFr_fnc_whichMod ], [ "unitClass" ] ] call VEMFr_fnc_config ) select 0, _this0, [], if not ( isNil "_this6" ) then { _this6 } else { 0 }, "FORM" ]; // Create Unit There
-						_allUnits pushBack _unit;
-						_unit addMPEventHandler [ "mpkilled", "if isDedicated then { [ _this select 0 ] ExecVM ( 'handleKillCleanup' call VEMFr_fnc_scriptPath ); [ _this select 0, name (_this select 0), _this select 1, name (_this select 1) ] ExecVM ( 'handleKillReward' call VEMFr_fnc_scriptPath ); ( _this select 0 ) removeAllEventHandlers 'MPKilled' }" ];
-						// Set skills
-						_unit setSkill [ "aimingAccuracy" , _ccrcy ];
-						_unit setSkill [ "aimingShake", _mshk ];
-						_unit setSkill [ "aimingSpeed", _mspd ];
-						_unit setSkill [ "endurance", _stmn ];
-						_unit setSkill [ "spotDistance", _sptDst ];
-						_unit setSkill [ "spotTime", _sptTm ];
-						_unit setSkill [ "courage", _crg ];
-						_unit setSkill [ "reloadSpeed", _rldSpd ];
-						_unit setSkill [ "commanding", _cmmndng ];
-						_unit setSkill [ "general", _gnrl ];
+				private _unit = _grp createUnit [ ( [ [ call VEMFr_fnc_whichMod ], [ "unitClass" ] ] call VEMFr_fnc_config ) select 0, _this0, [], if not ( isNil "_this6" ) then { _this6 } else { 0 }, "FORM" ]; // Create Unit There
+				_allUnits pushBack _unit;
+				_unit addMPEventHandler [ "mpkilled", "if isDedicated then { [ _this select 0 ] ExecVM ( 'handleKillCleanup' call VEMFr_fnc_scriptPath ); [ _this select 0, name (_this select 0), _this select 1, name (_this select 1) ] ExecVM ( 'handleKillReward' call VEMFr_fnc_scriptPath ); ( _this select 0 ) removeAllEventHandlers 'MPKilled' }" ];
+				// Set skills
+				_unit setSkill [ "aimingAccuracy" , _ccrcy ];
+				_unit setSkill [ "aimingShake", _mshk ];
+				_unit setSkill [ "aimingSpeed", _mspd ];
+				_unit setSkill [ "endurance", _stmn ];
+				_unit setSkill [ "spotDistance", _sptDst ];
+				_unit setSkill [ "spotTime", _sptTm ];
+				_unit setSkill [ "courage", _crg ];
+				_unit setSkill [ "reloadSpeed", _rldSpd ];
+				_unit setSkill [ "commanding", _cmmndng ];
+				_unit setSkill [ "general", _gnrl ];
 
-						_unit enableAI "TARGET";
-						_unit enableAI "AUTOTARGET";
-						_unit enableAI "MOVE";
-						_unit enableAI "ANIM";
-						_unit disableAI "TEAMSWITCH";
-						_unit enableAI "FSM";
-						_unit enableAI "AIMINGERROR";
-						_unit enableAI "SUPPRESSION";
-						_unit enableAI "CHECKVISIBLE";
-						_unit enableAI "COVER";
-						_unit enableAI "AUTOCOMBAT";
-						_unit enableAI "PATH";
-					};
-				_r pushBack _grp;
+				_unit enableAI "TARGET";
+				_unit enableAI "AUTOTARGET";
+				_unit enableAI "MOVE";
+				_unit enableAI "ANIM";
+				_unit disableAI "TEAMSWITCH";
+				_unit enableAI "FSM";
+				_unit enableAI "AIMINGERROR";
+				_unit enableAI "SUPPRESSION";
+				_unit enableAI "CHECKVISIBLE";
+				_unit enableAI "COVER";
+				_unit enableAI "AUTOCOMBAT";
+				_unit enableAI "PATH";
 			};
+		_r pushBack _grp;
+	};
 
-		_i = [ _allUnits, _this4, _this3 ] call VEMFr_fnc_loadInv; // Load the AI's inventory
-		if ( isNil "_i" ) then
-			{
-				_r = nil;
-				[ "fn_spawnVEMFrAI", 0, "unable to load AI's inventory" ] ExecVM ( "log" call VEMFr_fnc_scriptPath );
-				breakOut "outer";
-			};
-	} else { [ "fn_spawnVEMFrAI", 0, format [ "'%1' is not in missionList or is not equal to 'Static'", _this4 ] ] ExecVM ( "log" call VEMFr_fnc_scriptPath ) };
+[ _allUnits, _this4, _this3 ] ExecVM ( "loadInv" call VEMFr_fnc_scriptPath ); // Load the AI's inventory
 
-if not ( isNil "_r" ) then { _r };
+_r
