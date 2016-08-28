@@ -1,10 +1,12 @@
 class CfgVemfrScripts
    {
       checkLoot = "a3_vemf_reloaded\sqf\checkLoot.sqf";
+      giveFire = "a3_vemf_reloaded\sqf\giveFire.sqf";
       handleKillCleanup = "a3_vemf_reloaded\sqf\handleKillCleanup.sqf";
       handleKillReward = "a3_vemf_reloaded\sqf\handleKillReward.sqf";
       killedMonitor = "a3_vemf_reloaded\sqf\killedMonitor.sqf";
       loadLoot = "a3_vemf_reloaded\sqf\loadLoot.sqf";
+      loadInv = "a3_vemf_reloaded\sqf\loadInv.sqf";
       log = "a3_vemf_reloaded\sqf\log.sqf";
       missionTimer = "a3_vemf_reloaded\sqf\missionTimer.sqf";
       notificationToClient = "a3_vemf_reloaded\sqf\notificationToClient.sqf";
