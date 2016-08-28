@@ -21,7 +21,21 @@ if ( _ms0 isEqualTo "yes" ) then
             {
                if ( _x in _mssls ) then { _t removeMagazineGlobal _x };
             } forEach ( magazines _t );
-         };
+         } else
+            {
+               {
+                  _xx = _x;
+                  {
+                     _xxx = _x;
+                     if ( _xxx isKindOf [ "Launcher", ( configFile >> "CfgWeapons" ) ] ) then
+                        {
+                           clearWeaponCargoGlobal _xx;
+                           _mssls = getArray ( configFile >> "cfgWeapons" >> _xxx >> "magazines" );
+                           { if ( _x in _mssls ) then { _t removeMagazineGlobal _x } } forEach ( magazines _t );
+                        };
+                  } forEach ( weaponCargo _xx );
+               } forEach ( nearestObjects [ _t, [ "GroundWeaponHolder", "WeaponHolderSimulated" ], 3.5 ] );
+            };
    };
 if ( _ms2 isEqualTo "yes" ) then { removeHeadGear _t };
 
