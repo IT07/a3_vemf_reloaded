@@ -89,8 +89,8 @@ if ( VEMFrAttackCount <= _s0 ) then
                               [ "BaseAttack", 1, format [ "a para team is on the way to %1 @ %2's location!", _baseNm, name _nrPlyr ] ] ExecVM ( "log" call VEMFr_fnc_scriptPath );
 
                               _h = [ _nts, _mn ] ExecVM ( "killedMonitor" call VEMFr_fnc_scriptPath );
-                              _loop = [ _pos, _c ] spawn {
-                                 params [ "_pos", "_c" ];
+                              _loop = [ _pos, _c, _plyrs ] spawn {
+                                 params [ "_pos", "_c", "_plyrs" ];
                                  while { true } do
                                     {
                                        [ "a", _plyrs ] ExecVM ( "warningToClient" call VEMFr_fnc_scriptPath );
