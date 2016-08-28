@@ -1,5 +1,14 @@
 ## VEMFr Changelog
 
+#### `v0752.1`
+*Server-side* <br />
+**[FIXED]** BaseAttack warning won't stop if player moves further than 275 meters away from flag <br />
+**[FIXED]** launchers are not removed if launchers have enough time to drop on the ground <br />
+**[NEW]** SimplePatrol can now understand the "random" mode for behaviour <br />
+**[REMOVED]** SteerableParachute_F from Guerilla backpacks <br />
+**[TWEAKED]** spawn radius for BaseAttack AI <br />
+<br />
+
 #### `v0752.0`
 *Server-side* <br />
 **[NEW]** addon "SimplePatrol" as requested by CameraChick <br />
