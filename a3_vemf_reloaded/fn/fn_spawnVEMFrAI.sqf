@@ -11,6 +11,7 @@
 	_this select 3: SCALAR - AI mode
 	_this select 4: STRING - exact config name of mission or addon
 	_this select 5: SCALAR - (optional) altitude to create units at
+	_this select 6: SCALAR - (optional) spawn radius
 
 	Returns:
 	ARRAY with group(s)
@@ -34,7 +35,7 @@ if ( ( _this4 in ( "missionList" call VEMFr_fnc_config ) ) OR ( _this4 isEqualTo
 				_grp allowFleeing 0;
 				for "_u" from 1 to _this2 do
 					{
-						_unit = _grp createUnit [ ( [ [ call VEMFr_fnc_whichMod ], [ "unitClass" ] ] call VEMFr_fnc_config ) select 0, _this0, [], 0, "FORM" ]; // Create Unit There
+						_unit = _grp createUnit [ ( [ [ call VEMFr_fnc_whichMod ], [ "unitClass" ] ] call VEMFr_fnc_config ) select 0, _this0, [], if not ( isNil "_this6" ) then { _this6 } else { 0 }, "FORM" ]; // Create Unit There
 						_allUnits pushBack _unit;
 						_unit addMPEventHandler [ "mpkilled", "if isDedicated then { [ _this select 0 ] ExecVM ( 'handleKillCleanup' call VEMFr_fnc_scriptPath ); [ _this select 0, name (_this select 0), _this select 1, name (_this select 1) ] ExecVM ( 'handleKillReward' call VEMFr_fnc_scriptPath ); ( _this select 0 ) removeAllEventHandlers 'MPKilled' }" ];
 						// Set skills
