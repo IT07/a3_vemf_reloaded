@@ -9,8 +9,8 @@
    Returns: SIDE - unit's side
 */
 
-private [ "_r", "_f" ];
-_f = getText ( configFile >> "CfgVehicles" >> _this >> "faction" );
+private "_r";
+private _f = getText ( configFile >> "CfgVehicles" >> _this >> "faction" );
 if not ( _f isEqualTo "" ) then
    {
       scopeName "isEqualTo";
