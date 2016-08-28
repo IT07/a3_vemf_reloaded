@@ -22,6 +22,7 @@ if ( _ms0 isEqualTo "random" ) then
    };
 
 if ( _ms0 isEqualTo "manual" ) then { _ms0 = -1 };
+if ( _ms7 isEqualTo "random" ) then { _ms7 = selectRandom [ "CARELESS", "SAFE", "AWARE", "DANGER", "STEALTH" ] };
 
 {
    _grp = ( [ _x, 1, 1, _ms0, "SimplePatrol" ] call VEMFr_fnc_spawnVEMFrAI ) select 0;
