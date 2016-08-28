@@ -1,5 +1,12 @@
 ## VEMFr Changelog
 
+#### `v0752.2`
+*Server-side* <br />
+**[ADDED]** scripts that are supposed to be scripts instead of functions <br />
+**[REMOVED]** several functions that don't need to be functions <br />
+**[TWEAKED]** code speed and syntax <br />
+<br />
+
 #### `v0752.1`
 *Server-side* <br />
 **[FIXED]** BaseAttack warning won't stop if player moves further than 275 meters away from flag <br />
