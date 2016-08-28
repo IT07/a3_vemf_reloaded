@@ -58,7 +58,7 @@ if ( VEMFrAttackCount <= _s0 ) then
                   if ( _mod isEqualTo "Exile" ) then { _baseNm = _base getVariable [ "exileterritoryname", "ERROR: UNKNOWN NAME" ] };
                   _m = ( [ ( [ _mod ] ), ( [ "aiMode" ] ) ] call VEMFr_fnc_config ) select 0;
                   if ( _s3 isEqualTo "yes" ) then { _m = [ 0, 1, 2 ]; if ( ( "Apex" call VEMFr_fnc_modAppID ) in ( getDLCs 1 ) ) then { _m pushBack 3; _m pushBack 4 }; _m = selectRandom _m };
-                  _prGrps = [ _pos, _s1 select 0, _s1 select 1, _m, _mn, 1000 + ( random 1000 ), 150 ] call VEMFr_fnc_spawnVEMFrAI;
+                  _prGrps = [ _pos, _s1 select 0, _s1 select 1, _m, _mn, 1000 + ( random 1000 ), 50 ] call VEMFr_fnc_spawnVEMFrAI;
                   if not ( isNil "_prGrps" ) then
                      {
                         _ntCnt = 0;
@@ -83,8 +83,8 @@ if ( VEMFrAttackCount <= _s0 ) then
                                  { _nts pushback _x } forEach ( units _x );
                                  [ _x ] ExecVM ( "signAI" call VEMFr_fnc_scriptPath );
                               } forEach _prGrps;
-                              _plyrs = nearestObjects [ _pos, _c, 275 ];
 
+                              _plyrs = nearestObjects [ _pos, _c, 275 ];
                               [ "a", _plyrs ] ExecVM ( "warningToClient" call VEMFr_fnc_scriptPath );
                               [ "BaseAttack", 1, format [ "a para team is on the way to %1 @ %2's location!", _baseNm, name _nrPlyr ] ] ExecVM ( "log" call VEMFr_fnc_scriptPath );
 
@@ -93,13 +93,12 @@ if ( VEMFrAttackCount <= _s0 ) then
                                  params [ "_pos", "_c" ];
                                  while { true } do
                                     {
-                                       [ "a", nearestObjects [ _pos, _c, 275 ] ] ExecVM ( "warningToClient" call VEMFr_fnc_scriptPath );
-                                       uiSleep 15;
+                                       [ "a", _plyrs ] ExecVM ( "warningToClient" call VEMFr_fnc_scriptPath );
+                                       uiSleep 7;
                                     };
                               };
                      			waitUntil { if ( scriptDone _h ) then { terminate _loop; true } else { uiSleep 1; false } };
 
-                              _plyrs = nearestObjects [ _pos, _c, 275 ];
                               [ "d", _plyrs ] ExecVM ( "warningToClient" call VEMFr_fnc_scriptPath );
                               breakOut "outer";
                            } else
