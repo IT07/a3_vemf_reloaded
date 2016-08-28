@@ -44,13 +44,13 @@ class CfgVemfReloaded
 				class SimplePatrol
 					{
 						aiMode = random; // options: random | 0 (Guerilla) | 1 (Regular Police) | 2 (Police SF (Special Forces)) | 3 (Gendarmerie (needs Apex DLC)) | 4 (Apex Bandits (needs Apex DLC)) | manual (uses AIequipment class)
-						behaviour = "CARELESS";
-						enableAttack = false;
-						enabled = no;
-						combatMode = "BLUE";
+						behaviour = "CARELESS"; // optional: random | https://community.bistudio.com/wiki/Arma_3_AI_Behavior
+						enableAttack = false; // https://community.bistudio.com/wiki/enableAttack
+						enabled = no; // enable/disable this addon
+						combatMode = "BLUE"; // https://community.bistudio.com/wiki/Arma_3_AI_Behavior#Combat_modes_.28ROE.29
 						from[] = { { position }, { position } };
 						// NOTE: the first in "from" is connected to the first in "to" and so on...
-						removeAllAssignedItems = no;
+						removeAllAssignedItems = no; // https://community.bistudio.com/wiki/removeAllAssignedItems
 						speed = "LIMITED";
 						to[] = { { position }, { position } };
 						interval = 10;
@@ -430,7 +430,7 @@ class CfgVemfReloaded
 							"B_AssaultPack_mcamo", "B_TacticalPack_rgr", "B_TacticalPack_mcamo", "B_TacticalPack_ocamo", "B_TacticalPack_blk",
 							"B_TacticalPack_oli", "B_FieldPack_khk", "B_FieldPack_ocamo", "B_FieldPack_oucamo", "B_FieldPack_cbr",
 							"B_FieldPack_blk", "B_Carryall_ocamo", "B_Carryall_oucamo", "B_Carryall_mcamo", "B_Carryall_khk", "B_Carryall_cbr",
-							"B_Parachute", "B_FieldPack_oli", "B_Carryall_oli", "B_Kitbag_Base", "B_Kitbag_cbr", "B_Kitbag_mcamo",
+							"B_FieldPack_oli", "B_Carryall_oli", "B_Kitbag_Base", "B_Kitbag_cbr", "B_Kitbag_mcamo",
 							"B_Kitbag_rgr", "B_Kitbag_sgg", "B_OutdoorPack_Base", "B_OutdoorPack_blk", "B_OutdoorPack_blu", "B_OutdoorPack_tan"
 						};
 						faceWear[] = { "G_Aviator", "G_Balaclava_blk", "G_Balaclava_oli", "G_Bandanna_aviator", "G_Bandanna_beast", "G_Bandanna_blk", "G_Bandanna_khk", "G_Bandanna_oli", "G_Bandanna_sport", "G_Bandanna_tan" };
