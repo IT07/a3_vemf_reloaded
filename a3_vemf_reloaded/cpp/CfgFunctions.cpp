@@ -9,11 +9,8 @@ class CfgFunctions
 			class checkSide {};
 			class config {};
 			class findPos {};
-			class giveAmmo {};
-			class giveWeaponItems {};
 			class hc {};
 			class launch { postInit = 1; };
-			class loadInv {};
 			class mines {};
 			class modAppID {};
 			class playerNear {};
