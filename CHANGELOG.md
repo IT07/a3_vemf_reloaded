@@ -1,5 +1,11 @@
 ## VEMFr Changelog
 
+#### `v0752.3`
+*Server-side* <br />
+**[REMOVED]** setting 'invincible' from SimplePatrol settings <br />
+**[TWEAKED]** overrides output to detect not-existent settings <br />
+<br />
+
 #### `v0752.2`
 *Server-side* <br />
 **[ADDED]** scripts that are supposed to be scripts instead of functions <br />
