@@ -11,7 +11,7 @@
    nothing
 */
 
-( [ [ "addonSettings", "SimplePatrol" ], [ "aiMode", "from", "to", "interval", "enableAttack", "invincible", "combatMode", "behaviour", "speed" ] ] call VEMFr_fnc_config ) params [ "_ms0", "_ms1", "_ms2", "_ms3", "_ms4", "_ms5", "_ms6", "_ms7", "_ms8" ];
+( [ [ "addonSettings", "SimplePatrol" ], [ "aiMode", "from", "to", "interval", "enableAttack", "combatMode", "behaviour", "speed" ] ] call VEMFr_fnc_config ) params [ "_ms0", "_ms1", "_ms2", "_ms3", "_ms4", "_ms6", "_ms7", "_ms8" ];
 
 if ( _ms0 isEqualTo "random" ) then
    {
@@ -26,12 +26,6 @@ if ( _ms7 isEqualTo "random" ) then { _ms7 = selectRandom [ "CARELESS", "SAFE", 
 
 {
    _grp = ( [ _x, 1, 1, _ms0, "SimplePatrol" ] call VEMFr_fnc_spawnVEMFrAI ) select 0;
-   if ( _ms5 isEqualTo "yes" ) then
-      {
-         {
-            _x allowDamage false;
-         } forEach ( units _grp );
-      };
    _grp allowFleeing 0;
    _grp setBehaviour _ms7;
    _grp setCombatMode _ms6;
