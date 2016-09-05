@@ -54,7 +54,6 @@ class CfgVemfReloaded
 						speed = "LIMITED";
 						to[] = { { position }, { position } };
 						interval = 10;
-						invincible = no;
 						class AIequipment
 							{
 								backpacks[] = { };
