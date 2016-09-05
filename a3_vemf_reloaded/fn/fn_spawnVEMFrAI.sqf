@@ -29,7 +29,7 @@ for "_g" from 1 to _this1 do
 		_grp allowFleeing 0;
 		for "_u" from 1 to _this2 do
 			{
-				private _unit = _grp createUnit [ ( [ [ call VEMFr_fnc_whichMod ], [ "unitClass" ] ] call VEMFr_fnc_config ) select 0, _this0, [], if not ( isNil "_this6" ) then { _this6 } else { 0 }, "FORM" ]; // Create Unit There
+				private _unit = _grp createUnit [ ( [ [ call VEMFr_fnc_whichMod ], [ "unitClass" ] ] call VEMFr_fnc_config ) select 0, _this0, [], if not ( isNil "_this6" ) then { _this6 } else { 0 }, "FORM" ];
 				_allUnits pushBack _unit;
 				_unit addMPEventHandler [ "mpkilled", "if isDedicated then { [ _this select 0 ] ExecVM ( 'handleKillCleanup' call VEMFr_fnc_scriptPath ); [ _this select 0, name (_this select 0), _this select 1, name (_this select 1) ] ExecVM ( 'handleKillReward' call VEMFr_fnc_scriptPath ); ( _this select 0 ) removeAllEventHandlers 'MPKilled' }" ];
 				// Set skills
