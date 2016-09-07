@@ -1,5 +1,13 @@
 ## VEMFr Changelog
 
+#### `v0752.4`
+*Server-side* <br />
+**[ADDED]** "Freeze" option to SimplePatrol addon settings @CameraChick <br />
+**[ADDED]** "Koumac" to location blacklist of Tanoa <br /> 
+**[FIXED]** Apex bandits nor Guerillas have rocket launchers <br />
+**[FIXED]** missing worldName param in Special Forces completion message (DynamicLocationInvasion) <br />
+<br />
+
 #### `v0752.3`
 *Server-side* <br />
 **[REMOVED]** setting 'invincible' from SimplePatrol settings <br />
