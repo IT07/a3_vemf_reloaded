@@ -52,6 +52,9 @@ if ( _this2 isEqualTo 0 ) then // Guerilla
 		{
 			private _xx = _x;
 			// Strip it
+			if ( ( "removeAllAssignedItems" call VEMFr_fnc_config ) isEqualTo "yes" ) then { removeAllAssignedItems _xx };
+			removeAllItems _xx;
+			removeAllWeapons _xx;
 			removeBackpack _xx;
 			if ( _this1 isEqualTo "BaseAttack" ) then { _xx addBackpack "B_Parachute" };
 			removeVest _xx;
@@ -83,9 +86,6 @@ if ( _this2 isEqualTo 0 ) then // Guerilla
 						};
 				};
 
-			removeAllWeapons _xx;
-			removeAllItems _xx;
-			if ( ( "removeAllAssignedItems" call VEMFr_fnc_config ) isEqualTo "yes" ) then { removeAllAssignedItems _xx };
 			[ _xx, ( selectRandom _rfles ), "", "" ] ExecVM ( "giveFire" call VEMFr_fnc_scriptPath );
 		} forEach _this0;
 	};
@@ -97,6 +97,8 @@ if ( _this2 isEqualTo 1 ) then // Regular police
 			private _xx = _x;
 			// Strip it
 			if ( ( "removeAllAssignedItems" call VEMFr_fnc_config ) isEqualTo "yes" ) then { removeAllAssignedItems _xx };
+			removeAllItems _xx;
+			removeAllWeapons _xx;
 			removeUniform _xx;
 			_xx forceAddUniform ( selectRandom _unifs );
 			removeVest _xx;
@@ -106,10 +108,6 @@ if ( _this2 isEqualTo 1 ) then // Regular police
 			removeHeadGear _xx;
 			_xx addHeadGear ( selectRandom _headGr );
 			removeGoggles _xx;
-			removeAllWeapons _xx;
-			removeAllItems _xx;
-
-			// Give this guy some ammo
 			[ _xx, ( selectRandom _rfles ), "", ( selectRandom _pstls ) ] ExecVM ( "giveFire" call VEMFr_fnc_scriptPath );
 		} forEach _this0;
 	};
@@ -121,6 +119,8 @@ if ( _this2 isEqualTo 2 ) then // Police Special Forces
 			private _xx = _x;
 			// Strip it
 			if ( ( "removeAllAssignedItems" call VEMFr_fnc_config ) isEqualTo "yes" ) then { removeAllAssignedItems _xx };
+			removeAllItems _xx;
+			removeAllWeapons _xx;
 			removeBackpack _xx;
 			if ( _this1 isEqualTo "BaseAttack" ) then { _xx addBackpack "B_Parachute" };
 			removeGoggles _xx;
@@ -131,9 +131,6 @@ if ( _this2 isEqualTo 2 ) then // Police Special Forces
 			_xx forceAddUniform ( selectRandom _unifs );
 			removeVest _xx;
 			_xx addVest ( selectRandom _vests );
-			removeAllItems _xx;
-			removeAllWeapons _xx;
-
 			[ _xx, ( selectRandom _rfles ), "", ( selectRandom _pstls ) ] ExecVM ( "giveFire" call VEMFr_fnc_scriptPath ); // Give this guy some fire power
 		} forEach _this0;
 	};
@@ -147,6 +144,8 @@ if ( _this2 isEqualTo 3 ) then // Gendarmerie
 			_xx = _x;
 			// Strip it
 			if ( ( "removeAllAssignedItems" call VEMFr_fnc_config ) isEqualTo "yes" ) then { removeAllAssignedItems _xx };
+			removeAllItems _xx;
+			removeAllWeapons _xx;
 			removeBackpack _xx;
 			if ( _this1 isEqualTo "BaseAttack" ) then { _xx addBackpack "B_Parachute" };
 			removeGoggles _xx;
@@ -157,8 +156,6 @@ if ( _this2 isEqualTo 3 ) then // Gendarmerie
 			_xx forceAddUniform ( selectRandom _unifs );
 			removeVest _xx;
 			_xx addVest ( selectRandom _vests );
-			removeAllItems _xx;
-			removeAllWeapons _xx;
 
 			// Give this guy some fire power
 			[ _xx, ( selectRandom _rfles ), "", ( selectRandom _pstls ) ] ExecVM ( "giveFire" call VEMFr_fnc_scriptPath );
@@ -174,6 +171,9 @@ if ( _this2 isEqualTo 4 ) then // Raiders
 			private [ "_xx", "_g", "_a", "_pw" ];
 			_xx = _x;
 			// Strip it
+			if ( ( "removeAllAssignedItems" call VEMFr_fnc_config ) isEqualTo "yes" ) then { removeAllAssignedItems _xx };
+			removeAllWeapons _xx;
+			removeAllItems _xx;
 			removeBackpack _xx;
 			if ( _this1 isEqualTo "BaseAttack" ) then { _xx addBackpack "B_Parachute" };
 			removeGoggles _xx;
@@ -208,9 +208,6 @@ if ( _this2 isEqualTo 4 ) then // Raiders
 						};
 				};
 
-			removeAllWeapons _xx;
-			removeAllItems _xx;
-			if ( ( "removeAllAssignedItems" call VEMFr_fnc_config ) isEqualTo "yes" ) then { removeAllAssignedItems _xx };
 			[ _xx, ( selectRandom _rfles ), "", "" ] ExecVM ( "giveFire" call VEMFr_fnc_scriptPath ); // Give this guy some fire power
 		} forEach _this0;
 	};
