@@ -33,7 +33,7 @@ if ( VEMFrInvasionCount <= ( ( [ [ "missionSettings", _this0 ], [ "maxInvasions"
 		if ( _ms13 isEqualTo "yes" ) then { _m = [ 0, 1, 2 ]; if ( ( "Apex" call VEMFr_fnc_modAppID ) in ( getDLCs 1 ) ) then { _m pushBack 3; _m pushBack 4 }; _m = selectRandom _m };
 		if ( _ms7 isEqualTo "yes" ) then
 			{
-				if ( _m isEqualTo 0 ) then { [ _m, "NEW MISSION", format [ "%1 Guerilla has invaded %2 @ %3", worldName, _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
+				if ( _m isEqualTo 0 ) then { [ _m, "NEW MISSION", format [ "%1 Guerillas have invaded %2 @ %3", worldName, _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
 				if ( _m isEqualTo 1 ) then { [ _m, "NEW MISSION", format [ "%1 Police forces are now controlling %2 @ %3", worldName, _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
 				if ( _m isEqualTo 2 ) then { [ _m, "NEW MISSION", format [ "%1 Special Forces are now raiding %2 @ %3", worldName, _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
 				if ( _m isEqualTo 3 ) then { [ 1, "NEW MISSION", format [ "The Gendarmerie has invaded %1 @ %2", _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
@@ -190,7 +190,7 @@ if ( VEMFrInvasionCount <= ( ( [ [ "missionSettings", _this0 ], [ "maxInvasions"
 				{
 					if ( _m isEqualTo 0 ) then { [ _m, "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Guerillas", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
 					if ( _m isEqualTo 1 ) then { [ _m, "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Police Forces", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
-					if ( _m isEqualTo 2 ) then { [ _m, "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Special Forces", _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
+					if ( _m isEqualTo 2 ) then { [ _m, "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Special Forces", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
 					if ( _m isEqualTo 3 ) then { [ 1, "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Gendarmerie", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
 					if ( _m isEqualTo 4 ) then { [ 0, "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 bandits", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
 				};
