@@ -48,6 +48,7 @@ class CfgVemfReloaded
 						enableAttack = false; // https://community.bistudio.com/wiki/enableAttack
 						enabled = no; // enable/disable this addon
 						combatMode = "BLUE"; // https://community.bistudio.com/wiki/Arma_3_AI_Behavior#Combat_modes_.28ROE.29
+						freeze = no;
 						from[] = { { position }, { position } };
 						// NOTE: the first in "from" is connected to the first in "to" and so on...
 						removeAllAssignedItems = no; // https://community.bistudio.com/wiki/removeAllAssignedItems
@@ -81,7 +82,7 @@ class CfgVemfReloaded
 						class Stratis { names[] = { "jay cove", "kamino bay", "keiros bay", "kyfi bay", "limeri bay", "marina bay", "nisi bay", "strogos bay", "tsoukala bay" }; };
 						class Namalsk { names[] = { "brensk bay", "lubjansk bay", "nemsk bay", "seraja bay", "sebjan mine", "tara strait" }; };
 						class Other { names[] = { }; };
-						class Tanoa { names[] = { "ferry", "Regina", "nicolet", "petit nicolet", "galili", "la foa", "lakatoro", "kotomo", "comms bravo", "pénélo", "la rochelle aerodrome", "red spring surface mine", "ovau", "nandai" }; };
+						class Tanoa { names[] = { "koumac", "ferry", "Regina", "nicolet", "petit nicolet", "galili", "la foa", "lakatoro", "kotomo", "comms bravo", "pénélo", "la rochelle aerodrome", "red spring surface mine", "ovau", "nandai" }; };
 					};
 				class loot
 					{
