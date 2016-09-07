@@ -11,7 +11,7 @@
    nothing
 */
 
-( [ [ "addonSettings", "SimplePatrol" ], [ "aiMode", "from", "to", "interval", "enableAttack", "combatMode", "behaviour", "speed" ] ] call VEMFr_fnc_config ) params [ "_ms0", "_ms1", "_ms2", "_ms3", "_ms4", "_ms6", "_ms7", "_ms8" ];
+( [ [ "addonSettings", "SimplePatrol" ], [ "aiMode", "from", "to", "interval", "enableAttack", "freeze", "combatMode", "behaviour", "speed" ] ] call VEMFr_fnc_config ) params [ "_ms0", "_ms1", "_ms2", "_ms3", "_ms4", "_ms5", "_ms6", "_ms7", "_ms8" ];
 
 if ( _ms0 isEqualTo "random" ) then
    {
@@ -26,6 +26,12 @@ if ( _ms7 isEqualTo "random" ) then { _ms7 = selectRandom [ "CARELESS", "SAFE", 
 
 {
    _grp = ( [ _x, 1, 1, _ms0, "SimplePatrol" ] call VEMFr_fnc_spawnVEMFrAI ) select 0;
+   if ( _ms5 isEqualTo "yes" ) then
+      {
+         {
+            _x disableAI "MOVE";
+         } forEach ( units _grp );
+      };
    _grp allowFleeing 0;
    _grp setBehaviour _ms7;
    _grp setCombatMode _ms6;
@@ -37,26 +43,29 @@ if ( _ms7 isEqualTo "random" ) then { _ms7 = selectRandom [ "CARELESS", "SAFE", 
    };
    _grp enableAttack _b;
 
-   _wp0 = _grp addWaypoint [ _ms2 select _forEachIndex, 2, 1 ];
-   _wp0 setWaypointBehaviour _ms7;
-   _wp0 setWaypointCombatMode _ms6;
-   _wp0 setWaypointSpeed _ms8;
-   _wp0 setWaypointTimeOut [ _ms3, _ms3, _ms3 ];
-   _wp0 setWaypointType "MOVE";
+   if ( _ms5 isEqualTo "no" ) then
+      {
+         _wp0 = _grp addWaypoint [ _ms2 select _forEachIndex, 2, 1 ];
+         _wp0 setWaypointBehaviour _ms7;
+         _wp0 setWaypointCombatMode _ms6;
+         _wp0 setWaypointSpeed _ms8;
+         _wp0 setWaypointTimeOut [ _ms3, _ms3, _ms3 ];
+         _wp0 setWaypointType "MOVE";
 
-   _wp1 = _grp addWaypoint [ _x, 2, 2 ];
-   _wp1 setWaypointBehaviour _ms7;
-   _wp1 setWaypointCombatMode _ms6;
-   _wp1 setWaypointSpeed _ms8;
-   _wp1 setWaypointTimeOut [ _ms3, _ms3, _ms3 ];
-   _wp1 setWaypointType "MOVE";
+         _wp1 = _grp addWaypoint [ _x, 2, 2 ];
+         _wp1 setWaypointBehaviour _ms7;
+         _wp1 setWaypointCombatMode _ms6;
+         _wp1 setWaypointSpeed _ms8;
+         _wp1 setWaypointTimeOut [ _ms3, _ms3, _ms3 ];
+         _wp1 setWaypointType "MOVE";
 
-   _wp2 = _grp addWaypoint [ _ms2 select _forEachIndex, 2, 3 ];
-   _wp2 setWaypointBehaviour _ms7;
-   _wp2 setWaypointCombatMode _ms6;
-   _wp2 setWaypointSpeed _ms8;
-   _wp2 setWaypointTimeOut [ _ms3, _ms3, _ms3 ];
-   _wp2 setWaypointType "CYCLE";
+         _wp2 = _grp addWaypoint [ _ms2 select _forEachIndex, 2, 3 ];
+         _wp2 setWaypointBehaviour _ms7;
+         _wp2 setWaypointCombatMode _ms6;
+         _wp2 setWaypointSpeed _ms8;
+         _wp2 setWaypointTimeOut [ _ms3, _ms3, _ms3 ];
+         _wp2 setWaypointType "CYCLE";
+      };
 
    [ _grp ] ExecVM ( "signAI" call VEMFr_fnc_scriptPath );
 
