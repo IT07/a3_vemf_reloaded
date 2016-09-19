@@ -26,7 +26,7 @@ class CfgVemfReloaded
 		maxGlobalMissions = 10; // enable/disable global mission amount limit
 		maxNew = 2; // enable/disable MAXIMUM time (in minutes) before new mission can run
 		minNew = 1; // enable/disable MINIMUM time (in minutes) before new mission can run
-		minPlayers = 1; // enable/disable minimal required player count for (new) missions to (start) spawn(ing)
+		minPlayers = 1; // enable/disable minimal required player count for (new) missions to (start) spawn(ing) | NOTE: do NOT set this to 0 or lower than 0
 		minServerFPS = 20; // enable/disable minimum server FPS for VEMF to keep spawning missions
 		missionDistance = 2000; // enable/disable minimum distance between missions
 		missionList[] = { "DynamicLocationInvasion", "BaseAttack" }; // Each entry should represent an .sqf file in the missions folder
