@@ -36,9 +36,9 @@ class RscDisplayBaseAttack
    class controls
    {
       class text:RscText {
-         x = 0.292682 * safezoneW + safezoneX; //x = 0.285 * safezoneW + safezoneX;
+         x = 0.4 * safezoneW + safezoneX;
 			y = 0.88 * safezoneH + safezoneY;
-			w = 0.414637 * safezoneW; //w = 0.35 * safezoneW;
+			w = 0.2 * safezoneW; //w = 0.35 * safezoneW;
 			h = 0.0275 * safezoneH;
 
          font = "PuristaBold";
