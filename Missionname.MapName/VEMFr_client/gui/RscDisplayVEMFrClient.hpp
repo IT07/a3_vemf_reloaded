@@ -95,13 +95,13 @@ class RscDisplayVEMFrClient
 		};
 		class txtTitle: RscText
 		{
-			x = 0.285 * safezoneW + safezoneX;
+			x = 0.2875 * safezoneW + safezoneX;
 			y = 0.8235 * safezoneH + safezoneY;
 			w = 0 * safezoneW;
 			h = 0.02 * safezoneH;
 
-			colorBackground[] = {1,1,1,0.7};
-			colorText[] = {0,0,0,1};
+			colorBackground[] = {0,0,0,0.75};
+			colorText[] = {1,1,1,0.9};
 			fade = 1;
 			idc = 11;
 			shadow = 0;
@@ -110,13 +110,13 @@ class RscDisplayVEMFrClient
 		};
 		class txtMsg: RscText
 		{
-			x = 0.285 * safezoneW + safezoneX;
+			x = 0.2875 * safezoneW + safezoneX;
 			y = 0.845 * safezoneH + safezoneY;
 			w = 0 * safezoneW;
 			h = 0.03 * safezoneH;
 
-			colorBackground[] = {1,1,1,0.7};
-			colorText[] = {0,0,0,1};
+			colorBackground[] = {0,0,0,0.75};
+			colorText[] = {1,1,1,0.9};
 			fade = 1;
 			idc = 12;
 			shadow = 0;
