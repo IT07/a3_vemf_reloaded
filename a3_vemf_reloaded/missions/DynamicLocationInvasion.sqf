@@ -33,11 +33,11 @@ if ( VEMFrInvasionCount <= ( ( [ [ "missionSettings", _this0 ], [ "maxInvasions"
 		if ( _ms13 isEqualTo "yes" ) then { _m = [ 0, 1, 2 ]; if ( ( "Apex" call VEMFr_fnc_modAppID ) in ( getDLCs 1 ) ) then { _m pushBack 3; _m pushBack 4 }; _m = selectRandom _m };
 		if ( _ms7 isEqualTo "yes" ) then
 			{
-				if ( _m isEqualTo 0 ) then { [ _m, "NEW MISSION", format [ "%1 Guerillas have invaded %2 @ %3", worldName, _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
-				if ( _m isEqualTo 1 ) then { [ _m, "NEW MISSION", format [ "%1 Police forces are now controlling %2 @ %3", worldName, _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
-				if ( _m isEqualTo 2 ) then { [ _m, "NEW MISSION", format [ "%1 Special Forces are now raiding %2 @ %3", worldName, _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
-				if ( _m isEqualTo 3 ) then { [ 1, "NEW MISSION", format [ "The Gendarmerie has invaded %1 @ %2", _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
-				if ( _m isEqualTo 4 ) then { [ 0, "NEW MISSION", format [ "%1 bandits have taken %2 @ %3", worldName, _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
+				if ( _m isEqualTo 0 ) then { [ "ColorEAST", "NEW MISSION", format [ "%1 Guerillas have invaded %2 @ %3", worldName, _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
+				if ( _m isEqualTo 1 ) then { [ "ColorWEST", "NEW MISSION", format [ "%1 Police forces are now controlling %2 @ %3", worldName, _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
+				if ( _m isEqualTo 2 ) then { [ "ColorGrey", "NEW MISSION", format [ "%1 Special Forces are now raiding %2 @ %3", worldName, _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
+				if ( _m isEqualTo 3 ) then { [ "ColorWEST", "NEW MISSION", format [ "The Gendarmerie has invaded %1 @ %2", _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
+				if ( _m isEqualTo 4 ) then { [ "ColorEAST", "NEW MISSION", format [ "%1 bandits have taken %2 @ %3", worldName, _ln, mapGridPosition _lp ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
 			};
 
 		private "_mrkr";
@@ -45,12 +45,12 @@ if ( VEMFrInvasionCount <= ( ( [ [ "missionSettings", _this0 ], [ "maxInvasions"
 		{ // Create/place the marker if enabled
 			_mrkr = createMarker [ format [ "VEMFrMarker%1", _ln ], _lp ];
 			_mrkr setMarkerShape "ICON";
-			_mrkr setMarkerType "o_unknown";
+			_mrkr setMarkerType "o_art";
 			_mrkr setMarkerSize [ 0.85, 0.85 ];
 
 			if ( ( _m isEqualTo 0 ) OR ( _m isEqualTo 4 ) ) then { _mrkr setMarkerColor "ColorEAST" };
 			if ( ( _m isEqualTo 1 ) OR ( _m isEqualTo 3 ) ) then { _mrkr setMarkerColor "ColorWEST" };
-			if ( _m isEqualTo 2 ) then { _mrkr setMarkerColor "ColorBlack" };
+			if ( _m isEqualTo 2 ) then { _mrkr setMarkerColor "ColorGrey" };
 		};
 
 		// If enabled, kill all the lights
@@ -188,11 +188,11 @@ if ( VEMFrInvasionCount <= ( ( [ [ "missionSettings", _this0 ], [ "maxInvasions"
 			// Broadcast
 			if ( _ms7 isEqualTo "yes" ) then
 				{
-					if ( _m isEqualTo 0 ) then { [ _m, "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Guerillas", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
-					if ( _m isEqualTo 1 ) then { [ _m, "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Police Forces", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
-					if ( _m isEqualTo 2 ) then { [ _m, "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Special Forces", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
-					if ( _m isEqualTo 3 ) then { [ 1, "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Gendarmerie", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
-					if ( _m isEqualTo 4 ) then { [ 0, "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 bandits", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
+					if ( _m isEqualTo 0 ) then { [ "ColorEAST", "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Guerillas", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
+					if ( _m isEqualTo 1 ) then { [ "ColorWEST", "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Police Forces", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
+					if ( _m isEqualTo 2 ) then { [ "ColorGrey", "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Special Forces", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
+					if ( _m isEqualTo 3 ) then { [ "ColorWEST", "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 Gendarmerie", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
+					if ( _m isEqualTo 4 ) then { [ "ColorEAST", "MISSION ENDED", format [ "%1 @ %2 is now clear of %3 bandits", _ln, mapGridPosition _lp, worldName ] ] ExecVM ( "notificationToClient" call VEMFr_fnc_scriptPath ) };
 				};
 
 			// Deal with the 50s
