@@ -1,9 +1,20 @@
 ## VEMFr Changelog
 
+#### `v0752.5`
+*Server-side* <br />
+**[CHANGED]** DynamicLocationInvasion mission icon <br />
+**[CHANGED]** DynamicLocationInvasion special forces now have a grey map marker instead of black for better visibility <br />
+**[TWEAKED]** comment of the minPlayers setting <br />
+**[TWEAKED]** color code is now sent to client instead of mission mode (notifications) <br />
+*Client-side* <br />
+**[MOVED]** onLoad.sqf of RscDisplayVEMFrClient into own folder <br />
+**[TWEAKED]** GUI theme is now dark instead of light <br />
+<br />
+
 #### `v0752.4`
 *Server-side* <br />
 **[ADDED]** "Freeze" option to SimplePatrol addon settings @CameraChick <br />
-**[ADDED]** "Koumac" to location blacklist of Tanoa <br /> 
+**[ADDED]** "Koumac" to location blacklist of Tanoa <br />
 **[FIXED]** Apex bandits nor Guerillas have rocket launchers <br />
 **[FIXED]** missing worldName param in Special Forces completion message (DynamicLocationInvasion) <br />
 <br />
