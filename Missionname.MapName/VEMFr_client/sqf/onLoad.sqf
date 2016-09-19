@@ -62,7 +62,7 @@ if not isNull _dsp then
                      uiSleep 0.75;
                      _ctrlMsg ctrlSetText ( _x select 2 );
                      _ctrlPos = ctrlPosition _ctrlMsg;
-                     _ctrlMsg ctrlSetPosition [ _ctrlPos select 0, _ctrlPos select 1, 0.45 * safezoneW, _ctrlPos select 3 ];
+                     _ctrlMsg ctrlSetPosition [ _ctrlPos select 0, _ctrlPos select 1, 0.425 * safezoneW, _ctrlPos select 3 ];
                      _ctrlMsg ctrlSetFade 0;
                      _ctrlMsg ctrlCommit 0.5;
                      _ctrlMsg setVariable [ "expanded", true ];
@@ -79,7 +79,7 @@ if not isNull _dsp then
 
                      _ctrlMsg ctrlSetText ( _x select 2 );
                      _ctrlPos = ctrlPosition _ctrlMsg;
-                     _ctrlMsg ctrlSetPosition [ _ctrlPos select 0, _ctrlPos select 1, 0.45 * safezoneW, _ctrlPos select 3 ];
+                     _ctrlMsg ctrlSetPosition [ _ctrlPos select 0, _ctrlPos select 1, 0.425 * safezoneW, _ctrlPos select 3 ];
                      _ctrlMsg ctrlSetFade 0;
                      _ctrlMsg ctrlCommit 0.5;
                      _ctrlMsg setVariable [ "expanded", true ];
