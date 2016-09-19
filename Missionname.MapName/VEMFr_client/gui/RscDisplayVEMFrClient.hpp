@@ -4,7 +4,7 @@ class RscDisplayVEMFrClient
 	fadeIn = 0.2;
 	fadeOut = 1;
 	duration = 99999;
-	onLoad = "uiNamespace setVariable ['RscDisplayVEMFrClient', _this select 0]; ExecVM 'VEMFr_client\sqf\onLoad.sqf'";
+	onLoad = "uiNamespace setVariable ['RscDisplayVEMFrClient', _this select 0]; ExecVM 'VEMFr_client\sqf\RscDisplayVEMFrClient\onLoad.sqf'";
 	onUnLoad = "uiNamespace setVariable ['RscDisplayVEMFrClient', displayNull]";
 	class RscBackground
 	{
@@ -91,7 +91,7 @@ class RscDisplayVEMFrClient
 
 			fade = 1;
 			idc = 10;
-			text = "\A3\ui_f\data\map\markers\nato\o_unknown.paa";
+			text = "\A3\ui_f\data\map\markers\nato\o_art.paa";
 		};
 		class txtTitle: RscText
 		{
