@@ -21,6 +21,7 @@ if hasInterface then
 							};
 						if ( _mode isEqualTo "ba" ) then
 							{
+								disableSerialization;
 								_dsp = uiNamespace getVariable [ "RscDisplayBaseAttack", displayNull ];
 								if ( ( _msg isEqualTo "a" ) AND ( isNull _dsp ) ) then
 									{
