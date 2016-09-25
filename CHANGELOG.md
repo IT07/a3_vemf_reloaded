@@ -1,5 +1,10 @@
 ## VEMFr Changelog
 
+#### `v0752.5 HOTFIX`
+*Client-side* <br />
+**[FIXED]** variable does not support serialization <br />
+<br />
+
 #### `v0752.5`
 *Server-side* <br />
 **[CHANGED]** DynamicLocationInvasion mission icon <br />
